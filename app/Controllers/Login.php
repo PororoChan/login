@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\SiswaModel;
 use App\Models\userModel;
 
 class Login extends BaseController
@@ -49,10 +50,34 @@ class Login extends BaseController
     {
         $session = session();
         $data = [
-            'title' => 'Dashboard',
+            'title' => 'RekSpot | Dashboard',
             'nama'  => $session->get('nama'),
         ];
         return view('/dashboard/dashboard', $data);
+    }
+
+    public function siswa()
+    {
+        $model = new SiswaModel();
+        $session = session();
+        $data = [
+            'title' => 'RekSpot | Data Siswa',
+            'siswa' => $model->findAll(),
+            'nama'  => $session->get('nama'),
+        ];
+        return view('/dashboard/dtsiswa', $data);
+    }
+
+    public function kelas()
+    {
+        $model = new SiswaModel();
+        $session = session();
+        $data = [
+            'title' => 'RekSpot | Data Kelas',
+            'kelas' => $model->findAll(),
+            'nama'  => $session->get('nama'),
+        ];
+        return view('/dashboard/kelas', $data);
     }
 
     public function logout()
