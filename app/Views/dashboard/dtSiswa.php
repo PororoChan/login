@@ -10,7 +10,7 @@
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="dtsiswa" action="/siswa/add" class="needs-validation">
+                <form method="POST" id="dtsiswa" class="needs-validation">
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input id="nama" type="text" class="form-control" name="nama" tabindex="1" required autofocus>
@@ -49,7 +49,7 @@
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="ubahsiswa" action="#" class="needs-validation">
+                <form method="POST" id="ubahsiswa" class="needs-validation">
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input id="edit-nama" type="text" value="" class="form-control" name="nama" tabindex="1" required autofocus>
@@ -71,10 +71,10 @@
                             Data usia tidak boleh kosong
                         </div>
                     </div>
-                    <input type="hidden" name="ids">
+                    <input type="hidden" id="ids">
                     <div class="modal-footer">
                         <button type="button" id="batal" class="btn btn-warning">Batal</button>
-                        <button id="update" type="buton" class="btn btn-primary">Simpan</button>
+                        <button id="update" type="buton" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
@@ -88,7 +88,7 @@
     <section class="section">
         <div class="row mt-2">
             <div class="col">
-                <h4 class="mt-5">Data Siswa</h4>
+                <h5 class="mt-5">Data Siswa</h5>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-add">
                     Tambah Data
@@ -104,7 +104,7 @@
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
-                    <tbody id="fetchSiswa">
+                    <tbody>
                         <?php $i = 1; ?>
                         <?php foreach ($siswa as $k) : ?>
                             <tr>
@@ -113,8 +113,8 @@
                                 <td><?= $k['kelas'] ?></td>
                                 <td><?= $k['usia'] ?></td>
                                 <td>
-                                    <a data-id="<?= $k['id_siswa'] ?>" id="btn-edit" class="btn btn-warning">Edit</a>
-                                    <a class="btn btn-danger">Delete</a>
+                                    <button type="button" id="btn-edit" class="btn btn-warning" data-id="<?= $k['id_siswa'] ?>">Edit</button>
+                                    <button type="button" id="btn-delete" class="btn btn-danger" data-id="<?= $k['id_siswa'] ?>">Delete</button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

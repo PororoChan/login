@@ -36,13 +36,22 @@ $routes->get('/valid', 'Register::save');
 $routes->get('/register', 'Register::register');
 
 //home
+$routes->get('/siswa/adv', 'Login::adv');
 $routes->get('/siswa', 'Login::siswa');
-$routes->get('/siswa/kelas', 'Login::kelas');
+$routes->get('/kelas', 'Kelas::index');
 $routes->get('/home', 'Login::dashboard', ['filter' => 'auth']);
 
 //crud-siswa
 $routes->post('/siswa/add', 'Siswa::addSiswa');
 $routes->get('/siswa/edit', 'Siswa::edit');
+$routes->post('/siswa/update', 'Siswa::update');
+$routes->delete('/siswa/delete', 'Siswa::delete');
+
+//crud-kelas
+$routes->post('/kelas/add', 'Kelas::add');
+$routes->get('/kelas/edit', 'Kelas::edit');
+$routes->post('/kelas/update', 'Kelas::update');
+$routes->delete('/kelas/delete', 'Kelas::delete');
 
 /*
  * --------------------------------------------------------------------

@@ -98,8 +98,9 @@
                             <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" href="/home">Home</a></li>
-                                <li class="active"><a class="nav-link" href="/siswa/kelas">Kelas</a></li>
+                                <li class="active"><a class="nav-link" href="/kelas">Kelas</a></li>
                                 <li class="active"><a class="nav-link" href="/siswa">Data Siswa</a></li>
+                                <li class="active"><a class="nav-link" href="/siswa/adv">Data Siswa (Advanced)</a></li>
                             </ul>
                         </li>
                     </ul>

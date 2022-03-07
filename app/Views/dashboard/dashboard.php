@@ -6,7 +6,7 @@
     <section class="section">
         <div class="row mt-2">
             <div class="col">
-                <h4 class="mt-5">Selamat Siang <?= $nama ?></h4>
+                <h5 class="mt-5">Selamat Siang <?= $nama ?></h5>
             </div>
         </div>
     </section>

@@ -56,6 +56,19 @@ class Login extends BaseController
         return view('/dashboard/dashboard', $data);
     }
 
+    public function adv()
+    {
+        $model = new SiswaModel();
+        $session = session();
+        $data = [
+            'title' => 'RekSpot | Siswa Advanced',
+            'siswa' => $model->findAll(),
+            'nama'  => $session->get('nama'),
+        ];
+
+        return view('/dashboard/dtasiswa', $data);
+    }
+
     public function siswa()
     {
         $model = new SiswaModel();
@@ -65,19 +78,8 @@ class Login extends BaseController
             'siswa' => $model->findAll(),
             'nama'  => $session->get('nama'),
         ];
-        return view('/dashboard/dtsiswa', $data);
-    }
 
-    public function kelas()
-    {
-        $model = new SiswaModel();
-        $session = session();
-        $data = [
-            'title' => 'RekSpot | Data Kelas',
-            'kelas' => $model->findAll(),
-            'nama'  => $session->get('nama'),
-        ];
-        return view('/dashboard/kelas', $data);
+        return view('/dashboard/dtsiswa', $data);
     }
 
     public function logout()
