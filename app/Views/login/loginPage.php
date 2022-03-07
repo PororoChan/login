@@ -30,7 +30,7 @@
                                 <h4>Login</h4>
                             </div>
                             <?php if (session()->getFlashdata('msg')) : ?>
-                                <div class="alert alert-danger m-4"><?= session()->getFlashdata('msg') ?></div>
+                                <div class="alert alert-danger m-4 mb-auto"><?= session()->getFlashdata('msg') ?></div>
                             <?php endif; ?>
                             <div class=" card-body">
                                 <form method="POST" action="/login/auth" class="needs-validation">

@@ -31,11 +31,18 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Home::index');
 $routes->get('/login', 'Login::login');
-$routes->get('/register', 'Register::register');
 $routes->get('/valid', 'Register::save');
+$routes->get('/register', 'Register::register');
+
+//home
+$routes->get('/siswa', 'Login::siswa');
+$routes->get('/siswa/kelas', 'Login::kelas');
 $routes->get('/home', 'Login::dashboard', ['filter' => 'auth']);
+
+//crud-siswa
+$routes->post('/siswa/add', 'Siswa::addSiswa');
+$routes->get('/siswa/edit', 'Siswa::edit');
 
 /*
  * --------------------------------------------------------------------

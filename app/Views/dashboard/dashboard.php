@@ -1,12 +1,14 @@
-<?= $this->include('dashboard/layout/header') ?>
-<?= $this->include('dashboard/layout/sidebar') ?>
+<?= $this->extend('dashboard/layout/template') ?>
 
-<!-- Main Content -->
+<?= $this->section('content'); ?>
+<!-- Main-Content -->
 <div class="main-content">
-    <div class="container">
-        <div class="mt-5">
-            <p>Selamat Siang <?= $nama ?></p>
+    <section class="section">
+        <div class="row mt-2">
+            <div class="col">
+                <h4 class="mt-5">Selamat Siang <?= $nama ?></h4>
+            </div>
         </div>
-    </div>
+    </section>
 </div>
-<?= $this->include('dashboard/layout/footer') ?>
+<?= $this->endSection(); ?>
