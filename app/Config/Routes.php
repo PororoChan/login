@@ -17,7 +17,6 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
@@ -31,14 +30,16 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
+//Login & Register
 $routes->get('/login', 'Login::login');
 $routes->get('/valid', 'Register::save');
 $routes->get('/register', 'Register::register');
 
-//home
-$routes->get('/siswa/adv', 'Login::adv');
+//index-page-per-controller
 $routes->get('/siswa', 'Login::siswa');
 $routes->get('/kelas', 'Kelas::index');
+$routes->get('/dtsiswa', 'Dtsiswa::show');
 $routes->get('/home', 'Login::dashboard', ['filter' => 'auth']);
 
 //crud-siswa
@@ -52,6 +53,11 @@ $routes->post('/kelas/add', 'Kelas::add');
 $routes->get('/kelas/edit', 'Kelas::edit');
 $routes->post('/kelas/update', 'Kelas::update');
 $routes->delete('/kelas/delete', 'Kelas::delete');
+
+//crud-siswa-adv
+$routes->post('/dtsiswa/add', 'Dtsiswa::add');
+$routes->get('/dtsiswa/edit', 'Dtsiswa::edit');
+$routes->delete('/dtsiswa/delete', 'Dtsiswa::delete');
 
 /*
  * --------------------------------------------------------------------

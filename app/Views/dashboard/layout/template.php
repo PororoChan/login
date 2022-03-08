@@ -95,14 +95,13 @@
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
                         <li class="nav-item dropdown">
-                            <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-                            <ul class="dropdown-menu">
-                                <li><a class="nav-link" href="/home">Home</a></li>
-                                <li class="active"><a class="nav-link" href="/kelas">Kelas</a></li>
-                                <li class="active"><a class="nav-link" href="/siswa">Data Siswa</a></li>
-                                <li class="active"><a class="nav-link" href="/siswa/adv">Data Siswa (Advanced)</a></li>
-                            </ul>
+                        <li class="active"><a class="nav-link" href="/home"><i class="fas fa-home"></i><span>Home</span></a></li>
+                        <li><a class="nav-link" href="/kelas"><i class="fas fa-book"></i><span>Kelas</span></a></li>
+                        <li><a class="nav-link" href="/siswa"><i class="fas fa-user"></i><span>Data Siswa</span></a></li>
+                        <li><a class="nav-link" href="/dtsiswa"><i class="fas fa-users"></i><span>Data Siswa (Advanced)</span></a></li>
                         </li>
+                    </ul>
+                    </li>
                     </ul>
                 </aside>
             </div>

@@ -8,7 +8,6 @@ use App\Models\SiswaModel;
 
 class Siswa extends BaseController
 {
-    //SISWA
     public function addSiswa()
     {
         $rules = [

@@ -1,12 +1,12 @@
 $(document).ready(function() {
-    // $('#datasiswa').dataTable({
-    //     "bPaginate": false,
-    //     "bInfo": false,
-    //     "bFilter": false,
-    //     "bLengthChange": false,
-    //     "pageLength": 5
-    // });
-
+    let table = $('#datasiswa').dataTable({
+        "bPaginate": false,
+        "bInfo": false,
+        "bFilter": false,
+        "bLengthChange": false,
+        "pageLength": 5
+    });
+    
     $('#batal').click(function() {
         $('#dtsiswa')[0].reset();
     });
@@ -15,6 +15,12 @@ $(document).ready(function() {
         $('#kelasdt')[0].reset();
     });
 
+    
+    $('#bataldt').click(function () {
+        $('#datasis')[0].reset();
+    })
+
+    //Siswa-Page
     $('#simpan').on('click', function() {
         var nama = $('#nama').val();
         var kelas = $('#kelas').val();
@@ -148,7 +154,7 @@ $(document).ready(function() {
                 })
             }
         });
-    });;
+    });
 
     $(document).on('click', '#btn-edit-kelas', function () {
         var ids = $(this).attr('data-id');
@@ -172,67 +178,67 @@ $(document).ready(function() {
         var kelas = $('#editKelas').val();
         var id = $('#id_kelas').val();
 
-        // $.ajax({
-        //     url: '/kelas/update',
-        //     method: 'POST',
-        //     data: {
-        //         kelas: kelas,
-        //         id_kelas: id,
-        //     },
-        //     success: function () {
-        //         $('#modal-edit-kelas').modal('hide');
-        //         Swal.fire({
-        //             title: 'Success',
-        //             text: 'Data berhasil diubah',
-        //             icon: 'success',
-        //             showConfirmButton: false,
-        //         })
-        //         location.reload();
-        //     }
-        // })
-
-        Swal.fire({
-            title: 'Yakin ingin ubah data?',
-            text: "Data akan diubah!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya'
-        }).then((result) => {
-            if (result.isConfirmed) {
+        $.ajax({
+            url: '/kelas/update',
+            method: 'POST',
+            data: {
+                kelas: kelas,
+                id_kelas: id,
+            },
+            success: function () {
+                $('#modal-edit-kelas').modal('hide');
                 Swal.fire({
-                    title: 'Success!',
-                    text: 'Data berhasil diubah.',
+                    title: 'Success',
+                    text: 'Data berhasil diubah',
                     icon: 'success',
-                    confirmButtonText: 'Okay'
-                }).then((hapus) => {
-                    if (hapus.isConfirmed) {
-                        $.ajax({
-                            url: '/kelas/update',
-                            method: 'POST',
-                            data: {
-                                kelas: kelas,
-                                id_kelas: id,
-                            },  
-                            success: function () {
-                                $('#modal-edit-kelas').modal('hide');
-                                Swal.fire({
-                                    title: 'Success',
-                                    text: 'Data berhasil diubah',
-                                    icon: 'success',
-                                    showConfirmButton: false,
-                                })
-                                location.reload();
-                            }
-                        })
-                        location.reload();
-                    }
+                    showConfirmButton: false,
                 })
-            } else {
                 location.reload();
             }
         })
+
+        // Swal.fire({
+        //     title: 'Yakin ingin ubah data?',
+        //     text: "Data akan diubah!",
+        //     icon: 'warning',
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Ya'
+        // }).then((result) => {
+        //     if (result.isConfirmed) {
+        //         Swal.fire({
+        //             title: 'Success!',
+        //             text: 'Data berhasil diubah.',
+        //             icon: 'success',
+        //             confirmButtonText: 'Okay'
+        //         }).then((hapus) => {
+        //             if (hapus.isConfirmed) {
+        //                 $.ajax({
+        //                     url: '/kelas/update',
+        //                     method: 'POST',
+        //                     data: {
+        //                         kelas: kelas,
+        //                         id_kelas: id,
+        //                     },  
+        //                     success: function () {
+        //                         $('#modal-edit-kelas').modal('hide');
+        //                         Swal.fire({
+        //                             title: 'Success',
+        //                             text: 'Data berhasil diubah',
+        //                             icon: 'success',
+        //                             showConfirmButton: false,
+        //                         })
+        //                         location.reload();
+        //                     }
+        //                 })
+        //                 location.reload();
+        //             }
+        //         })
+        //     } else {
+        //         location.reload();
+        //     }
+        // })
     });
 
     $(document).on('click', '#btn-delete-kelas', function () {
@@ -269,4 +275,92 @@ $(document).ready(function() {
             }
         })
     });
+
+    //Siswa-Adv
+    $('#simpandt').on('click', function () {
+        var img = $('#inputfile').prop('files')[0];
+        let data = new FormData();
+        data.append('type', 1);
+        data.append('nama', $('#names').val());
+        data.append('kelas', $('#pilihkelas').val());
+        data.append('usia', $('#ages').val());
+        data.append('gambar', img);
+
+        $.ajax({
+            url: '/dtsiswa/add',
+            method: 'POST',
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: function () {
+                $('#modal-add-siswa').modal('hide');
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Data berhasil ditambahkan',
+                    icon: 'success',
+                    showConfirmButton: false,
+                });
+
+                table.clear().draw();
+            }
+        });
+    });
+
+    $(document).on('click', '#dt-edit', function () {
+        var ids = $(this).attr('data-id');
+
+        $.ajax({
+            url: '/dtsiswa/edit',
+            method: 'GET',
+            dataType: 'JSON',
+            data: {
+                id_data: ids,
+            },
+            success: function (data) {
+                $('#dt-edit').modal('show');
+                $('#dt-nama').val(data.nama);
+                $('#dt-kelas').val(data.kelas);
+                $('#dt-usia').val(data.usia);
+                // $('#dt-file').val(data.gambar);
+                $('#idt').val(ids);
+            }
+        });
+    });
+
+    $('#dt-delete').on('click', function () {
+        var ids = $(this).attr('data-id');
+
+        Swal.fire({
+            title: 'Yakin ingin hapus data?',
+            text: "Data akan dihapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Data berhasil dihapus.',
+                    icon: 'success',
+                    confirmButtonText: 'Okay'
+                }).then((hapus) => {
+                    if (hapus.isConfirmed) {
+                        $.ajax({
+                            url: '/dtsiswa/delete',
+                            method: 'GET',
+                            data: {
+                                id_data: ids,
+                            },
+                        })
+                        location.reload();
+                    }
+                })
+            } else {
+                location.reload();
+            }
+        })
+    })
 });

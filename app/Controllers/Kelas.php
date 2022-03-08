@@ -56,11 +56,11 @@ class Kelas extends BaseController
         $kelas = new KelasModel();
         $id = $this->request->getVar('id_kelas');
 
-        $data = [
-            'kelas' => $this->request->getVar('editfield'),
+        $dt = [
+            'kelas' => $this->request->getVar('kelas'),
         ];
 
-        $kelas->update($id, $data);
+        $kelas->update($id, $dt);
     }
 
     public function delete()

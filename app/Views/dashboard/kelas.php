@@ -38,7 +38,7 @@
                 <form method="POST" id="ubahkelas" class="needs-validation">
                     <div class="form-group">
                         <label for="kelas">Kelas</label>
-                        <input id="editKelas" type="text" class="form-control" name="editfield" tabindex="2" required>
+                        <input id="editKelas" type="text" class="form-control" name="kelas" tabindex="2" required>
                         <div class="invalid-feedback">
                             Data kelas tidak boleh kosong
                         </div>
@@ -67,7 +67,7 @@
                 <button class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#tambahKelas">
                     Tambah Kelas
                 </button>
-                <table class="table">
+                <table class="table" id="datasiswa">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
