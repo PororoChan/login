@@ -113,8 +113,8 @@
                                 <td><?= $k['kelas'] ?></td>
                                 <td><?= $k['usia'] ?></td>
                                 <td>
-                                    <button type="button" id="btn-edit" class="btn btn-warning" data-id="<?= $k['id_siswa'] ?>">Edit</button>
-                                    <button type="button" id="btn-delete" class="btn btn-danger" data-id="<?= $k['id_siswa'] ?>">Delete</button>
+                                    <button type="button" id="btn-edit" class="btn btn-warning" data-id="<?= $k['id_siswa'] ?>"><i class="fas fa-edit"></i></button>
+                                    <button type="button" id="btn-delete" class="btn btn-danger" data-id="<?= $k['id_siswa'] ?>"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -124,4 +124,125 @@
         </div>
     </section>
 </div>
+<?= $this->endSection(); ?>
+
+<?= $this->section('javascript') ?>
+<script>
+    //CRUD-Siswa-Page
+    $('#simpan').on('click', function() {
+
+        $('#batal').click(function() {
+            $('#dtsiswa')[0].reset();
+        });
+
+        var nama = $('#nama').val();
+        var kelas = $('#kelas').val();
+        var usia = $('#usia').val();
+
+        $.ajax({
+            url: '/siswa/add',
+            method: 'POST',
+            data: {
+                type: 1,
+                nama: nama,
+                kelas: kelas,
+                usia: usia,
+            },
+            success: function() {
+                $('#tambahData').modal('hide');
+                location.reload();
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Data berhasil ditambahkan',
+                    icon: 'success',
+                    showConfirmButton: false,
+                })
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-edit', function() {
+        var ids = $(this).attr('data-id');
+
+        $.ajax({
+            url: '/siswa/edit',
+            method: 'GET',
+            dataType: 'JSON',
+            data: {
+                id_siswa: ids,
+            },
+            success: function(data) {
+                $('#modal-edit').modal('show');
+                $('#edit-nama').val(data.nama);
+                $('#edit-kelas').val(data.kelas);
+                $('#edit-usia').val(data.usia);
+                $('#ids').val(ids);
+            }
+        });
+    });
+
+    $(document).on('click', '#update', function() {
+        var nama = $('#edit-nama').val();
+        var kelas = $('#edit-kelas').val();
+        var usia = $('#edit-usia').val();
+        var id = $('#ids').val();
+
+        $.ajax({
+            url: '/siswa/update',
+            method: 'POST',
+            data: {
+                nama: nama,
+                kelas: kelas,
+                usia: usia,
+                id_siswa: id,
+            },
+            success: function() {
+                $('#modal-edit').modal('hide');
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Data berhasil diubah',
+                    icon: 'success',
+                    showConfirmButton: false,
+                })
+                location.reload();
+            }
+        })
+    });
+
+    $(document).on('click', '#btn-delete', function() {
+        var ids = $(this).attr('data-id');
+
+        Swal.fire({
+            title: 'Yakin ingin hapus data?',
+            text: "Data akan dihapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Data berhasil dihapus.',
+                    icon: 'success',
+                    confirmButtonText: 'Okay'
+                }).then((hapus) => {
+                    if (hapus.isConfirmed) {
+                        $.ajax({
+                            url: '/siswa/delete',
+                            method: 'GET',
+                            data: {
+                                id_siswa: ids,
+                            },
+                            success: function(data) {
+                                location.reload();
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    });
+</script>
 <?= $this->endSection(); ?>

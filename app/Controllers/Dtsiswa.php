@@ -25,6 +25,21 @@ class Dtsiswa extends BaseController
         return view('/dashboard/dtasiswa', $data);
     }
 
+    public function view()
+    {
+        $model = new Datasiswa();
+        $dt = $model->where('id_data', $this->request->getVar('id_data'))->first();
+
+        $data = array(
+            'nama'  => $dt['nama'],
+            'kelas' => $dt['kelas'],
+            'usia'  => $dt['usia'],
+            'gambar'    => $dt['gambar'],
+        );
+
+        echo json_encode($data, JSON_PRETTY_PRINT);
+    }
+
     public function add()
     {
         $rules = [
@@ -71,6 +86,33 @@ class Dtsiswa extends BaseController
             );
 
             echo json_encode($data, JSON_PRETTY_PRINT);
+        }
+    }
+
+    public function update()
+    {
+        $model = new Datasiswa();
+        $dt = $model->where('id_data', $this->request->getVar('id_data'))->first();
+        $did = $this->request->getVar('id_data');
+        $image = $dt['gambar'];
+
+        if ($did) {
+            if (file_exists('images/' . $image)) {
+                unlink('images/' . $image);
+            }
+            $imgNew = $this->request->getFile('gambar');
+
+            $data = [
+                'nama'  => $this->request->getPost('nama'),
+                'kelas' => $this->request->getPost('kelas'),
+                'usia'  => $this->request->getPost('usia'),
+                'gambar'    => $imgNew,
+            ];
+
+            $model->update($did, $data);
+
+            $nama = $imgNew->getRandomName();
+            $imgNew->move('../public/images', $nama);
         }
     }
 

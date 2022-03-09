@@ -31,6 +31,9 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 
+//load_data
+// $routes->get('/loadsis', 'Dtsiswa::load');
+
 //Login & Register
 $routes->get('/login', 'Login::login');
 $routes->get('/valid', 'Register::save');
@@ -55,8 +58,10 @@ $routes->post('/kelas/update', 'Kelas::update');
 $routes->delete('/kelas/delete', 'Kelas::delete');
 
 //crud-siswa-adv
+$routes->get('/dtsiswa/view', 'Dtsiswa::view');
 $routes->post('/dtsiswa/add', 'Dtsiswa::add');
 $routes->get('/dtsiswa/edit', 'Dtsiswa::edit');
+$routes->post('/dtsiswa/update', 'Dtsiswa::update');
 $routes->delete('/dtsiswa/delete', 'Dtsiswa::delete');
 
 /*

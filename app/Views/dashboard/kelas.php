@@ -82,8 +82,8 @@
                                 <th scope="row"><?= $i++; ?></th>
                                 <td><?= $k['kelas'] ?></td>
                                 <td>
-                                    <button id="btn-edit-kelas" class="btn btn-warning" data-id="<?= $k['id_kelas'] ?>">Edit</button>
-                                    <button id="btn-delete-kelas" class="btn btn-danger" data-id="<?= $k['id_kelas'] ?>">Delete</button>
+                                    <button id="btn-edit-kelas" class="btn btn-warning" data-id="<?= $k['id_kelas'] ?>"><i class="fas fa-edit"></i></button>
+                                    <button id="btn-delete-kelas" class="btn btn-danger" data-id="<?= $k['id_kelas'] ?>"><i class="fas fa-trash"></i></button>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -93,4 +93,114 @@
         </div>
     </section>
 </div>
+<?= $this->endSection(); ?>
+
+<?= $this->section('javascript') ?>
+<script>
+    //CRUD-Kelas-Page
+    $('#kelas-add').on('click', function() {
+
+        $('#kelas-batal').click(function() {
+            $('#kelasdt')[0].reset();
+        });
+
+        var kelas = $('#kelas').val();
+
+        $.ajax({
+            url: '/kelas/add',
+            method: 'POST',
+            data: {
+                type: 1,
+                kelas: kelas,
+            },
+            success: function() {
+                $('#tambahKelas').modal('hide');
+                location.reload();
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Data berhasil ditambahkan',
+                    icon: 'success',
+                    showConfirmButton: false,
+                })
+            }
+        });
+    });
+
+    $(document).on('click', '#btn-edit-kelas', function() {
+        var ids = $(this).attr('data-id');
+
+        $.ajax({
+            url: '/kelas/edit',
+            method: 'GET',
+            dataType: 'JSON',
+            data: {
+                id_kelas: ids,
+            },
+            success: function(data) {
+                $('#modal-edit-kelas').modal('show');
+                $('#editKelas').val(data.kelas);
+                $('#id_kelas').val(ids);
+            }
+        });
+    });
+
+    $(document).on('click', '#updateKelas', function() {
+        var kelas = $('#editKelas').val();
+        var id = $('#id_kelas').val();
+
+        $.ajax({
+            url: '/kelas/update',
+            method: 'POST',
+            data: {
+                kelas: kelas,
+                id_kelas: id,
+            },
+            success: function() {
+                $('#modal-edit-kelas').modal('hide');
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Data berhasil diubah',
+                    icon: 'success',
+                    showConfirmButton: false,
+                })
+                location.reload();
+            }
+        })
+    });
+
+    $(document).on('click', '#btn-delete-kelas', function() {
+        var ids = $(this).attr('data-id');
+        Swal.fire({
+            title: 'Yakin ingin hapus data?',
+            text: "Data akan dihapus!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Data berhasil dihapus.',
+                    icon: 'success',
+                    confirmButtonText: 'Okay'
+                }).then((hapus) => {
+                    if (hapus.isConfirmed) {
+                        $.ajax({
+                            url: '/kelas/delete',
+                            method: 'GET',
+                            data: {
+                                id_kelas: ids,
+                            },
+                        })
+                        location.reload();
+                    }
+                })
+            } else {
+                location.reload
+            }
+        })
+    });
+</script>
 <?= $this->endSection(); ?>
