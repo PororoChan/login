@@ -100,7 +100,7 @@
                         <li><a class="nav-link" href="/kelas"><i class="fas fa-book"></i><span>Kelas</span></a></li>
                         <li><a class="nav-link" href="/siswa"><i class="fas fa-school"></i><span>Data Siswa</span></a></li>
                         <li><a class="nav-link" href="/dtsiswa"><i class="fas fa-users"></i><span>Data Siswa (Advanced)</span></a></li>
-                        <li><a class="nav-link" href=""><i class="fas fa-user"></i><span>User</span></a></li>
+                        <li><a class="nav-link" href="/users"><i class="fas fa-user"></i><span>User</span></a></li>
                         </li>
                     </ul>
                     </li>
