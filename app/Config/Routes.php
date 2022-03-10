@@ -58,6 +58,7 @@ $routes->post('/kelas/update', 'Kelas::update');
 $routes->delete('/kelas/delete', 'Kelas::delete');
 
 //crud-siswa-adv
+$routes->get('/dtsiswa/details', 'Dtsiswa::detail');
 $routes->get('/dtsiswa/view', 'Dtsiswa::view');
 $routes->post('/dtsiswa/add', 'Dtsiswa::add');
 $routes->get('/dtsiswa/edit', 'Dtsiswa::edit');

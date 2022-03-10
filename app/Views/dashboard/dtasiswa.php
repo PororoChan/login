@@ -63,7 +63,7 @@
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="editsiswa" class="needs-validation">
+                <form method="POST" id="edit-siswa" class="needs-validation">
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input id="edit-dt-nama" type="text" value="" class="form-control" name="edit-nama" tabindex="1" required autofocus>
@@ -94,7 +94,7 @@
                     </div>
                     <input type="hidden" id="edit-ids">
                     <div class="modal-footer">
-                        <button type="button" id="batal" class="btn btn-warning">Batal</button>
+                        <button type="button" class="btn btn-warning">Batal</button>
                         <button id="dt-update" type="button" class="btn btn-primary">Update</button>
                     </div>
                 </form>
@@ -105,17 +105,38 @@
 
 <!-- Modal Detail View -->
 <div class="modal fade" id="modal-view" tabindex="2" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+    <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Menampilkan Data Siswa</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
-                <div class="container-fluid ms-auto">
-                    <div class="col-lg-2">
-                        <img id="viewpic" width="165" height="185">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card h-220 w-45 align-items-center">
+                            <img id="id-gambar" class="img-fluid" src="" height="200" width="135">
+                        </div>
                     </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <p><b>Nama : &nbsp;</b></p>
+                            <p id="id-nama"></p>
+                        </div>
+                        <div class="row">
+                            <p><b>Kelas : &nbsp;</b></p>
+                            <p id="id-kelas"></p>
+                        </div>
+                        <div class="row">
+                            <p><b>Usia : &nbsp;</b></p>
+                            <p id="id-usia"></p>
+                            <input type="hidden" id="idn">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" style="width: 45px; height: 45px;" id="exp-excel" title="Save as Excel" class="btn btn-success float-right"><i class="fas fa-file-excel"></i></button>
+                    <button style="width: 45px; height: 45px;" id="exp-pdf" title="Save as PDF" class="btn btn-danger float-right"><i class="fas fa-file-pdf"></i></button>
                 </div>
             </div>
         </div>
@@ -135,7 +156,7 @@
                     Tambah Data
                 </button>
 
-                <table class="table" id="dtsiswa">
+                <table class="table" id="dtsiswa" width="100%">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -146,20 +167,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 1; ?>
-                        <?php foreach ($dtsiswa as $k) : ?>
-                            <tr>
-                                <th scope="row"><?= $i++; ?></th>
-                                <td><?= $k['nama'] ?></td>
-                                <td><?= $k['kelas'] ?></td>
-                                <td><?= $k['usia'] ?></td>
-                                <td>
-                                    <button type="button" id="dt-view" class="btn btn-success" data-id="<?= $k['id_data'] ?>"><i class="fas fa-eye"></i></button>
-                                    <button type="button" id="dt-edit" class="btn btn-warning" data-id="<?= $k['id_data'] ?>"><i class="fas fa-edit"></i></button>
-                                    <button type="button" id="dt-delete" class="btn btn-danger" data-id="<?= $k['id_data'] ?>"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+
                     </tbody>
                 </table>
             </div>
@@ -171,12 +179,38 @@
 <?= $this->section('javascript') ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        // $('#dtsiswa').DataTable({
-        //     data: data,
-        //     columns: [{
-        //         data: "nama"
-        //     }]
-        // })
+        let data = {};
+        var _dtTable = $('#dtsiswa').DataTable({
+            "order": [],
+            "responsive": true,
+            "processing": true,
+            "serverSide": true,
+            "info": true,
+            "pageLength": 5,
+            "search": {
+                "caseInsensitive": false,
+            },
+            "language": {
+                "emptyTable": "Tidak ada data tersedia di tabel",
+                "zeroRecords": "Data tidak ditemukan",
+                "infoEmpty": "Menampilkan 0 dari 0 data",
+                "lengthMenu": "Tampilkan _MENU_ data",
+                "info": "Menampilkan _START_ - _END_ dari _TOTAL_ total data",
+                "infoFiltered": "(dipilih dari _TOTAL_ data)",
+                "processing": "Diproses...",
+            },
+            "ajax": {
+                "url": "/dtsiswa/view",
+                "type": "POST",
+                "data": function(d) {
+                    d = data;
+                }
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+        });
 
         $('#bataldt').click(function() {
             $('#datasis')[0].reset();
@@ -200,14 +234,16 @@
                 contentType: false,
                 cache: false,
                 success: function() {
+                    $('#datasis')[0].reset();
                     $('#modal-add-siswa').modal('hide');
                     Swal.fire({
                         title: 'Success',
                         text: 'Data berhasil ditambahkan',
                         icon: 'success',
+                        timer: 1500,
                         showConfirmButton: false,
                     });
-                    location.reload();
+                    _dtTable.ajax.reload();
                 }
             });
         });
@@ -216,15 +252,22 @@
             var ids = $(this).attr('data-id');
 
             $("#modal-view").modal('show');
+
             $.ajax({
-                url: '/dtsiswa/view',
+                url: '/dtsiswa/details',
                 method: 'GET',
                 dataType: 'JSON',
                 data: {
                     id_data: ids,
                 },
                 success: function(data) {
-                    $('#modal-view').modal('show');
+                    var img = data.gambar;
+
+                    $('#id-nama').text(data.nama);
+                    $('#id-kelas').text(data.kelas);
+                    $('#id-usia').text(data.usia);
+                    $('#idn').val(ids)
+                    $('#id-gambar').attr('src', 'images/' + img);
                 }
             })
         })
@@ -271,14 +314,16 @@
                 processData: false,
                 contentType: false,
                 success: function() {
-                    $('#modal-edit-siswa').modal('hide');
                     Swal.fire({
                         title: 'Success',
                         text: 'Data berhasil diubah',
                         icon: 'success',
+                        timer: 1500,
                         showConfirmButton: false,
                     });
-                    location.reload();
+                    $('#dt-edit').modal('hide');
+                    $('#edit-siswa')[0].reset();
+                    _dtTable.ajax.reload();
                 }
             })
         });
@@ -310,9 +355,31 @@
                                     id_data: ids,
                                 },
                             })
-                            location.reload();
+                            _dtTable.ajax.reload();
                         }
                     })
+                }
+            })
+        });
+
+        $(document).on('click', '#exp-excel', function() {
+            var id = $('#idn').val();
+
+            $.ajax({
+                url: '/dtsiswa/expExcel',
+                method: "POST",
+                data: {
+                    id_data: id,
+                },
+                success: function() {
+                    $('#modal-view').modal('hide');
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'File telah di unduh',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false,
+                    });
                 }
             })
         });
