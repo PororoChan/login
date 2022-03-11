@@ -66,7 +66,10 @@ $routes->post('/dtsiswa/update', 'Dtsiswa::update');
 $routes->delete('/dtsiswa/delete', 'Dtsiswa::delete');
 
 //crud-users
+$routes->post('/users/data', 'Users::data');
+$routes->post('/users/update', 'Users::update');
 $routes->get('/users', 'Users::show');
+$routes->delete('/users/delete', 'Users::delete');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

@@ -72,6 +72,7 @@ class Dtsiswa extends BaseController
 
         $output = array(
             'draw' => $_POST['draw'],
+            'recordsTotal' => $model->getData(),
             'recordsFiltered' => $model->getDtFilter(),
             'data' => $data,
         );

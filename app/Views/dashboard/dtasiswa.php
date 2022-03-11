@@ -185,30 +185,26 @@
             "responsive": true,
             "processing": true,
             "serverSide": true,
-            "info": true,
-            "pageLength": 5,
-            "search": {
-                "caseInsensitive": false,
-            },
+            "lengthMenu": [
+                [5, 10, 25, 50, 100, -1],
+                [5, 10, 25, 50, 100, "All"]
+            ],
+            "searching": true,
             "language": {
                 "emptyTable": "Tidak ada data tersedia di tabel",
                 "zeroRecords": "Data tidak ditemukan",
                 "infoEmpty": "Menampilkan 0 dari 0 data",
                 "lengthMenu": "Tampilkan _MENU_ data",
                 "info": "Menampilkan _START_ - _END_ dari _TOTAL_ total data",
-                "infoFiltered": "(dipilih dari _TOTAL_ data)",
-                "processing": "Diproses...",
+                "infoFiltered": "(dipilih dari _MAX_ data)",
             },
             "ajax": {
                 "url": "/dtsiswa/view",
                 "type": "POST",
-                "data": function(d) {
-                    d = data;
-                }
             },
             "columnDefs": [{
                 "targets": [0],
-                "orderable": false,
+                "orderable": true,
             }, ],
         });
 

@@ -5,12 +5,12 @@ namespace App\Models;
 use CodeIgniter\Model;
 use Codeigniter\HTTP\RequestInterface;
 
-class Datatable extends Model
+class DtUser extends Model
 {
-    protected $table = "biodata";
-    protected $column_order = ['id_data', 'nama', 'kelas', 'usia'];
-    protected $column_search = ['nama', 'kelas'];
-    protected $order = ['id_data' => 'ASC'];
+    protected $table = "login";
+    protected $column_order = ['id_user', 'username', 'password'];
+    protected $column_search = ['nama', 'username'];
+    protected $order = ['id_user' => 'ASC'];
     protected $request;
     protected $db;
     protected $dt;
