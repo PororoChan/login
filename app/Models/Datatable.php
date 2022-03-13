@@ -8,8 +8,8 @@ use Codeigniter\HTTP\RequestInterface;
 class Datatable extends Model
 {
     protected $table = "biodata";
-    protected $column_order = ['id_data', 'nama', 'kelas', 'usia'];
-    protected $column_search = ['nama', 'kelas'];
+    private $column_order = [NULL, 'nama', 'kelas', 'usia'];
+    private $column_search = ['nama', 'kelas'];
     protected $order = ['id_data' => 'ASC'];
     protected $request;
     protected $db;

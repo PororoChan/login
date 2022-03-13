@@ -189,7 +189,6 @@
                 [5, 10, 25, 50, 100, -1],
                 [5, 10, 25, 50, 100, "All"]
             ],
-            "searching": true,
             "language": {
                 "emptyTable": "Tidak ada data tersedia di tabel",
                 "zeroRecords": "Data tidak ditemukan",
@@ -210,6 +209,10 @@
 
         $('#bataldt').click(function() {
             $('#datasis')[0].reset();
+        });
+
+        $('search').on('keyup', function() {
+            alert('ini bisa');
         })
 
         //CRUD-Siswa-Adv

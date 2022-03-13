@@ -98,7 +98,7 @@
             },
             "ajax": {
                 "url": '/Users/data',
-                "type": "POST"
+                "type": "POST",
             },
             "columnDefs": [{
                 "targets": [0],
