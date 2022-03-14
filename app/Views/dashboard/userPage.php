@@ -148,7 +148,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
-                        title: 'Deleted!',
+                        title: 'Success!',
                         text: 'Data berhasil diubah.',
                         icon: 'success',
                         confirmButtonText: 'Okay'
