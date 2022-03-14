@@ -57,19 +57,23 @@
             <div class="col">
                 <h5 class="mt-5">Data Users</h5>
                 <br><br>
-                <table class="table" id="datauser">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Password</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-bordered" id="datauser">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Password</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -82,7 +86,9 @@
         var _table = $('#datauser').DataTable({
             "order": [],
             "responsive": true,
+            "processing": true,
             "serverSide": true,
+            "filter": true,
             "lengthMenu": [
                 [5, 10, 25, 50, 100, -1],
                 [5, 10, 25, 50, 100, "All"]
@@ -126,41 +132,83 @@
         });
 
         $(document).on('click', '#btn-update', function() {
-            var ids = $('#ids').val();
             var nama = $('#edit-nama').val();
-            var user = $('#edit-usern').val();
-            var pw = $('#edit-pass').val();
-            var confirm = $('#confirm').val();
+            var uname = $('#edit-usern').val();
+            var pass = $('#edit-pass').val();
+            var id = $('#ids').val();
 
+            Swal.fire({
+                title: 'Yakin ingin ubah data?',
+                text: "Data akan diubah!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Data berhasil diubah.',
+                        icon: 'success',
+                        confirmButtonText: 'Okay'
+                    }).then((hapus) => {
+                        if (hapus.isConfirmed) {
+                            $.ajax({
+                                url: '/users/update',
+                                method: 'POST',
+                                data: {
+                                    id_user: id,
+                                    nama: nama,
+                                    username: uname,
+                                    password: pass,
+                                },
+                                success: function() {
+                                    $('#modal-upt').modal('hide');
 
-            $.ajax({
-                url: '/users/update',
-                method: 'POST',
-                data: {
-                    id_user: ids,
-                    nama: nama,
-                    username: user,
-                    password: pw,
-                },
-                success: function() {
-                    $('#modal-upt').modal('hide');
-                    _table.ajax.reload();
+                                    _table.ajax.reload();
+                                }
+                            })
+                        }
+                    })
                 }
             })
-        });
+
+
+        })
 
         $(document).on('click', '#dt-delete', function() {
             var ids = $(this).attr('data-id');
 
-            $.ajax({
-                url: '/users/delete',
-                method: 'GET',
-                data: {
-                    id_user: ids,
-                },
-                success: function() {
-                    console.log("berhasil");
-                    _table.ajax.reload();
+            Swal.fire({
+                title: 'Yakin ingin hapus data?',
+                text: "Data akan dihapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Data berhasil dihapus.',
+                        icon: 'success',
+                        confirmButtonText: 'Okay'
+                    }).then((hapus) => {
+                        if (hapus.isConfirmed) {
+                            $.ajax({
+                                url: '/users/delete',
+                                method: 'GET',
+                                data: {
+                                    id_user: ids,
+                                },
+                                success: function(data) {
+                                    _table.ajax.reload();
+                                }
+                            })
+                        }
+                    })
                 }
             })
         })

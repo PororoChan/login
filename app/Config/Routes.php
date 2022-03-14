@@ -64,6 +64,8 @@ $routes->post('/dtsiswa/add', 'Dtsiswa::add');
 $routes->get('/dtsiswa/edit', 'Dtsiswa::edit');
 $routes->post('/dtsiswa/update', 'Dtsiswa::update');
 $routes->delete('/dtsiswa/delete', 'Dtsiswa::delete');
+$routes->post('/dtsiswa/excel', 'Dtsiswa::excel');
+$routes->post('/dtsiswa/pdf', 'Dtsiswa::pdf');
 
 //crud-users
 $routes->post('/users/data', 'Users::data');

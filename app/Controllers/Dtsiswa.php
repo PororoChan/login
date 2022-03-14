@@ -71,7 +71,7 @@ class Dtsiswa extends BaseController
         }
 
         $output = array(
-            'draw' => intval($_POST['draw']),
+            'draw' => $_POST['draw'],
             'recordsTotal' => $model->getData(),
             'recordsFiltered' => $model->getDtFilter(),
             'data' => $data,
@@ -172,39 +172,42 @@ class Dtsiswa extends BaseController
         }
     }
 
-    public function expExcel()
+    public function excel()
     {
-        if ($this->request->getVar('id_data')) {
-            $model = new Datasiswa();
-            $data = $model->findAll();
+        $model = new Datasiswa();
+        $data = $model->findAll();
 
-            $excel = new Spreadsheet();
+        $excel = new Spreadsheet();
 
-            //header-kolom-excel
+        //header-kolom-excel
+        $excel->setActiveSheetIndex(0)
+            ->setCellValue('D1', 'Nama')
+            ->setCellValue('E1', 'Kelas')
+            ->setCellValue('F1', 'Usia');
+
+        $kolom = 2;
+
+        foreach ($data as $dt) {
             $excel->setActiveSheetIndex(0)
-                ->setCellValue('D4', 'Nama')
-                ->setCellValue('E4', 'Kelas')
-                ->setCellValue('F4', 'Usia');
-
-            $kolom = 2;
-
-            foreach ($data as $dt) {
-                $excel->setActiveSheetIndex(0)
-                    ->setCellValue('D' . $kolom, $dt['nama'])
-                    ->setCellValue('E' . $kolom, $dt['kelas'])
-                    ->setCellValue('F' . $kolom, $dt['usia']);
-                $kolom++;
-            }
-
-            $writer = new Xlsx($excel);
-            $filename = 'Data Siswa';
-
-            //Redirect Download
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
-            header('Cache-Control: max-age=0');
-
-            // $writer->save('php://output');
+                ->setCellValue('D' . $kolom, $dt['nama'])
+                ->setCellValue('E' . $kolom, $dt['kelas'])
+                ->setCellValue('F' . $kolom, $dt['usia']);
+            $kolom++;
         }
+
+        $writer = new Xlsx($excel);
+        $filename = 'Data Siswa';
+
+        //Redirect Download
+        header('Content-Type:application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
+        header('Cache-Control: max-age=0');
+
+        $writer->save('php://output');
+    }
+
+    public function pdf()
+    {
+        echo "Selamat Pagi";
     }
 }

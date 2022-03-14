@@ -8,8 +8,8 @@ use Codeigniter\HTTP\RequestInterface;
 class Datatable extends Model
 {
     protected $table = "biodata";
-    private $column_order = [NULL, 'nama', 'kelas', 'usia'];
-    private $column_search = ['nama', 'kelas'];
+    protected $column_order = ['id_data', 'nama', 'kelas', 'usia'];
+    protected $column_search = ['nama', 'kelas'];
     protected $order = ['id_data' => 'ASC'];
     protected $request;
     protected $db;
@@ -23,27 +23,11 @@ class Datatable extends Model
         $this->dt = $this->db->table($this->table);
     }
 
-    public function getData()
-    {
-        return $this->dt->select('*')
-            ->from($this->table)
-            ->countAll();
-    }
-
-    public function get_dtTable()
-    {
-        if ($_POST['length'] != 1);
-        $query = $this->dt->select('*')
-            ->limit($_POST['length'], $_POST['start'])
-            ->get();
-        return $query->getResult();
-    }
-
     private function getFilter()
     {
         $i = 0;
         foreach ($this->column_search as $item) {
-            if ($_POST['search']) {
+            if ($_POST['search']['value']) {
                 if ($i === 0) {
                     $this->dt->groupStart();
                     $this->dt->like($item, $_POST['search']['value']);
@@ -62,6 +46,23 @@ class Datatable extends Model
             }
         }
     }
+
+    public function getData()
+    {
+        return $this->dt->select('*')
+            ->from($this->table)
+            ->countAll();
+    }
+
+    public function get_dtTable()
+    {
+        $this->getFilter();
+        if ($_POST['length'] != 1) {
+            $this->dt->limit($_POST['length'], $_POST['start']);
+            return $this->dt->get()->getResult();
+        }
+    }
+
 
     public function getDtFilter()
     {

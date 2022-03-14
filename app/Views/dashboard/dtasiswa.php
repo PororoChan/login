@@ -155,21 +155,24 @@
                 <button type="button" class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-add-siswa">
                     Tambah Data
                 </button>
+                <div class="card mt-5" style="width: 100%;">
+                    <div class="card-body">
+                        <table class="table table-bordered" id="dtsiswa" width="100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Kelas</th>
+                                    <th scope="col">Usia</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                <table class="table" id="dtsiswa" width="100%">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Kelas</th>
-                            <th scope="col">Usia</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -180,8 +183,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         let data = {};
-        var _dtTable = $('#dtsiswa').DataTable({
-            "order": [],
+        let _dtTable = $('#dtsiswa').DataTable({
             "responsive": true,
             "processing": true,
             "serverSide": true,
@@ -197,6 +199,7 @@
                 "info": "Menampilkan _START_ - _END_ dari _TOTAL_ total data",
                 "infoFiltered": "(dipilih dari _MAX_ data)",
             },
+            "order": [],
             "ajax": {
                 "url": "/dtsiswa/view",
                 "type": "POST",
@@ -207,13 +210,19 @@
             }, ],
         });
 
+        $('.search').on('keyup', function() {
+            data.search = $(this).val();
+            if (data.search == "") {
+                delete data.search;
+            }
+
+            _dtTable.draw();
+        })
+
         $('#bataldt').click(function() {
             $('#datasis')[0].reset();
         });
 
-        $('search').on('keyup', function() {
-            alert('ini bisa');
-        })
 
         //CRUD-Siswa-Adv
         $('#simpandt').on('click', function() {
@@ -361,27 +370,19 @@
             })
         });
 
-        $(document).on('click', '#exp-excel', function() {
-            var id = $('#idn').val();
-
+        $('#exp-excel').click(function() {
             $.ajax({
-                url: '/dtsiswa/expExcel',
-                method: "POST",
-                data: {
-                    id_data: id,
-                },
-                success: function() {
-                    $('#modal-view').modal('hide');
-                    Swal.fire({
-                        title: 'Success',
-                        text: 'File telah di unduh',
-                        icon: 'success',
-                        timer: 1500,
-                        showConfirmButton: false,
-                    });
-                }
+                url: '/dtsiswa/excel',
+                method: 'POST',
+                success: function() {}
             })
         });
+
+        $('#exp-pdf').click(function() {
+            $.ajax({
+                url: '/dtsiswa/pdf',
+            })
+        })
     })
 </script>
 <?= $this->endSection(); ?>

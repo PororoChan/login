@@ -23,22 +23,6 @@ class DtUser extends Model
         $this->dt = $this->db->table($this->table);
     }
 
-    public function getData()
-    {
-        return $this->dt->select('*')
-            ->from($this->table)
-            ->countAll();
-    }
-
-    public function get_dtTable()
-    {
-        if ($_POST['length'] != 1);
-        $query = $this->dt->select('*')
-            ->limit($_POST['length'], $_POST['start'])
-            ->get();
-        return $query->getResult();
-    }
-
     private function getFilter()
     {
         $i = 0;
@@ -62,6 +46,23 @@ class DtUser extends Model
             }
         }
     }
+
+    public function getData()
+    {
+        return $this->dt->select('*')
+            ->from($this->table)
+            ->countAll();
+    }
+
+    public function get_dtTable()
+    {
+        $this->getFilter();
+        if ($_POST['length'] != 1) {
+            $this->dt->limit($_POST['length'], $_POST['start']);
+            return $this->dt->get()->getResult();
+        }
+    }
+
 
     public function getDtFilter()
     {

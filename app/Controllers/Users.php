@@ -74,16 +74,15 @@ class Users extends BaseController
     public function update()
     {
         $model = new userModel();
-        $id = $this->request->getPost('id_user');
+        $id = $this->request->getVar('id_user');
 
         $data = [
-            'nama'      => $this->request->getVar('nama'),
-            'username'  => $this->request->getVar('uname'),
-            'password'  => password_hash($this->request->getVar('pass'), PASSWORD_DEFAULT),
+            'nama'  => $this->request->getVar('nama'),
+            'username' => $this->request->getVar('username'),
+            'password'  => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
         ];
 
         $model->update($id, $data);
-        dd($data['nama']);
     }
 
     public function delete()
@@ -94,7 +93,5 @@ class Users extends BaseController
         if ($id) {
             $model->delete($id);
         }
-
-        dd($id);
     }
 }
