@@ -5,13 +5,26 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Datasiswa;
 use App\Models\Datatable;
+use App\Models\Excel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\KelasModel;
 use Config\Services;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Dtsiswa extends BaseController
 {
+    private $datat;
+    private $excel;
+
+    public function __construct()
+    {
+        $request = Services::request();
+        $this->datat = new Datatable($request);
+        $this->excel = new Excel();
+    }
+
     public function show()
     {
         $siswamdl = new Datasiswa();
@@ -174,40 +187,42 @@ class Dtsiswa extends BaseController
 
     public function excel()
     {
-        $model = new Datasiswa();
-        $data = $model->findAll();
+        $request = Services::request();
+        $datat = new Datatable($request);
+        $header = [
+            'No',
+            'Nama',
+            'Kelas',
+            'Usia',
+            'Gambar',
+        ];
 
-        $excel = new Spreadsheet();
+        $option = [
+            "columns" => [
+                "No" => [
+                    "numberFormat" => [
+                        "formatCode" => NumberFormat::FORMAT_NUMBER,
+                    ],
+                ],
+                "Usia" => [
+                    "numberFormat" => [
+                        "formatCode" => NumberFormat::FORMAT_NUMBER,
+                    ]
+                ]
+            ]
+        ];
 
-        //header-kolom-excel
-        $excel->setActiveSheetIndex(0)
-            ->setCellValue('D1', 'Nama')
-            ->setCellValue('E1', 'Kelas')
-            ->setCellValue('F1', 'Usia');
+        $data_excel = $datat->gettData();
 
-        $kolom = 2;
-
-        foreach ($data as $dt) {
-            $excel->setActiveSheetIndex(0)
-                ->setCellValue('D' . $kolom, $dt['nama'])
-                ->setCellValue('E' . $kolom, $dt['kelas'])
-                ->setCellValue('F' . $kolom, $dt['usia']);
-            $kolom++;
-        }
-
-        $writer = new Xlsx($excel);
-        $filename = 'Data Siswa';
-
-        //Redirect Download
-        header('Content-Type:application/vnd.ms-excel');
-        header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
-        header('Cache-Control: max-age=0');
-
-        $writer->save('php://output');
+        $this->excel
+            ->set_title("Data Siswa")
+            ->set_data($data_excel, $header, $option)
+            ->set_filename("data-siswa" . date("y-m-d H:i:s"))
+            ->download();
     }
 
     public function pdf()
     {
-        echo "Selamat Pagi";
+        echo "work uy";
     }
 }

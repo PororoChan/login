@@ -135,8 +135,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" style="width: 45px; height: 45px;" id="exp-excel" title="Save as Excel" class="btn btn-success float-right"><i class="fas fa-file-excel"></i></button>
-                    <button style="width: 45px; height: 45px;" id="exp-pdf" title="Save as PDF" class="btn btn-danger float-right"><i class="fas fa-file-pdf"></i></button>
+                    <a style="padding: 10px; width: 45px; height: 45px;" id="exp-excel" title="Save as Excel" href="/dtsiswa/excel" class="btn btn-warning"><i class="fas fa-file-excel"></i></a>
+                    <a style="padding: 10px; width: 45px; height: 45px;" id="exp-pdf" title="Save as PDF" href="/dtsiswa/pdf" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
                 </div>
             </div>
         </div>
@@ -373,9 +373,18 @@
         $('#exp-excel').click(function() {
             $.ajax({
                 url: '/dtsiswa/excel',
-                method: 'POST',
-                success: function() {}
-            })
+                type: 'POST',
+                data: {},
+                success: function() {
+                    $('#modal-view').modal('hide');
+                    Swal.fire({
+                        title: 'Download',
+                        text: 'Berhasil download',
+                        icon: 'success',
+                        timer: 1500,
+                    })
+                }
+            });
         });
 
         $('#exp-pdf').click(function() {

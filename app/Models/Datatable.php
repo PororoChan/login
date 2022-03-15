@@ -54,6 +54,11 @@ class Datatable extends Model
             ->countAll();
     }
 
+    public function gettData()
+    {
+        return $this->dt->get()->getResultArray();
+    }
+
     public function get_dtTable()
     {
         $this->getFilter();

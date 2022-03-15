@@ -85,22 +85,23 @@
                     </li>
                 </ul>
             </nav>
+
             <div class="main-sidebar">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">RekSpot</a>
+                        <a href="#">RekSpot</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">RS</a>
+                        <a href="#">RS</a>
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class="nav-item dropdown">
-                        <li class="active"><a class="nav-link" href="/home"><i class="fas fa-home"></i><span>Home</span></a></li>
-                        <li><a class="nav-link" href="/kelas"><i class="fas fa-book"></i><span>Kelas</span></a></li>
-                        <li><a class="nav-link" href="/siswa"><i class="fas fa-school"></i><span>Data Siswa</span></a></li>
-                        <li><a class="nav-link" href="/dtsiswa"><i class="fas fa-users"></i><span>Data Siswa (Advanced)</span></a></li>
-                        <li><a class="nav-link" href="/users"><i class="fas fa-user"></i><span>User</span></a></li>
+                        <li class="nav-item">
+                        <li><a class="nav-link" href="<?= site_url('/home'); ?>"><i class="fas fa-home"></i><span>Home</span></a></li>
+                        <li><a class="nav-link" href="<?= site_url('/kelas'); ?>"><i class="fas fa-book"></i><span>Kelas</span></a></li>
+                        <li><a class="nav-link" href="<?= site_url('/siswa'); ?>"><i class="fas fa-school"></i><span>Data Siswa</span></a></li>
+                        <li><a class="nav-link" href="<?= site_url('/dtsiswa'); ?>"><i class="fas fa-users"></i><span>Data Siswa (Advanced)</span></a></li>
+                        <li><a class="nav-link" href="<?= site_url('/users'); ?>"><i class="fas fa-user"></i><span>User</span></a></li>
                         </li>
                     </ul>
                     </li>
@@ -140,6 +141,20 @@
 
     <!-- Page Specific JS File -->
     <script src="<?= base_url('template'); ?>/assets/js/page/index.js"></script>
+
+    <!-- Active-link-nav-per-page -->
+    <script>
+        $(document).ready(function() {
+            var path = location.pathname.split('/');
+            var url = location.origin + '/' + path[1];
+
+            $('ul.sidebar-menu li a').each(function() {
+                if ($(this).attr('href').indexOf(url) !== -1) {
+                    $(this).parent().addClass('active').parent().parent('li').addClass('active');
+                }
+            })
+        })
+    </script>
 </body>
 
 </html>
