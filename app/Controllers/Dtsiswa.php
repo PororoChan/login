@@ -190,7 +190,6 @@ class Dtsiswa extends BaseController
         $request = Services::request();
         $datat = new Datatable($request);
         $header = [
-            'No',
             'Nama',
             'Kelas',
             'Usia',
@@ -199,11 +198,6 @@ class Dtsiswa extends BaseController
 
         $option = [
             "columns" => [
-                "No" => [
-                    "numberFormat" => [
-                        "formatCode" => NumberFormat::FORMAT_NUMBER,
-                    ],
-                ],
                 "Usia" => [
                     "numberFormat" => [
                         "formatCode" => NumberFormat::FORMAT_NUMBER,

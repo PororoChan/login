@@ -100,7 +100,7 @@
                         <li><a class="nav-link" href="<?= site_url('/home'); ?>"><i class="fas fa-home"></i><span>Home</span></a></li>
                         <li><a class="nav-link" href="<?= site_url('/kelas'); ?>"><i class="fas fa-book"></i><span>Kelas</span></a></li>
                         <li><a class="nav-link" href="<?= site_url('/siswa'); ?>"><i class="fas fa-school"></i><span>Data Siswa</span></a></li>
-                        <li><a class="nav-link" href="<?= site_url('/dtsiswa'); ?>"><i class="fas fa-users"></i><span>Data Siswa (Advanced)</span></a></li>
+                        <li><a class="nav-link" href="<?= site_url('/dtsiswa'); ?>"><i class="fas fa-users"></i><span>Data Siswa V.1.5</span></a></li>
                         <li><a class="nav-link" href="<?= site_url('/users'); ?>"><i class="fas fa-user"></i><span>User</span></a></li>
                         </li>
                     </ul>

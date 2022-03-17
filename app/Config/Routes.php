@@ -46,32 +46,32 @@ $routes->get('/dtsiswa', 'Dtsiswa::show');
 $routes->get('/home', 'Login::dashboard', ['filter' => 'auth']);
 
 //crud-siswa
-$routes->post('/siswa/add', 'Siswa::addSiswa');
-$routes->get('/siswa/edit', 'Siswa::edit');
-$routes->post('/siswa/update', 'Siswa::update');
-$routes->delete('/siswa/delete', 'Siswa::delete');
+$routes->add('/siswa/add', 'Siswa::addSiswa');
+$routes->add('/siswa/edit', 'Siswa::edit');
+$routes->add('/siswa/update', 'Siswa::update');
+$routes->add('/siswa/delete', 'Siswa::delete');
 
 //crud-kelas
-$routes->post('/kelas/add', 'Kelas::add');
-$routes->get('/kelas/edit', 'Kelas::edit');
-$routes->post('/kelas/update', 'Kelas::update');
-$routes->delete('/kelas/delete', 'Kelas::delete');
+$routes->add('/kelas/add', 'Kelas::add');
+$routes->add('/kelas/edit', 'Kelas::edit');
+$routes->add('/kelas/update', 'Kelas::update');
+$routes->add('/kelas/delete', 'Kelas::delete');
 
 //crud-siswa-adv
 $routes->get('/dtsiswa/details', 'Dtsiswa::detail');
 $routes->get('/dtsiswa/view', 'Dtsiswa::view');
-$routes->post('/dtsiswa/add', 'Dtsiswa::add');
-$routes->get('/dtsiswa/edit', 'Dtsiswa::edit');
-$routes->post('/dtsiswa/update', 'Dtsiswa::update');
-$routes->delete('/dtsiswa/delete', 'Dtsiswa::delete');
-$routes->post('/dtsiswa/excel', 'Dtsiswa::excel');
-$routes->post('/dtsiswa/pdf', 'Dtsiswa::pdf');
+$routes->add('/dtsiswa/add', 'Dtsiswa::add');
+$routes->add('/dtsiswa/edit', 'Dtsiswa::edit');
+$routes->add('/dtsiswa/update', 'Dtsiswa::update');
+$routes->add('/dtsiswa/delete', 'Dtsiswa::delete');
+$routes->add('/dtsiswa/excel', 'Dtsiswa::excel');
+$routes->add('/dtsiswa/pdf', 'Dtsiswa::pdf');
 
 //crud-users
-$routes->post('/users/data', 'Users::data');
-$routes->post('/users/update', 'Users::update');
-$routes->get('/users', 'Users::show');
-$routes->delete('/users/delete', 'Users::delete');
+$routes->get('/users/data', 'Users::data');
+$routes->add('/users/update', 'Users::update');
+$routes->add('/users', 'Users::show');
+$routes->add('/users/delete', 'Users::delete');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

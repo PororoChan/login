@@ -56,7 +56,7 @@ class Datatable extends Model
 
     public function gettData()
     {
-        return $this->dt->get()->getResultArray();
+        return $this->dt->select('nama,' . 'kelas,' . 'usia,' . 'gambar')->get()->getResultArray();
     }
 
     public function get_dtTable()

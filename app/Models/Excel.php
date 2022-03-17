@@ -3,12 +3,10 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use FontLib\Table\Type\head;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx as writerx;
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx as readerx;
 
 class Excel extends Model
 {
@@ -67,7 +65,7 @@ class Excel extends Model
         $this->dt = $this->db->table($this->table);
 
         $this->spreadsheet = new Spreadsheet();
-        $this->alpha = array_merge(range('A', 'Z'));
+        $this->alpha = array_merge(range('B', 'Z'));
         $this->writer = new writerx($this->spreadsheet);
     }
 
@@ -130,6 +128,7 @@ class Excel extends Model
         if ($this->header) {
             foreach ($this->header as $key => $val) {
                 $al = $this->alpha[$key];
+                $sheet->setCellValue("A2", "No");
                 $sheet->setCellValue("$al$i", strtoupper($val));
             }
 
@@ -138,12 +137,14 @@ class Excel extends Model
 
             $i++;
         }
-
+        $num = 1;
         foreach ($this->data as $row) {
+            $numer = $num++;
             $k = 0;
             foreach ($row as $cell) {
                 $alphas = $this->alpha[$k++];
                 $sheet->getColumnDimension($alphas)->setAutoSize(true);
+                $sheet->setCellValue("A$i", $numer);
                 $sheet->setCellValue("$alphas$i", $cell);
             }
             $i++;
