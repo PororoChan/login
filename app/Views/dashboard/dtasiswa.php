@@ -184,46 +184,32 @@
 <script type="text/javascript">
     $(document).ready(function() {
         let data = {};
-        // let _dtTable = $('#dtsiswa').DataTable({
-        //     "responsive": true,
-        //     "processing": true,
-        //     "serverSide": true,
-        //     "lengthMenu": [
-        //         [5, 10, 25, 50, 100, -1],
-        //         [5, 10, 25, 50, 100, "All"]
-        //     ],
-        //     "language": {
-        //         "emptyTable": "Tidak ada data tersedia di tabel",
-        //         "zeroRecords": "Data tidak ditemukan",
-        //         "infoEmpty": "Menampilkan 0 dari 0 data",
-        //         "lengthMenu": "Tampilkan _MENU_ data",
-        //         "info": "Menampilkan _START_ - _END_ dari _TOTAL_ total data",
-        //         "infoFiltered": "(dipilih dari _MAX_ data)",
-        //     },
-        //     "order": [],
-        //     "ajax": {
-        //         "url": "/dtsiswa/view",
-        //         "type": "POST",
-        //     },
-        //     "columnDefs": [{
-        //         "targets": [0],
-        //         "orderable": true,
-        //     }, ],
-        // });
-        var csrfName = "<?= csrf_token() ?>";
-        var csrfHash = $('#txt_csrfname').val();
-        var _dtTable = $('#dtsiswa').DataTable({
-            serverSide: true,
-            destroy: true,
-            ajax: {
-                type: 'post',
-                url: '/DtTable/datatable',
-                data: function(param) {
-                    param[csrfName] = csrfHash;
-                    return param;
-                }
-            }
-        })
+        let _dtTable = $('#dtsiswa').DataTable({
+            "responsive": true,
+            "processing": false,
+            "serverSide": true,
+            "lengthMenu": [
+                [5, 10, 25, 50, 100, -1],
+                [5, 10, 25, 50, 100, "All"]
+            ],
+            "language": {
+                "emptyTable": "Tidak ada data tersedia di tabel",
+                "zeroRecords": "Data tidak ditemukan",
+                "infoEmpty": "Menampilkan 0 dari 0 data",
+                "lengthMenu": "Tampilkan _MENU_ data",
+                "info": "Menampilkan _START_ - _END_ dari _TOTAL_ total data",
+                "infoFiltered": "(dipilih dari _MAX_ data)",
+            },
+            "order": [],
+            "ajax": {
+                "url": "/dtsiswa/view",
+                "type": "POST",
+            },
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": true,
+            }, ],
+        });
 
         $('.search').on('keyup', function() {
             data.search = $(this).val();

@@ -43,6 +43,7 @@ $routes->get('/register', 'Register::register');
 $routes->get('/siswa', 'Login::siswa');
 $routes->get('/kelas', 'Kelas::index');
 $routes->get('/dtsiswa', 'Dtsiswa::show');
+$routes->get('/files', 'Files::index');
 $routes->get('/home', 'Login::dashboard', ['filter' => 'auth']);
 
 //crud-siswa
@@ -72,6 +73,12 @@ $routes->get('/users/data', 'Users::data');
 $routes->add('/users/update', 'Users::update');
 $routes->add('/users', 'Users::show');
 $routes->add('/users/delete', 'Users::delete');
+
+//crud-files
+$routes->add('/files/add', 'Files::save');
+
+// table
+$routes->add('/tbfile', 'Files::table');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

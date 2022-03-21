@@ -83,6 +83,8 @@ class Users extends BaseController
         ];
 
         $model->update($id, $data);
+
+        echo json_encode($data);
     }
 
     public function delete()
@@ -93,5 +95,7 @@ class Users extends BaseController
         if ($id) {
             $model->delete($id);
         }
+
+        echo json_encode($id);
     }
 }

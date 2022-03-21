@@ -102,6 +102,7 @@
                         <li><a class="nav-link" href="<?= site_url('/siswa'); ?>"><i class="fas fa-school"></i><span>Data Siswa</span></a></li>
                         <li><a class="nav-link" href="<?= site_url('/dtsiswa'); ?>"><i class="fas fa-users"></i><span>Data Siswa V.1.5</span></a></li>
                         <li><a class="nav-link" href="<?= site_url('/users'); ?>"><i class="fas fa-user"></i><span>User</span></a></li>
+                        <li><a class="nav-link" href="<?= site_url('/files'); ?>"><i class="fas fa-folder"></i><span>Files</span></a></li>
                         </li>
                     </ul>
                     </li>
@@ -132,8 +133,8 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="<?= base_url('template'); ?>/assets/js/stisla.js"></script>
     <?= $this->renderSection('javascript'); ?>
+    <script src="<?= base_url('template'); ?>/assets/js/stisla.js"></script>
 
     <!-- Template JS File -->
     <script src="<?= base_url('template'); ?>/assets/js/scripts.js"></script>

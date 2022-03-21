@@ -86,7 +86,7 @@
         var _table = $('#datauser').DataTable({
             "order": [],
             "responsive": true,
-            "processing": true,
+            "processing": false,
             "serverSide": true,
             "filter": true,
             "lengthMenu": [

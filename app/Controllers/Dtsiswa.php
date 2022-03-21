@@ -168,6 +168,8 @@ class Dtsiswa extends BaseController
 
             $imgNew->move('../public/images', $nama);
         }
+
+        echo json_encode($data);
     }
 
     public function delete()

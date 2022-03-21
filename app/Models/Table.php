@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class Table extends Model
+{
+    protected $table = 'file_upload';
+    public function __construct()
+    {
+        $this->db = db_connect();
+        $this->builder = $this->db->table($this->table);
+    }
+
+    public function searchable()
+    {
+        return [
+            null,
+            'publisher',
+            'file_name',
+            null,
+        ];
+    }
+
+    public function getData($param, $text)
+    {
+        return $this->builder->select('userid, publisher, file_name, description');
+    }
+
+    public function simpan($data)
+    {
+        return $this->builder->insert($data);
+    }
+}
