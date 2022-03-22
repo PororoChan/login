@@ -25,11 +25,26 @@ class Table extends Model
 
     public function getData($param, $text)
     {
-        return $this->builder->select('userid, publisher, file_name, description');
+        return $this->builder->select('userid, publisher, file_name as file, description');
+    }
+
+    public function getOne($id = '')
+    {
+        $build = $this->builder->select('publisher, file_name as file, description');
+        if ($id != '') {
+            $build->where('userid', $id);
+        }
+
+        return $build->get()->getRowArray();
     }
 
     public function simpan($data)
     {
         return $this->builder->insert($data);
+    }
+
+    public function hapus($id)
+    {
+        return $this->builder->delete(['userid' => $id]);
     }
 }

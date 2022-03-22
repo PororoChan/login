@@ -11,10 +11,24 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
-    <!-- Template CSS -->
     <link rel="stylesheet" href="<?= base_url('template') ?>/assets/css/style.css">
     <link rel="stylesheet" href="<?= base_url('template') ?>/assets/css/components.css">
+    <style>
+        #signcanva {
+            display: none;
+            width: 100%;
+            border: 1px solid;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        #signature-result {
+            display: none;
+            border-radius: 5px;
+            width: 100%;
+            border: 1px solid;
+        }
+    </style>
 </head>
 
 <body>
@@ -133,17 +147,13 @@
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <?= $this->renderSection('javascript'); ?>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/stisla.js"></script>
-
-    <!-- Template JS File -->
     <script src="<?= base_url('template'); ?>/assets/js/scripts.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/custom.js"></script>
-
-    <!-- Page Specific JS File -->
+    <script src="<?= base_url('template'); ?>/assets/js/notify.js"></script>
+    <?= $this->renderSection('javascript'); ?>
     <script src="<?= base_url('template'); ?>/assets/js/page/index.js"></script>
-
-    <!-- Active-link-nav-per-page -->
     <script>
         $(document).ready(function() {
             var path = location.pathname.split('/');

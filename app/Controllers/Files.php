@@ -31,12 +31,12 @@ class Files extends BaseController
         $datatables->updateRow(function ($db, $no) {
             return [
                 $no,
-                $db->file_name,
+                $db->file,
                 $db->publisher,
                 " 
-                <button class='btn btn-success'><i class='fas fa-eye'></i></button>
-                <button class='btn btn-warning'><i class='fas fa-pencil-alt'></i></button>
-                <button class='btn btn-danger'><i class='fas fa-trash-alt'></i></button>
+                <button id='btn-prev' onclick=preview($db->userid) title='Signature' class='btn btn-success'><i class='fas fa-signature'></i></button>
+                <button id='btn-edit' title='Edit File' class='btn btn-warning'><i class='fas fa-edit'></i></button>
+                <button id='btn-del' onclick='deleteDt($db->userid)' title='Delete File' class='btn btn-danger'><i class='fas fa-trash'></i></button>
                 "
             ];
         });
@@ -48,10 +48,11 @@ class Files extends BaseController
     {
         if ($this->request->getPost('type') == 1) {
             $file = $this->request->getFile('file_name');
-            $name = $file->getRandomName();
+            $filename = $file->getClientName();
+            $name = str_replace(' ', '', $filename);
             $file->move('../public/file_upload', $name);
             $data = [
-                'publisher' => $this->request->getPost('publisher'),
+                'publisher' => session()->get('nama'),
                 'file_name' => $name,
                 'description' => $this->request->getPost('desc'),
             ];
@@ -60,6 +61,23 @@ class Files extends BaseController
             $result['success'] = 1;
 
             echo json_encode($result);
+        }
+    }
+
+    public function delete()
+    {
+        $id = $this->request->getPost('id');
+        $dt = $this->model->getOne($id);
+
+        if ($id) {
+            if (file_exists('file_upload/' . $dt['file'])) {
+                unlink('file_upload/' . $dt['file']);
+            }
+
+            $this->model->hapus($id);
+            echo '1';
+        } else {
+            echo '0';
         }
     }
 }

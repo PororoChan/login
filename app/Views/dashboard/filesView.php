@@ -33,6 +33,73 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="modal-del" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Files</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="userid">
+                <div class="content">
+                    <p>
+                        Are you sure to delete this files?
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="delete" type="button" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal-Sign -->
+<div class="modal fade" id="modal-prev" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Files</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formcanva">
+                    <input type="hidden" id="ids">
+                    <div class="row">
+                        <div class="col-8">
+                            <iframe id="preview" frameborder="0" style="border-radius: 5px; width: 700px; height: 500px;" src="file_upload/Contoh.pdf"></iframe>
+                        </div>
+                        <div class="col-4">
+                            <div class="row">
+                                <b>Make a Digital Signature</b>
+                            </div>
+                            <div class="row-2 mt-2">
+                                <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-outline-primary"><b>Buat Tanda Tangan</b></button>
+                                <div class="mt-2">
+                                    <img draggable="true" src="" class="border-success" id="signature-result" />
+                                    <canvas class="border-secondary mt-2" id="signcanva">
+
+                                    </canvas>
+                                </div>
+                            </div>
+                            <div class="row-2 mt-2">
+                                <button id="resetCanva" type="button" style="width: 100%; height: 50px;" class="btn btn-outline-warning"><b>Bersihkan</b></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button id="sign" type="button" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <?= $this->endSection(); ?>
 <?= $this->section('content') ?>
 <div class="main-content">
@@ -73,6 +140,8 @@
 <script type="text/javascript">
     var csrfName = '<?= csrf_token() ?>';
     var csrfHash = $('#txt_csrfname').val();
+    var canvas = document.querySelector('canvas');
+    var signaturePad = new SignaturePad(canvas);
 
     var _table = $('#dtfile').DataTable({
         serverSide: true,
@@ -87,7 +156,64 @@
         }
     });
 
+    function deleteDt(id) {
+        $('#modal-del').modal('show');
+        $('#userid').val(id);
+    }
+
+    function preview(id) {
+        $('#modal-prev').modal('show');
+        $('#ids').val(id);
+    }
+
+    function resetModal() {
+        signaturePad.clear();
+        $('#formcanva')[0].reset();
+        $('#signcanva').css('display', 'none');
+        $('#signature-result').remove();
+
+    }
+
     $(document).ready(function() {
+
+        // Signature-Pad------------------------------------------------------------
+        $('#addsign').click(function() {
+            var canva = $('#signcanva').css('display');
+
+            if (canva == 'none') {
+                $('#signcanva').css('display', 'block');
+
+            } else if (canva == 'block') {
+                $('#signcanva').css('display', 'none');
+                signaturePad.clear();
+            }
+        });
+
+        $('#resetCanva').click(function() {
+            signaturePad.clear();
+        });
+
+        $('#cancel').click(function() {
+            $('#signcanva').css('display', 'none');
+            signaturePad.clear();
+        });
+
+        $('#sign').click(function() {
+            var signature = signaturePad.toDataURL('image/png');
+
+            $('#signature-result').css('display', 'block');
+            $('#signature-result').attr('src', "data:" + signature);
+            $('#signcanva').css('display', 'none');
+            signaturePad.clear();
+            return true;
+        });
+
+        $('#modal-prev').on('hidden.bs.modal', function() {
+            $('#signcanva').css('display', 'none');
+        })
+        // End-Signature-------------------------------------------------------------
+
+        // CRUD-Proccess-------------------------------------------------------------
         $('#batal').click(function() {
             $('#dataf')[0].reset();
         });
@@ -97,7 +223,6 @@
             var file = $('#upload').prop('files')[0];
             let data = new FormData();
             data.append('type', 1);
-            data.append('publisher', pub);
             data.append('file_name', file);
             data.append('desc', $('#desc').val());
 
@@ -115,6 +240,32 @@
                 }
             });
         });
+
+        $('#delete').on('click', function() {
+            var id = $('#userid').val();
+            var link = "<?= base_url('files/delete') ?>";
+            var data = {
+                id: id
+            }
+
+            $.ajax({
+                type: 'post',
+                url: link,
+                data: data,
+                success: function(response) {
+                    if (response == 1) {
+                        $('#modal-del').modal('hide');
+                        $.notify('Data telah dihapus', 'success');
+                        setTimeout(() => {
+                            _table.ajax.reload();
+                        }, 500);
+                        console.log(response);
+                    }
+                }
+            })
+        });
+
+        // End-CRUD-Proccess---------------------------------------------------------
     });
 </script>
 <?= $this->endSection(); ?>
