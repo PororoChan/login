@@ -71,7 +71,10 @@
                     <input type="hidden" id="ids">
                     <div class="row">
                         <div class="col-8">
-                            <iframe id="preview" frameborder="0" style="border-radius: 5px; width: 700px; height: 500px;" src="file_upload/Contoh.pdf"></iframe>
+                            <iframe id="preview" frameborder='0' style="border-radius: 5px; width: 700px; height: 500px;" src="file_upload/contoh.pdf#toolbar=0">
+
+                            </iframe>
+                            <br>
                         </div>
                         <div class="col-4">
                             <div class="row">
@@ -80,7 +83,7 @@
                             <div class="row-2 mt-2">
                                 <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-outline-primary"><b>Buat Tanda Tangan</b></button>
                                 <div class="mt-2">
-                                    <img draggable="true" src="" class="border-success" id="signature-result" />
+                                    <img draggable="true" src="" class="draggable border-success" id="signature-result" />
                                     <canvas class="border-secondary mt-2" id="signcanva">
 
                                     </canvas>
@@ -107,7 +110,6 @@
         <div class="row mt-2">
             <div class="col">
                 <h5 class="mt-5">Data Files</h5>
-                <input type="hidden" id="person" value="<?= session()->get('nama') ?>">
                 <input type="hidden" id="txt_csrfname" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-tambah">
@@ -166,14 +168,6 @@
         $('#ids').val(id);
     }
 
-    function resetModal() {
-        signaturePad.clear();
-        $('#formcanva')[0].reset();
-        $('#signcanva').css('display', 'none');
-        $('#signature-result').remove();
-
-    }
-
     $(document).ready(function() {
 
         // Signature-Pad------------------------------------------------------------
@@ -195,22 +189,22 @@
 
         $('#cancel').click(function() {
             $('#signcanva').css('display', 'none');
+            $('#signature-result').css('display', 'none');
             signaturePad.clear();
         });
 
         $('#sign').click(function() {
             var signature = signaturePad.toDataURL('image/png');
-
             $('#signature-result').css('display', 'block');
             $('#signature-result').attr('src', "data:" + signature);
             $('#signcanva').css('display', 'none');
+            $('#sign').html('Terapkan');
             signaturePad.clear();
-            return true;
         });
 
         $('#modal-prev').on('hidden.bs.modal', function() {
             $('#signcanva').css('display', 'none');
-        })
+        });
         // End-Signature-------------------------------------------------------------
 
         // CRUD-Proccess-------------------------------------------------------------
@@ -264,8 +258,8 @@
                 }
             })
         });
-
         // End-CRUD-Proccess---------------------------------------------------------
+
     });
 </script>
 <?= $this->endSection(); ?>
