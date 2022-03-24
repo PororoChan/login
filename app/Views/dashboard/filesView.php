@@ -70,10 +70,10 @@
                 <form id="formcanva">
                     <input type="hidden" id="ids">
                     <div class="row">
-                        <div class="col-8">
-                            <iframe id="preview" frameborder='0' style="border-radius: 5px; width: 700px; height: 500px;" src="file_upload/contoh.pdf#toolbar=0">
+                        <div id="frame" class="col-8">
+                            <span id="page">
 
-                            </iframe>
+                            </span>
                             <br>
                         </div>
                         <div class="col-4">
@@ -139,12 +139,15 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('javascript') ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
 <script type="text/javascript">
+    // GlobalVariable
     var csrfName = '<?= csrf_token() ?>';
     var csrfHash = $('#txt_csrfname').val();
     var canvas = document.querySelector('canvas');
     var signaturePad = new SignaturePad(canvas);
 
+    // DtTable-Load
     var _table = $('#dtfile').DataTable({
         serverSide: true,
         destroy: true,
@@ -158,6 +161,43 @@
         }
     });
 
+    // RenderPDF
+    function renderPDF(url, canvasContainer, options) {
+        var options = options || {
+            scale: 1
+        }
+
+        function renderPage(page) {
+            var viewport = page.getViewport(options.scale);
+            var canvas = document.createElement('canvas');
+            var contex = canvas.getContext('2d');
+            var renderContext = {
+                canvasContext: contex,
+                viewport: viewport
+            };
+
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            canvasContainer.appendChild(canvas);
+
+            page.render(renderContext);
+        }
+
+        function pageNumber(pdfDoc) {
+            for (var page = 1; page <= pdfDoc.numPages; page++)
+                pdfDoc.getPage(page).then(renderPage);
+            document.getElementById('page').innerHTML += pdfDoc.numPages
+        }
+
+        url = convertDataBase64ToBinary(url)
+        var setPDF = pdfjsLib.getDocument(url);
+        setPDF.then(pageNumber)
+    }
+
+    renderPDF('file_upload/contoh.pdf', document.getElementById('frame'), {
+        scale: 1.55
+    });
+
     function deleteDt(id) {
         $('#modal-del').modal('show');
         $('#userid').val(id);
@@ -168,6 +208,7 @@
         $('#ids').val(id);
     }
 
+    // READY----------------------------------
     $(document).ready(function() {
 
         // Signature-Pad------------------------------------------------------------
