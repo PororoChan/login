@@ -22,11 +22,19 @@
             position: relative;
         }
 
-        #signature-result {
+        #signature-frame {
             display: none;
             border-radius: 5px;
             width: 100%;
-            border: 1px solid;
+            height: 150px;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #signature-result {
+            display: none;
+            transform: scale(0.8);
+            image-rendering: smooth;
         }
     </style>
 </head>
@@ -145,11 +153,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script src="<?= base_url('template'); ?>/assets/js/drag.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/stisla.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/scripts.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/custom.js"></script>

@@ -71,26 +71,33 @@
                     <input type="hidden" id="ids">
                     <div class="row">
                         <div id="frame" class="col-8">
-                            <span id="page">
-
-                            </span>
+                            <button type="button" class="btn btn-info" id="prev" onclick="goPrevious()">Prev</button>
+                            <button type="button" class="btn btn-info" id="next" onclick="goNext()">Next</button>
+                            <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
                             <br>
+                            <br>
+                            &nbsp;
+                            <canvas class="col-10 border border-secondary" id="render">
+
+                            </canvas>
                         </div>
                         <div class="col-4">
                             <div class="row">
                                 <b>Make a Digital Signature</b>
                             </div>
                             <div class="row-2 mt-2">
-                                <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-outline-primary"><b>Buat Tanda Tangan</b></button>
+                                <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-primary"><b>Buat Tanda Tangan</b></button>
                                 <div class="mt-2">
-                                    <img draggable="true" src="" class="draggable border-success" id="signature-result" />
+                                    <div id="signature-frame" class="border border-success">
+                                        <img draggable="true" src="" class="draggable" id="signature-result" />
+                                    </div>
                                     <canvas class="border-secondary mt-2" id="signcanva">
 
                                     </canvas>
                                 </div>
                             </div>
                             <div class="row-2 mt-2">
-                                <button id="resetCanva" type="button" style="width: 100%; height: 50px;" class="btn btn-outline-warning"><b>Bersihkan</b></button>
+                                <button id="resetCanva" type="button" style="width: 100%; height: 50px;" class="btn btn-warning"><b>Bersihkan</b></button>
                             </div>
                         </div>
                     </div>
@@ -139,13 +146,17 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('javascript') ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
+
 <script type="text/javascript">
     // GlobalVariable
     var csrfName = '<?= csrf_token() ?>';
     var csrfHash = $('#txt_csrfname').val();
-    var canvas = document.querySelector('canvas');
-    var signaturePad = new SignaturePad(canvas);
+    var canvas = document.getElementById('signcanva');
+    var signaturePad = new SignaturePad(canvas, {
+        minWidth: 1,
+        maxWidth: 2,
+        penColor: "rgb(25, 25, 25)"
+    });
 
     // DtTable-Load
     var _table = $('#dtfile').DataTable({
@@ -162,41 +173,60 @@
     });
 
     // RenderPDF
-    function renderPDF(url, canvasContainer, options) {
-        var options = options || {
-            scale: 1
-        }
+    var pdfDoc = null;
+    var pageNum;
+    var ctx;
 
-        function renderPage(page) {
-            var viewport = page.getViewport(options.scale);
-            var canvas = document.createElement('canvas');
-            var contex = canvas.getContext('2d');
-            var renderContext = {
-                canvasContext: contex,
-                viewport: viewport
-            };
-
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            canvasContainer.appendChild(canvas);
-
-            page.render(renderContext);
-        }
-
-        function pageNumber(pdfDoc) {
-            for (var page = 1; page <= pdfDoc.numPages; page++)
-                pdfDoc.getPage(page).then(renderPage);
-            document.getElementById('page').innerHTML += pdfDoc.numPages
-        }
-
-        url = convertDataBase64ToBinary(url)
-        var setPDF = pdfjsLib.getDocument(url);
-        setPDF.then(pageNumber)
+    window.onload = function() {
+        var url = 'file_upload/contoh.pdf';
+        renderPDF(url);
     }
 
-    renderPDF('file_upload/contoh.pdf', document.getElementById('frame'), {
-        scale: 1.55
-    });
+    function renderPDF(url) {
+        pdfDoc = null;
+        pageNum = 1;
+        scale = 1.5;
+        canvas = document.getElementById('render');
+        ctx = canvas.getContext('2d');
+        pdfjsLib.disableWorker = true;
+        pdfjsLib.getDocument(url).then(function getPdf(_pdfDoc) {
+            pdfDoc = _pdfDoc;
+            renderPage(pageNum);
+        })
+    }
+
+    pdfjsLib.disableWorker = true;
+
+    function renderPage(num) {
+        pdfDoc.getPage(num).then(function(page) {
+            var viewport = page.getViewport(scale);
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            var renderContext = {
+                canvasContext: ctx,
+                viewport: viewport
+            };
+            page.render(renderContext);
+        });
+
+        document.getElementById('page_num').textContent = pageNum;
+        document.getElementById('page_count').textContent = pdfDoc.numPages;
+    }
+
+    function goPrevious() {
+        if (pageNum <= 1)
+            return;
+        pageNum--;
+        renderPage(pageNum);
+    }
+
+    function goNext() {
+        if (pageNum >= pdfDoc.numPages)
+            return;
+        pageNum++;
+        renderPage(pageNum);
+    }
 
     function deleteDt(id) {
         $('#modal-del').modal('show');
@@ -237,8 +267,9 @@
         $('#sign').click(function() {
             var signature = signaturePad.toDataURL('image/png');
             $('#signature-result').css('display', 'block');
-            $('#signature-result').attr('src', "data:" + signature);
+            $('#signature-result').attr('src', signature);
             $('#signcanva').css('display', 'none');
+            $('#signature-frame').css('display', 'flex');
             $('#sign').html('Terapkan');
             signaturePad.clear();
         });
