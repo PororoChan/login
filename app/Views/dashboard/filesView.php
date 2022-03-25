@@ -1,6 +1,7 @@
 <?= $this->extend('dashboard/layout/template') ?>
 
 <?= $this->section('modal') ?>
+<!-- Modal Tambah -->
 <div class="modal fade" id="modal-tambah" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -73,7 +74,8 @@
                         <div id="frame" class="col-8">
                             <button type="button" class="btn btn-info" id="prev" onclick="goPrevious()">Prev</button>
                             <button type="button" class="btn btn-info" id="next" onclick="goNext()">Next</button>
-                            <span>Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+                            &nbsp;
+                            <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
                             <br>
                             <br>
                             &nbsp;
@@ -81,7 +83,7 @@
 
                             </canvas>
                         </div>
-                        <div class="col-4">
+                        <div id="signframe" class="col-4">
                             <div class="row">
                                 <b>Make a Digital Signature</b>
                             </div>
@@ -178,7 +180,7 @@
     var ctx;
 
     window.onload = function() {
-        var url = 'file_upload/contoh.pdf';
+        var url = 'file_upload/ModulJavaFX.pdf';
         renderPDF(url);
     }
 
@@ -210,8 +212,18 @@
             page.render(renderContext);
         });
 
-        document.getElementById('page_num').textContent = pageNum;
+        $('#page_num').val(num);
         document.getElementById('page_count').textContent = pdfDoc.numPages;
+    }
+
+    function goToPage() {
+        let input = document.getElementById('page_num');
+        let pageNum = parseInt(input.value);
+        if (pageNum) {
+            if (pageNum <= pdfDoc.numPages && pageNum >= 1) {
+                renderPage(pageNum);
+            }
+        }
     }
 
     function goPrevious() {

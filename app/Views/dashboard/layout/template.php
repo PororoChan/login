@@ -14,6 +14,23 @@
     <link rel="stylesheet" href="<?= base_url('template') ?>/assets/css/style.css">
     <link rel="stylesheet" href="<?= base_url('template') ?>/assets/css/components.css">
     <style>
+        #signframe {
+            padding-left: 35px;
+        }
+
+        #frame {
+            position: relative;
+            border-right: 1px solid grey;
+        }
+
+        #render {
+            padding: 2px;
+            border: 0.5px solid grey;
+            border-radius: 5px;
+            height: min-content;
+            scale: 1.5;
+        }
+
         #signcanva {
             display: none;
             width: 100%;
@@ -27,8 +44,6 @@
             border-radius: 5px;
             width: 100%;
             height: 150px;
-            justify-content: center;
-            text-align: center;
         }
 
         #signature-result {
@@ -157,8 +172,8 @@
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/drag.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/stisla.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/scripts.js"></script>

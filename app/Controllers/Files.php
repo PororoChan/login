@@ -34,8 +34,7 @@ class Files extends BaseController
                 $db->file,
                 $db->publisher,
                 " 
-                <button id='btn-prev' onclick=preview($db->userid) title='Signature' class='btn btn-success'><i class='fas fa-signature'></i></button>
-                <button id='btn-edit' title='Edit File' class='btn btn-warning'><i class='fas fa-edit'></i></button>
+                <button id='btn-prev' onclick=preview($db->userid) title='Signature' class='btn btn-warning'><i class='fas fa-signature'></i></button>
                 <button id='btn-del' onclick='deleteDt($db->userid)' title='Delete File' class='btn btn-danger'><i class='fas fa-trash'></i></button>
                 "
             ];

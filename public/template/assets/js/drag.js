@@ -1,54 +1,70 @@
-window.dragMoveListener = dragMoveListener;
+const position = { x: 0, y: 0 };
 
-interact('.draggable')
+interact(".draggable")
     .draggable({
-        onmove: dragMoveListener,
-        inertia: true,
-        autoScroll: true,
-        restrict: {
-            elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
-        }
-    })
-    .resizable({
-        edges: { top: true, left: true, bottom: true, right: true },
-        listeners: {
-            move: function (event) {
-                let { x, y } = event.target.dataset
-        
-                x = (parseFloat(x) || 0) + event.deltaRect.left
-                y = (parseFloat(y) || 0) + event.deltaRect.top
-        
-                Object.assign(event.target.style, {
-                    width: `${event.rect.width}px`,
-                    height: `${event.rect.height}px`,
-                    transform: `translate(${x}px, ${y}px)`
-                })
-        
-                Object.assign(event.target.dataset, { x, y })
-            }
-        }
-    })
-    .styleCursor(false);
+    manualStart: true,
+    listeners: {
+    move(event) {
+        position.x += event.dx;
+        position.y += event.dy;
+        event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
+    }
+    }
+})
+.on("move", function(event) {
+    const { currentTarget, interaction } = event;
+    let element = currentTarget;
 
-function dragMoveListener(event) {
-    var target = event.target;
-    var x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-    var y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
-}
+    if (
+    interaction.pointerIsDown &&
+    !interaction.interacting() &&
+    currentTarget.style.transform === ""
+    ) {
+    element = currentTarget.cloneNode(true);
 
-function resizeMoveListener(event) {
-    var target = event.target;
-    var x = (parseFloat(target.getAttribute('data-x')) || 0);
-    var y = (parseFloat(target.getAttribute('data-y')) || 0);
+    element.style.position = "absolute";
+    element.style.left = 0;
+    element.style.top = 0;
+
+    const container = document.querySelector("#signature-frame");
+    container && container.appendChild(element);
+
+    const { offsetTop, offsetLeft } = currentTarget;
+    position.x = offsetLeft;
+    position.y = offsetTop;
+
+    } else if (interaction.pointerIsDown && !interaction.interacting()) {
+    const regex = /translate\(([\d]+)px, ([\d]+)px\)/i;
+    const transform = regex.exec(currentTarget.style.transform);
+
+    if (transform && transform.length > 1) {
+        position.x = Number(transform[1]);
+        position.y = Number(transform[2]);
+    }
+    }
+
+    interaction.start({ name: "drag" }, event.interactable, element);
+})
+.resizable({
+    preserveAspectRatio: false,
+    edges: { left: true, right: true, bottom: true, top: true }
+})
+.on('resizemove', function (event) {
+    var target = event.target,
+        x = (parseFloat(target.getAttribute('data-x')) || 0),
+        y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+    target.style.width  = event.rect.width + 'px';
+    target.style.height = event.rect.height + 'px';
+
     x += event.deltaRect.left;
     y += event.deltaRect.top;
 
-    target.style.width = event.rect.width + 'px';
-    target.style.height = event.rect.height + 'px';
-    target.style.webkitTransform = target.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    target.style.webkitTransform = target.style.transform =
+        'translate(' + x + 'px,' + y + 'px)';
+
     target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);    
-}
+    target.setAttribute('data-y', y);
+    target.textContent = event.rect.width + '×' + event.rect.height;
+})
+
