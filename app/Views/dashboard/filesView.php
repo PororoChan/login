@@ -70,6 +70,7 @@
             <div class="modal-body">
                 <form id="formcanva">
                     <input type="hidden" id="ids">
+                    <input type="hidden" id="namaf">
                     <div class="row">
                         <div id="frame" class="col-8">
                             <button type="button" class="btn btn-info" id="prev" onclick="goPrevious()">Prev</button>
@@ -78,8 +79,7 @@
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
                             <br>
                             <br>
-                            &nbsp;
-                            <canvas class="col-10 border border-secondary" id="render">
+                            <canvas class="col border border-secondary" id="render">
 
                             </canvas>
                         </div>
@@ -87,6 +87,7 @@
                             <div class="row">
                                 <b>Make a Digital Signature</b>
                             </div>
+                            <br>
                             <div class="row-2 mt-2">
                                 <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-primary"><b>Buat Tanda Tangan</b></button>
                                 <div class="mt-2">
@@ -101,11 +102,11 @@
                             <div class="row-2 mt-2">
                                 <button id="resetCanva" type="button" style="width: 100%; height: 50px;" class="btn btn-warning"><b>Bersihkan</b></button>
                             </div>
+                            <div class="modal-footer">
+                                <button id="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button id="sign" type="button" class="btn btn-primary">Simpan</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button id="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button id="sign" type="button" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -179,11 +180,6 @@
     var pageNum;
     var ctx;
 
-    window.onload = function() {
-        var url = 'file_upload/ModulJavaFX.pdf';
-        renderPDF(url);
-    }
-
     function renderPDF(url) {
         pdfDoc = null;
         pageNum = 1;
@@ -192,9 +188,18 @@
         ctx = canvas.getContext('2d');
         pdfjsLib.disableWorker = true;
         pdfjsLib.getDocument(url).then(function getPdf(_pdfDoc) {
-            pdfDoc = _pdfDoc;
-            renderPage(pageNum);
-        })
+                pdfDoc = _pdfDoc;
+                renderPage(pageNum);
+            })
+            .catch((err) => {
+                var ctx = $('#render')[0].getContext("2d");
+                var img = new Image();
+                img.src = "<?= base_url('images/canva/null.png') ?>";
+                img.onload = () => {
+                    ctx.imageSmoothingEnabled = false;
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                }
+            })
     }
 
     pdfjsLib.disableWorker = true;
@@ -245,9 +250,14 @@
         $('#userid').val(id);
     }
 
-    function preview(id) {
+    function preview(id, files) {
         $('#modal-prev').modal('show');
         $('#ids').val(id);
+        $('#namaf').val(files);
+        var home = $('#namaf').val();
+
+        var link = "<?= base_url('file_upload') ?>" + "/" + home;
+        renderPDF(link);
     }
 
     // READY----------------------------------
@@ -277,13 +287,23 @@
         });
 
         $('#sign').click(function() {
-            var signature = signaturePad.toDataURL('image/png');
-            $('#signature-result').css('display', 'block');
-            $('#signature-result').attr('src', signature);
-            $('#signcanva').css('display', 'none');
-            $('#signature-frame').css('display', 'flex');
-            $('#sign').html('Terapkan');
-            signaturePad.clear();
+            if ($('#sign').html() == 'Terapkan') {
+                alert('ini terapkan');
+                $('#sign').html('Simpan');
+                /*  Jika Button dengan value terapkan di tekan 
+                 *   maka image akan ter attach ke dalam pdf
+                 */
+            } else if ($('#sign').html() == 'Simpan') {
+                var signature = signaturePad.toDataURL('image/png');
+                $('#signature-result').css('display', 'block');
+                $('#signature-result').attr('src', signature);
+                $('#signcanva').css('display', 'none');
+                $('#signature-frame').css('display', 'flex');
+                $('#sign').html('Terapkan');
+                signaturePad.clear();
+            } else {
+                alert('Error');
+            }
         });
 
         $('#modal-prev').on('hidden.bs.modal', function() {
@@ -297,15 +317,15 @@
         });
 
         $('#save').click(function() {
-            var pub = $('#person').val();
+            var desc = $('#desc').val();
             var file = $('#upload').prop('files')[0];
             let data = new FormData();
             data.append('type', 1);
             data.append('file_name', file);
-            data.append('desc', $('#desc').val());
+            data.append('desc', desc);
 
             $.ajax({
-                url: '/files/add',
+                url: 'files/add',
                 method: 'post',
                 data: data,
                 processData: false,
@@ -337,7 +357,6 @@
                         setTimeout(() => {
                             _table.ajax.reload();
                         }, 500);
-                        console.log(response);
                     }
                 }
             })

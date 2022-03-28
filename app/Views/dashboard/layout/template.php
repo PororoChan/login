@@ -20,15 +20,15 @@
 
         #frame {
             position: relative;
-            border-right: 1px solid grey;
+            border-right: 3px solid #78828A;
         }
 
         #render {
-            padding: 2px;
+            padding: 3px;
             border: 0.5px solid grey;
             border-radius: 5px;
             height: min-content;
-            scale: 1.5;
+            scale: 1;
         }
 
         #signcanva {

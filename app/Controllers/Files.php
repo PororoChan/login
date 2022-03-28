@@ -34,7 +34,7 @@ class Files extends BaseController
                 $db->file,
                 $db->publisher,
                 " 
-                <button id='btn-prev' onclick=preview($db->userid) title='Signature' class='btn btn-warning'><i class='fas fa-signature'></i></button>
+                <button id='btn-prev' onclick=\"preview($db->userid, '$db->file')\" title='Signature' class='btn btn-warning'><i class='fas fa-signature'></i></button>
                 <button id='btn-del' onclick='deleteDt($db->userid)' title='Delete File' class='btn btn-danger'><i class='fas fa-trash'></i></button>
                 "
             ];
@@ -59,7 +59,7 @@ class Files extends BaseController
             $this->model->simpan($data);
             $result['success'] = 1;
 
-            echo json_encode($result);
+            var_dump($data);
         }
     }
 
