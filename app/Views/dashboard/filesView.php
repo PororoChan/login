@@ -103,7 +103,7 @@
                                 <button id="resetCanva" type="button" style="width: 100%; height: 50px;" class="btn btn-warning"><b>Bersihkan</b></button>
                             </div>
                             <div class="modal-footer">
-                                <button id="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button onclick="cancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button id="sign" type="button" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
@@ -190,6 +190,7 @@
         pdfjsLib.getDocument(url).then(function getPdf(_pdfDoc) {
                 pdfDoc = _pdfDoc;
                 renderPage(pageNum);
+                console.log("page rendered");
             })
             .catch((err) => {
                 var ctx = $('#render')[0].getContext("2d");
@@ -220,6 +221,7 @@
         $('#page_num').val(num);
         document.getElementById('page_count').textContent = pdfDoc.numPages;
     }
+
 
     function goToPage() {
         let input = document.getElementById('page_num');
@@ -260,6 +262,15 @@
         renderPDF(link);
     }
 
+    function cancel() {
+        if ($('#signature-frame').html() != '') {
+            $('#signature-frame').css('display', 'none');
+        } else {
+            $('#signature-frame').css('display', 'block');
+        }
+        $('#sign').html('Simpan');
+    }
+
     // READY----------------------------------
     $(document).ready(function() {
 
@@ -269,7 +280,7 @@
 
             if (canva == 'none') {
                 $('#signcanva').css('display', 'block');
-
+                $('#sign').html('Simpan');
             } else if (canva == 'block') {
                 $('#signcanva').css('display', 'none');
                 signaturePad.clear();
@@ -280,19 +291,12 @@
             signaturePad.clear();
         });
 
-        $('#cancel').click(function() {
-            $('#signcanva').css('display', 'none');
-            $('#signature-result').css('display', 'none');
-            signaturePad.clear();
-        });
-
         $('#sign').click(function() {
+            var img = $('#signature-frame').attr('src');
             if ($('#sign').html() == 'Terapkan') {
-                alert('ini terapkan');
+
+                console.log(pdfDoc);
                 $('#sign').html('Simpan');
-                /*  Jika Button dengan value terapkan di tekan 
-                 *   maka image akan ter attach ke dalam pdf
-                 */
             } else if ($('#sign').html() == 'Simpan') {
                 var signature = signaturePad.toDataURL('image/png');
                 $('#signature-result').css('display', 'block');
