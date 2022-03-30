@@ -46,3 +46,11 @@ interact(".draggable")
         interaction.start({ name: "drag" }, event.interactable, element);
     })
     .styleCursor(false);
+
+
+interact('#render').dropzone({
+    accept: '#signature-result',
+    ondrop: function () {
+        
+    },
+})

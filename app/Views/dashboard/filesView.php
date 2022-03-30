@@ -155,6 +155,7 @@
     var csrfName = '<?= csrf_token() ?>';
     var csrfHash = $('#txt_csrfname').val();
     var canvas = document.getElementById('signcanva');
+    var layer = document.getElementById('render');
     var signaturePad = new SignaturePad(canvas, {
         minWidth: 1,
         maxWidth: 2,
@@ -179,6 +180,7 @@
     var pdfDoc = null;
     var pageNum;
     var ctx;
+    var home = $('#namaf').val();
 
     function renderPDF(url) {
         pdfDoc = null;
@@ -190,7 +192,6 @@
         pdfjsLib.getDocument(url).then(function getPdf(_pdfDoc) {
                 pdfDoc = _pdfDoc;
                 renderPage(pageNum);
-                console.log("page rendered");
             })
             .catch((err) => {
                 var ctx = $('#render')[0].getContext("2d");
@@ -221,7 +222,6 @@
         $('#page_num').val(num);
         document.getElementById('page_count').textContent = pdfDoc.numPages;
     }
-
 
     function goToPage() {
         let input = document.getElementById('page_num');
@@ -292,10 +292,15 @@
         });
 
         $('#sign').click(function() {
-            var img = $('#signature-frame').attr('src');
+            var doc = new jsPDF();
+            var img = $('#signature-result').attr('src');
             if ($('#sign').html() == 'Terapkan') {
+                var source = $('#render');
 
-                console.log(pdfDoc);
+                doc.addHTML(source, function() {
+                    doc.save();
+                })
+
                 $('#sign').html('Simpan');
             } else if ($('#sign').html() == 'Simpan') {
                 var signature = signaturePad.toDataURL('image/png');
