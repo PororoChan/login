@@ -8,7 +8,19 @@ interact(".draggable")
                 position.x += event.dx;
                 position.y += event.dy;
                 event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
-            }
+            },
+
+            end(ev) {
+                var x = ev.clientX;
+                var y = ev.clientY;
+
+                var img = document.getElementById('signature-result');
+                var canv = document.getElementById('render');
+
+                var ctx = canv.getContext("2d");
+
+                ctx.drawImage(img, x, y);
+            }   
         }
     })
     .on("move", function (event) {
@@ -50,7 +62,4 @@ interact(".draggable")
 
 interact('#render').dropzone({
     accept: '#signature-result',
-    ondrop: function () {
-        
-    },
 })

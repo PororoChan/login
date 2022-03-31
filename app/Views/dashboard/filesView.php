@@ -155,7 +155,6 @@
     var csrfName = '<?= csrf_token() ?>';
     var csrfHash = $('#txt_csrfname').val();
     var canvas = document.getElementById('signcanva');
-    var layer = document.getElementById('render');
     var signaturePad = new SignaturePad(canvas, {
         minWidth: 1,
         maxWidth: 2,
@@ -294,12 +293,14 @@
         $('#sign').click(function() {
             var doc = new jsPDF();
             var img = $('#signature-result').attr('src');
-            if ($('#sign').html() == 'Terapkan') {
-                var source = $('#render');
 
-                doc.addHTML(source, function() {
-                    doc.save();
-                })
+            if ($('#sign').html() == 'Terapkan') {
+                var imgs = $('#render')[0].toDataURL("image/png");
+                var width = doc.internal.pageSize.getWidth();
+                var height = doc.internal.pageSize.getHeight();
+
+                doc.addImage(imgs, 'PNG', 0, 0, width, height);
+                doc.save();
 
                 $('#sign').html('Simpan');
             } else if ($('#sign').html() == 'Simpan') {

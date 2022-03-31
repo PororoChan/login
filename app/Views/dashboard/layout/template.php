@@ -134,12 +134,12 @@
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
                         <li class="nav-item">
-                        <li><a class="nav-link" href="<?= site_url('/home'); ?>"><i class="fas fa-home"></i><span>Home</span></a></li>
-                        <li><a class="nav-link" href="<?= site_url('/kelas'); ?>"><i class="fas fa-book"></i><span>Kelas</span></a></li>
-                        <li><a class="nav-link" href="<?= site_url('/siswa'); ?>"><i class="fas fa-school"></i><span>Data Siswa</span></a></li>
-                        <li><a class="nav-link" href="<?= site_url('/dtsiswa'); ?>"><i class="fas fa-users"></i><span>Data Siswa V.1.5</span></a></li>
-                        <li><a class="nav-link" href="<?= site_url('/users'); ?>"><i class="fas fa-user"></i><span>User</span></a></li>
-                        <li><a class="nav-link" href="<?= site_url('/files'); ?>"><i class="fas fa-folder"></i><span>Files</span></a></li>
+                        <li><a class="nav-link" href="<?= base_url('/home'); ?>"><i class="fas fa-home"></i><span>Home</span></a></li>
+                        <li><a class="nav-link" href="<?= base_url('/kelas'); ?>"><i class="fas fa-book"></i><span>Kelas</span></a></li>
+                        <li><a class="nav-link" href="<?= base_url('/siswa'); ?>"><i class="fas fa-school"></i><span>Data Siswa</span></a></li>
+                        <li><a class="nav-link" href="<?= base_url('/dtsiswa'); ?>"><i class="fas fa-users"></i><span>Data Siswa V.1.5</span></a></li>
+                        <li><a class="nav-link" href="<?= base_url('/users'); ?>"><i class="fas fa-user"></i><span>User</span></a></li>
+                        <li><a class="nav-link" href="<?= base_url('/files'); ?>"><i class="fas fa-folder"></i><span>Files</span></a></li>
                         </li>
                     </ul>
                     </li>
@@ -172,9 +172,7 @@
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
     <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js" integrity="sha512-pZmE8nx/gdufIRZ9DdgsipK4ocMbdq6zU2epbECb4/iwu9bHfN3aDYmOiVNC8SHk90uWi03o1ziB6JEd6/3VQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <script src="<?= base_url('template'); ?>/assets/js/drag.js"></script>
