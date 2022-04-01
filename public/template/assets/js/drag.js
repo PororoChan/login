@@ -11,15 +11,18 @@ interact(".draggable")
             },
 
             end(ev) {
-                var x = ev.clientX;
-                var y = ev.clientY;
-
+                var pos = {x: 0, y: 0}
                 var img = document.getElementById('signature-result');
                 var canv = document.getElementById('render');
 
-                var ctx = canv.getContext("2d");
+                var rect = canv.getBoundingClientRect();
+                pos.x = ev.clientX - rect.left
+                pos.y = ev.clientY - rect.top
 
-                ctx.drawImage(img, x, y);
+                var ctx = canv.getContext("2d");
+                
+                ctx.drawImage(img, pos.x, pos.y);
+                console.log('x:' + pos.x, 'y:' + pos.y);
             }   
         }
     })

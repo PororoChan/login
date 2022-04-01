@@ -24,11 +24,13 @@
         }
 
         #render {
+            display: flex;
             padding: 3px;
             border: 0.5px solid grey;
             border-radius: 5px;
             height: min-content;
-            scale: 1;
+            scale: 1.5;
+            position: relative;
         }
 
         #signcanva {

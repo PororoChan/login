@@ -188,7 +188,8 @@
         canvas = document.getElementById('render');
         ctx = canvas.getContext('2d');
         pdfjsLib.disableWorker = true;
-        pdfjsLib.getDocument(url).then(function getPdf(_pdfDoc) {
+        var loadingTask = pdfjsLib.getDocument(url);
+        loadingTask.promise.then(function getPdf(_pdfDoc) {
                 pdfDoc = _pdfDoc;
                 renderPage(pageNum);
             })
@@ -207,7 +208,9 @@
 
     function renderPage(num) {
         pdfDoc.getPage(num).then(function(page) {
-            var viewport = page.getViewport(scale);
+            var viewport = page.getViewport({
+                scale: scale
+            });
             canvas.height = viewport.height;
             canvas.width = viewport.width;
 
@@ -299,9 +302,8 @@
                 var width = doc.internal.pageSize.getWidth();
                 var height = doc.internal.pageSize.getHeight();
 
-                doc.addImage(imgs, 'PNG', 0, 0, width, height);
+                doc.addImage(imgs, 0, 0, width, height);
                 doc.save();
-
                 $('#sign').html('Simpan');
             } else if ($('#sign').html() == 'Simpan') {
                 var signature = signaturePad.toDataURL('image/png');
