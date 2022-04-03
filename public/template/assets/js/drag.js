@@ -1,4 +1,5 @@
 const position = { x: 0, y: 0 };
+const ukuran = {x: 0, y: 0};
 
 interact(".draggable")
     .draggable({
@@ -11,18 +12,13 @@ interact(".draggable")
             },
 
             end(ev) {
-                var pos = {x: 0, y: 0}
-                var img = document.getElementById('signature-result');
                 var canv = document.getElementById('render');
-
-                var rect = canv.getBoundingClientRect();
-                pos.x = ev.clientX - rect.left
-                pos.y = ev.clientY - rect.top
-
-                var ctx = canv.getContext("2d");
                 
-                ctx.drawImage(img, pos.x, pos.y);
-                console.log('x:' + pos.x, 'y:' + pos.y);
+                var rect = canv.getBoundingClientRect();
+                ukuran.x = ev.clientX - rect.left - canv.offsetLeft;
+                ukuran.y = ev.clientY - rect.top - canv.offsetTop;
+
+                console.log(ukuran.x, ukuran.y);
             }   
         }
     })

@@ -79,7 +79,7 @@
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
                             <br>
                             <br>
-                            <canvas class="col border border-secondary" id="render">
+                            <canvas class="col" id="render">
 
                             </canvas>
                         </div>
@@ -276,6 +276,7 @@
     // READY----------------------------------
     $(document).ready(function() {
 
+
         // Signature-Pad------------------------------------------------------------
         $('#addsign').click(function() {
             var canva = $('#signcanva').css('display');
@@ -293,19 +294,30 @@
             signaturePad.clear();
         });
 
-        $('#sign').click(function() {
+        $('#sign').click(function(ev) {
+
             var doc = new jsPDF();
             var img = $('#signature-result').attr('src');
 
             if ($('#sign').html() == 'Terapkan') {
+
+                // Add Signature Image
+                var img = document.getElementById('signature-result');
+                var canv = document.getElementById('render');
+
+                var ctx = canv.getContext("2d");
+                ctx.drawImage(img, ukuran.x, ukuran.y);
+
+                // Save Document
                 var imgs = $('#render')[0].toDataURL("image/png");
                 var width = doc.internal.pageSize.getWidth();
                 var height = doc.internal.pageSize.getHeight();
 
                 doc.addImage(imgs, 0, 0, width, height);
                 doc.save();
-                $('#sign').html('Simpan');
+
             } else if ($('#sign').html() == 'Simpan') {
+
                 var signature = signaturePad.toDataURL('image/png');
                 $('#signature-result').css('display', 'block');
                 $('#signature-result').attr('src', signature);
@@ -313,8 +325,9 @@
                 $('#signature-frame').css('display', 'flex');
                 $('#sign').html('Terapkan');
                 signaturePad.clear();
+
             } else {
-                alert('Error');
+                alert('Unknown Button Process');
             }
         });
 
