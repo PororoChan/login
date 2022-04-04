@@ -1,5 +1,5 @@
 const position = { x: 0, y: 0 };
-const ukuran = {x: 0, y: 0};
+const ukuran = { x: 0, y: 0 };
 
 interact(".draggable")
     .draggable({
@@ -10,17 +10,7 @@ interact(".draggable")
                 position.y += event.dy;
                 event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
             },
-
-            end(ev) {
-                var canv = document.getElementById('render');
-                
-                var rect = canv.getBoundingClientRect();
-                ukuran.x = ev.clientX - rect.left - canv.offsetLeft;
-                ukuran.y = ev.clientY - rect.top - canv.offsetTop;
-
-                console.log(ukuran.x, ukuran.y);
-            }   
-        }
+        },
     })
     .on("move", function (event) {
         const { currentTarget, interaction } = event;
@@ -53,12 +43,17 @@ interact(".draggable")
                 position.y = Number(transform[2]);
             }
         }
-
         interaction.start({ name: "drag" }, event.interactable, element);
     })
     .styleCursor(false);
 
 
-interact('#render').dropzone({
-    accept: '#signature-result',
-})
+interact('#render').
+    dropzone({
+        accept: '.draggable',
+        ondrop: function (ev) {
+            var c = ev.target.offsetTop;
+
+            alert(c);
+        }
+    })

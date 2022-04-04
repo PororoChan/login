@@ -19,14 +19,14 @@
         }
 
         #frame {
-            position: relative;
             border-right: 3px solid #78828A;
         }
 
         #render {
-            border: 0.5px solid red;
+            width: max-content;
+            height: max-content;
+            border: 0.5px solid grey;
             border-radius: 5px;
-            scale: 1.5;
         }
 
         #signcanva {
@@ -44,7 +44,6 @@
 
         #signature-result {
             display: none;
-            position: relative;
             image-rendering: smooth;
         }
     </style>

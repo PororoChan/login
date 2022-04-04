@@ -276,7 +276,6 @@
     // READY----------------------------------
     $(document).ready(function() {
 
-
         // Signature-Pad------------------------------------------------------------
         $('#addsign').click(function() {
             var canva = $('#signcanva').css('display');
@@ -306,6 +305,7 @@
                 var canv = document.getElementById('render');
 
                 var ctx = canv.getContext("2d");
+
                 ctx.drawImage(img, ukuran.x, ukuran.y);
 
                 // Save Document
@@ -315,6 +315,9 @@
 
                 doc.addImage(imgs, 0, 0, width, height);
                 doc.save();
+
+                console.log('x: ' + ukuran.x, 'y:' + ukuran.y);
+                // window.location.reload();
 
             } else if ($('#sign').html() == 'Simpan') {
 
