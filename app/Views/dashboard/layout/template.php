@@ -23,8 +23,6 @@
         }
 
         #render {
-            width: max-content;
-            height: max-content;
             border: 0.5px solid grey;
             border-radius: 5px;
         }
@@ -44,6 +42,8 @@
 
         #signature-result {
             display: none;
+            cursor: pointer;
+            align-items: center;
             image-rendering: smooth;
         }
     </style>

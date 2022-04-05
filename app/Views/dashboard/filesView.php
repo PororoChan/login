@@ -79,7 +79,7 @@
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
                             <br>
                             <br>
-                            <canvas class="col" id="render">
+                            <canvas class="col" style="width: 918; height: 1188;" id="render">
 
                             </canvas>
                         </div>
@@ -317,7 +317,6 @@
                 doc.save();
 
                 console.log('x: ' + ukuran.x, 'y:' + ukuran.y);
-                // window.location.reload();
 
             } else if ($('#sign').html() == 'Simpan') {
 
@@ -389,8 +388,7 @@
                 }
             })
         });
-        // End-CRUD-Proccess---------------------------------------------------------
-
+        // End-CRUD-Proccess---------------------------------------------------------   
     });
 </script>
 <?= $this->endSection(); ?>

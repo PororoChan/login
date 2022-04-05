@@ -1,15 +1,30 @@
 const position = { x: 0, y: 0 };
 const ukuran = { x: 0, y: 0 };
+const cnv = document.getElementById('render');
 
 interact(".draggable")
     .draggable({
         manualStart: true,
+        autoScroll: true,
+        target: '#render',
         listeners: {
             move: function (event) {
                 position.x += event.dx;
                 position.y += event.dy;
                 event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
             },
+            end: function (ev) {
+                var rect = cnv.getBoundingClientRect();
+
+                var scaleX = cnv.clientWidth / rect.width;
+                var scaleY = cnv.clientHeight / rect.height;
+
+                ukuran.x = Math.round((ev.clientX - rect.left) * scaleX);
+                ukuran.y = Math.round((ev.clientY - rect.top) * scaleY);
+                    
+                console.log(ukuran.x, ukuran.y);
+
+            }
         },
     })
     .on("move", function (event) {
@@ -44,16 +59,9 @@ interact(".draggable")
             }
         }
         interaction.start({ name: "drag" }, event.interactable, element);
-    })
-    .styleCursor(false);
+    })  
 
-
-interact('#render').
-    dropzone({
-        accept: '.draggable',
-        ondrop: function (ev) {
-            var c = ev.target.offsetTop;
-
-            alert(c);
-        }
-    })
+interact('#render').dropzone({
+    accept: '#signature-result',
+    overlap: 0.25,
+})
