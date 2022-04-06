@@ -72,17 +72,18 @@
                     <input type="hidden" id="ids">
                     <input type="hidden" id="namaf">
                     <div class="row">
-                        <div id="frame" class="col-8">
+                        <div id="frame" class="col">
                             <button type="button" class="btn btn-info" id="prev" onclick="goPrevious()">Prev</button>
                             <button type="button" class="btn btn-info" id="next" onclick="goNext()">Next</button>
                             &nbsp;
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
                             <br>
                             <br>
-                            <canvas class="col" style="width: 918; height: 1188;" id="render">
+                            <canvas class="col" id="render">
 
                             </canvas>
                         </div>
+
                         <div id="signframe" class="col-4">
                             <div class="row">
                                 <b>Make a Digital Signature</b>
@@ -106,6 +107,7 @@
                                 <button onclick="cancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button id="sign" type="button" class="btn btn-primary">Simpan</button>
                             </div>
+                            <label id="size"></label>
                         </div>
                     </div>
                 </form>
@@ -154,6 +156,7 @@
     // GlobalVariable
     var csrfName = '<?= csrf_token() ?>';
     var csrfHash = $('#txt_csrfname').val();
+    var can = document.getElementById('render');
     var canvas = document.getElementById('signcanva');
     var signaturePad = new SignaturePad(canvas, {
         minWidth: 1,
@@ -185,8 +188,7 @@
         pdfDoc = null;
         pageNum = 1;
         scale = 1.5;
-        canvas = document.getElementById('render');
-        ctx = canvas.getContext('2d');
+        ctx = can.getContext('2d');
         pdfjsLib.disableWorker = true;
         var loadingTask = pdfjsLib.getDocument(url);
         loadingTask.promise.then(function getPdf(_pdfDoc) {
@@ -211,8 +213,8 @@
             var viewport = page.getViewport({
                 scale: scale
             });
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
+            can.height = viewport.height;
+            can.width = viewport.width;
 
             var renderContext = {
                 canvasContext: ctx,

@@ -23,6 +23,7 @@
         }
 
         #render {
+            padding: 1px;
             border: 0.5px solid grey;
             border-radius: 5px;
         }
@@ -42,6 +43,7 @@
 
         #signature-result {
             display: none;
+            position: relative;
             cursor: pointer;
             align-items: center;
             image-rendering: smooth;
@@ -117,7 +119,6 @@
                     </li>
                 </ul>
             </nav>
-
             <div class="main-sidebar">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">

@@ -1,12 +1,15 @@
+// DrawingSize
 const position = { x: 0, y: 0 };
+const res = { x: 0, y: 0 };
 const ukuran = { x: 0, y: 0 };
+
+// CanvasRender
 const cnv = document.getElementById('render');
 
 interact(".draggable")
     .draggable({
         manualStart: true,
         autoScroll: true,
-        target: '#render',
         listeners: {
             move: function (event) {
                 position.x += event.dx;
@@ -16,14 +19,10 @@ interact(".draggable")
             end: function (ev) {
                 var rect = cnv.getBoundingClientRect();
 
-                var scaleX = cnv.clientWidth / rect.width;
-                var scaleY = cnv.clientHeight / rect.height;
+                ukuran.x = Math.round(ev.clientX - rect.left);
+                ukuran.y = Math.round(ev.clientY - rect.top);
 
-                ukuran.x = Math.round((ev.clientX - rect.left) * scaleX);
-                ukuran.y = Math.round((ev.clientY - rect.top) * scaleY);
-                    
                 console.log(ukuran.x, ukuran.y);
-
             }
         },
     })
