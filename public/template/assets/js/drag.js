@@ -17,12 +17,16 @@ interact(".draggable")
                 event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
             },
             end: function (ev) {
-                var rect = cnv.getBoundingClientRect();
 
-                ukuran.x = Math.round(ev.clientX - rect.left);
-                ukuran.y = Math.round(ev.clientY - rect.top);
+                ukuran.x = ev.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
+                ukuran.y = ev.clientY + document.body.scrollTop + document.documentElement.scrollTop;
 
-                console.log(ukuran.x, ukuran.y);
+                ukuran.x -= cnv.offsetLeft;
+                ukuran.y -= cnv.offsetTop;
+
+                // console.log(ukuran.x, ukuran.y);
+                var sz = document.getElementById('size');
+                sz.textContent = 'x:' + ukuran.x + ',' + 'y:' + ukuran.y;
             }
         },
     })

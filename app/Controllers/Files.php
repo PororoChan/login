@@ -48,7 +48,7 @@ class Files extends BaseController
         if ($this->request->getPost('type') == 1) {
             $file = $this->request->getFile('file_name');
             $filename = $file->getClientName();
-            $name = str_replace(' ', '', $filename);
+            $name = str_replace(' ', '_', $filename);
             $file->move('../public/file_upload', $name);
             $data = [
                 'publisher' => session()->get('nama'),

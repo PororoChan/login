@@ -316,7 +316,7 @@
                 var height = doc.internal.pageSize.getHeight();
 
                 doc.addImage(imgs, 0, 0, width, height);
-                doc.save();
+                // doc.save($('#namaf').val());
 
                 console.log('x: ' + ukuran.x, 'y:' + ukuran.y);
 
