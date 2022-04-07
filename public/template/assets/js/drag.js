@@ -5,18 +5,8 @@ const ukuran = { x: 0, y: 0 };
 
 // CanvasRender
 const cnv = document.getElementById('render');
+const im = document.getElementById('signature-result');
 const ct = cnv.getContext("2d");
-
-// cnv.addEventListener("mousemove", function (ev) {
-//     var rect = cnv.getBoundingClientRect();
-
-//     ukuran.x = (ev.clientX - rect.left) / (rect.right - rect.left) * cnv.width;
-//     ukuran.y = (ev.clientY - rect.top) / (rect.bottom - rect.top) * cnv.height;
-
-//     $('#size').html(ukuran.x + ',' + ukuran.y);
-//     ct.fillStyle = '#000000';
-//     ct.fillRect(ukuran.x, ukuran.y, 8, 8);
-// })
 
 interact(".draggable")
     .draggable({
@@ -31,12 +21,14 @@ interact(".draggable")
             end: function (ev) {
                 var rect = cnv.getBoundingClientRect();
 
-                ukuran.x = (ev.clientX - rect.left) / (rect.right - rect.left) * cnv.width;
-                ukuran.y = (ev.clientY - rect.top) / (rect.bottom - rect.top) * cnv.height;
+                ukuran.x = (ev.pageX - rect.left) / (rect.right - rect.left) * cnv.width;
+                ukuran.y = (ev.pageY - rect.top) / (rect.bottom - rect.top) * cnv.height;
 
                 $('#size').html(ukuran.x + ',' + ukuran.y);
+
                 ct.fillStyle = '#000000';
                 ct.fillRect(ukuran.x, ukuran.y, 100,100);
+                // ct.drawImage(ev.target, ukuran.x, ukuran.y);
             }
         },
     })
@@ -77,13 +69,6 @@ interact(".draggable")
 interact('#render').dropzone({
     accept: '#signature-result',
     overlap: 0.25,
-    // listeners: {
-    //     drop: function (event) {
-    //         ukuran.x = event.touches[0].clientX;
-
-    //         console.log(ukuran.x);
-    //     }
-    // }
 })
 
 

@@ -34,6 +34,7 @@
 
         #signcanva {
             display: none;
+            align-items: center;
             width: 100%;
             border: 1px solid;
             border-radius: 5px;
@@ -47,7 +48,6 @@
 
         #signature-result {
             display: none;
-            position: relative;
             cursor: pointer;
             align-items: center;
             image-rendering: smooth;
