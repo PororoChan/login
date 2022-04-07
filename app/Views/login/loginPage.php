@@ -33,7 +33,7 @@
                                 <div class="alert alert-danger m-4 mb-auto"><?= session()->getFlashdata('msg') ?></div>
                             <?php endif; ?>
                             <div class=" card-body">
-                                <form method="POST" action="/login/auth" class="needs-validation">
+                                <form method="POST" action="<?= base_url('/login/auth') ?>" class="needs-validation">
                                     <div class="form-group">
                                         <label for="email">Username</label>
                                         <input id="email" type="text" class="form-control" name="uname" tabindex="1" required autofocus>
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                         <div class="mt-5 text-muted text-center">
-                            Don't have an account? <a href="/register">Create One</a>
+                            Don't have an account? <a href="<?= base_url('/register') ?>">Create One</a>
                         </div>
                         <div class="simple-footer">
                             Copyright &copy; Stisla 2018
@@ -90,13 +90,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="<?= base_url('template') ?>/assets/js/stisla.js"></script>
+    <script src="<?= base_url('template/assets/js/stisla.js') ?>"></script>
 
     <!-- JS Libraies -->
 
     <!-- Template JS File -->
-    <script src="<?= base_url('template') ?>/assets/js/scripts.js"></script>
-    <script src="<?= base_url('template') ?>/assets/js/custom.js"></script>
+    <script src="<?= base_url('template/assets/js/scripts.js') ?>"></script>
+    <script src="<?= base_url('template/assets/js/custom.js') ?>"></script>
 
     <!-- Page Specific JS File -->
 </body>

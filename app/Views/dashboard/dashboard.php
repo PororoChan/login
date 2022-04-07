@@ -18,8 +18,8 @@
                             <h4>Total File</h4>
                         </div>
                         <div class="card-body mt-2">
-                            15
-                            <a style="font-size: 11px;" href="#" class="card-link float-right mt-4">View Details ></a>
+                            <?= $count ?>
+                            <a style="font-size: 11px;" href="<?= base_url('/files') ?>" class="card-link float-right mt-4"> View Details <i class="fas fa-chevron-right"></i> </a>
                         </div>
                     </div>
                 </div>
@@ -34,8 +34,8 @@
                             <h4>Total Size</h4>
                         </div>
                         <div class="card-body mt-2">
-                            250
-                            <a style="font-size: 11px;" href="#" class="card-link float-right mt-4">View Details ></a>
+                            0
+                            <a style="font-size: 11px;" href="#" class="card-link float-right mt-4"> View Details <i class="fas fa-chevron-right"></i> </a>
                         </div>
                     </div>
                 </div>
@@ -50,8 +50,8 @@
                             <h4>Pending Workflow</h4>
                         </div>
                         <div class="card-body mt-2">
-                            7
-                            <a style="font-size: 11px;" href="#" class="card-link float-right mt-4">View Details ></a>
+                            0
+                            <a style="font-size: 11px;" href="#" class="card-link float-right mt-4"> View Details <i class="fas fa-chevron-right"></i> </a>
                         </div>
                     </div>
                 </div>
@@ -66,8 +66,8 @@
                             <h4>Document Shared</h4>
                         </div>
                         <div class="card-body mt-2">
-                            12
-                            <a style="font-size: 11px;" href="#" class="card-link float-right mt-4">View Details ></a>
+                            0
+                            <a style="font-size: 11px;" href="#" class="card-link float-right mt-4">View Details <i class="fas fa-chevron-right"></i> </a>
                         </div>
                     </div>
                 </div>

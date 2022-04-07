@@ -53,13 +53,15 @@
 <!-- Main-Content -->
 <div class="main-content">
     <section class="section">
-        <div class="row mt-2">
+        <div class="section-header">
+            <h1>Data User</h1>
+        </div>
+        <div class="row">
             <div class="col">
-                <h5 class="mt-5">Data Users</h5>
                 <br><br>
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-bordered" id="datauser">
+                        <table class="table table-bordered table-striped table-hover table-head-fixed" id="datauser">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -103,7 +105,7 @@
                 "infoFiltered": "(dipilih dari _MAX_ data)",
             },
             "ajax": {
-                "url": '/Users/data',
+                "url": '<?= base_url('/Users/data') ?>',
                 "type": "POST",
             },
             "columnDefs": [{
@@ -115,7 +117,7 @@
         $(document).on('click', '#dt-edit', function() {
             var id = $(this).attr('data-id');
             $.ajax({
-                url: '/users/edit',
+                url: '<?= base_url('/users/edit') ?>',
                 method: 'GET',
                 dataType: 'JSON',
                 data: {
@@ -155,7 +157,7 @@
                     }).then((hapus) => {
                         if (hapus.isConfirmed) {
                             $.ajax({
-                                url: '/users/update',
+                                url: '<?= base_url('/users/update') ?>',
                                 method: 'POST',
                                 data: {
                                     id_user: id,
@@ -198,7 +200,7 @@
                     }).then((hapus) => {
                         if (hapus.isConfirmed) {
                             $.ajax({
-                                url: '/users/delete',
+                                url: '<?= base_url('/users/delete') ?>',
                                 method: 'GET',
                                 data: {
                                     id_user: ids,

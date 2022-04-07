@@ -59,36 +59,40 @@
 <!-- Main-Content -->
 <div class="main-content">
     <section class="section">
+        <div class="section-header">
+            <h1>Data Kelas</h1>
+        </div>
         <div class="row mt-2">
             <div class="col">
-                <h5 class="mt-5">
-                    Data Kelas Siswa
-                </h5>
                 <button class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#tambahKelas">
                     Tambah Kelas
                 </button>
-                <table class="table" id="datasiswa">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Kelas</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-                        <?php foreach ($kelas as $k) : ?>
-                            <tr>
-                                <th scope="row"><?= $i++; ?></th>
-                                <td><?= $k['kelas'] ?></td>
-                                <td>
-                                    <button id="btn-edit-kelas" class="btn btn-warning" data-id="<?= $k['id_kelas'] ?>"><i class="fas fa-edit"></i></button>
-                                    <button id="btn-delete-kelas" class="btn btn-danger" data-id="<?= $k['id_kelas'] ?>"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped table-hover" id="datasiswa">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Kelas</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                <?php foreach ($kelas as $k) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $i++; ?></th>
+                                        <td><?= $k['kelas'] ?></td>
+                                        <td>
+                                            <button id="btn-edit-kelas" class="btn btn-warning" data-id="<?= $k['id_kelas'] ?>"><i class="fas fa-edit"></i></button>
+                                            <button id="btn-delete-kelas" class="btn btn-danger" data-id="<?= $k['id_kelas'] ?>"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -107,7 +111,7 @@
         var kelas = $('#kelas').val();
 
         $.ajax({
-            url: '/kelas/add',
+            url: '<?= base_url('/kelas/add') ?>',
             method: 'POST',
             data: {
                 type: 1,
@@ -130,7 +134,7 @@
         var ids = $(this).attr('data-id');
 
         $.ajax({
-            url: '/kelas/edit',
+            url: '<?= base_url('/kelas/edit') ?>',
             method: 'GET',
             dataType: 'JSON',
             data: {
@@ -149,7 +153,7 @@
         var id = $('#id_kelas').val();
 
         $.ajax({
-            url: '/kelas/update',
+            url: '<?= base_url('/kelas/update') ?>',
             method: 'POST',
             data: {
                 kelas: kelas,
@@ -188,7 +192,7 @@
                 }).then((hapus) => {
                     if (hapus.isConfirmed) {
                         $.ajax({
-                            url: '/kelas/delete',
+                            url: '<?= base_url('/kelas/delete') ?>',
                             method: 'GET',
                             data: {
                                 id_kelas: ids,

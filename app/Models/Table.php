@@ -38,6 +38,12 @@ class Table extends Model
         return $build->get()->getRowArray();
     }
 
+    public function getFileCount()
+    {
+        $build = $this->builder->countAllResults('file_name');
+        return $build;
+    }
+
     public function simpan($data)
     {
         return $this->builder->insert($data);

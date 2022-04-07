@@ -83,7 +83,6 @@
 
                             </canvas>
                         </div>
-
                         <div id="signframe" class="col-4">
                             <div class="row">
                                 <b>Make a Digital Signature</b>
@@ -119,9 +118,11 @@
 <?= $this->section('content') ?>
 <div class="main-content">
     <section class="section">
+        <div class="section-header">
+            <h1>Data Files</h1>
+        </div>
         <div class="row mt-2">
             <div class="col">
-                <h5 class="mt-5">Data Files</h5>
                 <input type="hidden" id="txt_csrfname" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-tambah">
@@ -129,7 +130,7 @@
                 </button>
                 <div class="card mt-5" style="width: 100%;">
                     <div class="card-body">
-                        <table class="table table-bordered" id="dtfile" width="100%">
+                        <table class="table table-striped table-hover table-bordered table-head-fixed" id="dtfile" width="100%">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>

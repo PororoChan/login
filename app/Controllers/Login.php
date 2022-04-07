@@ -4,10 +4,16 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\SiswaModel;
+use App\Models\Table;
 use App\Models\userModel;
 
 class Login extends BaseController
 {
+    public function __construct()
+    {
+        $this->model = new Table();
+    }
+
     public function login()
     {
         $data = [
@@ -48,10 +54,12 @@ class Login extends BaseController
 
     public function dashboard()
     {
+        $count = $this->model->getFileCount();
         $session = session();
         $data = [
             'title' => 'RekSpot | Dashboard',
             'nama'  => $session->get('nama'),
+            'count' => $count,
         ];
         return view('/dashboard/dashboard', $data);
     }

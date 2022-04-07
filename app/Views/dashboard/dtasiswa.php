@@ -73,7 +73,12 @@
                     </div>
                     <div class="form-group">
                         <label for="kelas">Kelas</label>
-                        <input id="edit-dt-kelas" type="text" class="form-control" name="edit-kelas" tabindex="2" required>
+                        <select class="form-control" name="edit-kelas" id="edit-dt-kelas">
+                            <option value="">Pilih Kelas</option>
+                            <?php foreach ($dtkelas as $dtk) : ?>
+                                <option value="<?= $dtk['kelas'] ?>"><?= $dtk['kelas'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <div class="invalid-feedback">
                             Data kelas tidak boleh kosong
                         </div>
@@ -94,7 +99,7 @@
                     </div>
                     <input type="hidden" id="edit-ids">
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-warning">Batal</button>
+                        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Batal</button>
                         <button id="dt-update" type="button" class="btn btn-primary">Update</button>
                     </div>
                 </form>
@@ -135,8 +140,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <a style="padding: 10px; width: 45px; height: 45px;" id="exp-excel" title="Save as Excel" href="/dtsiswa/excel" class="btn btn-warning"><i class="fas fa-file-excel"></i></a>
-                    <a style="padding: 10px; width: 45px; height: 45px;" id="exp-pdf" title="Save as PDF" href="/dtsiswa/pdf" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
+                    <a style="padding: 10px; width: 45px; height: 45px;" id="exp-excel" title="Save as Excel" href="<?= base_url('/dtsiswa/excel') ?>" class="btn btn-warning"><i class="fas fa-file-excel"></i></a>
+                    <a style="padding: 10px; width: 45px; height: 45px;" id="exp-pdf" title="Save as PDF" href="<?= base_url('/dtsiswa/pdf') ?>" class="btn btn-danger"><i class="fas fa-file-pdf"></i></a>
                 </div>
             </div>
         </div>
@@ -148,9 +153,11 @@
 <!-- Main-Content -->
 <div class="main-content">
     <section class="section">
+        <div class="section-header">
+            <h1>Data Siswa Advanced</h1>
+        </div>
         <div class="row mt-2">
             <div class="col">
-                <h5 class="mt-5">Data Siswa</h5>
                 <input type="hidden" id="txt_csrfname" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-add-siswa">
@@ -158,7 +165,7 @@
                 </button>
                 <div class="card mt-5" style="width: 100%;">
                     <div class="card-body">
-                        <table class="table table-bordered" id="dtsiswa" width="100%">
+                        <table class="table table-bordered table-hover table-striped table-head-fixed" id="dtsiswa" width="100%">
                             <thead>
                                 <tr>
                                     <th scope="col">#</th>
@@ -202,7 +209,7 @@
             },
             "order": [],
             "ajax": {
-                "url": "/dtsiswa/view",
+                "url": "<?= base_url('/dtsiswa/view') ?>",
                 "type": "POST",
             },
             "columnDefs": [{
@@ -236,7 +243,7 @@
             data.append('gambar', img);
 
             $.ajax({
-                url: '/dtsiswa/add',
+                url: '<?= base_url('/dtsiswa/add') ?>',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -263,7 +270,7 @@
             $("#modal-view").modal('show');
 
             $.ajax({
-                url: '/dtsiswa/details',
+                url: '<?= base_url('/dtsiswa/details') ?>',
                 method: 'GET',
                 dataType: 'JSON',
                 data: {
@@ -285,7 +292,7 @@
             var ids = $(this).attr('data-id');
 
             $.ajax({
-                url: '/dtsiswa/edit',
+                url: '<?= base_url('/dtsiswa/edit') ?>',
                 method: 'GET',
                 dataType: 'JSON',
                 data: {
@@ -317,7 +324,7 @@
             data.append('gambar', files);
 
             $.ajax({
-                url: '/dtsiswa/update',
+                url: '<?= base_url('/dtsiswa/update') ?>',
                 method: 'POST',
                 data: data,
                 processData: false,
@@ -358,7 +365,7 @@
                     }).then((hapus) => {
                         if (hapus.isConfirmed) {
                             $.ajax({
-                                url: '/dtsiswa/delete',
+                                url: '<?= base_url('/dtsiswa/delete') ?>',
                                 method: 'GET',
                                 data: {
                                     id_data: ids,
@@ -373,7 +380,7 @@
 
         $('#exp-excel').click(function() {
             $.ajax({
-                url: '/dtsiswa/excel',
+                url: '<?= base_url('/dtsiswa/excel') ?>',
                 type: 'POST',
                 data: {},
                 success: function() {
@@ -390,7 +397,7 @@
 
         $('#exp-pdf').click(function() {
             $.ajax({
-                url: '/dtsiswa/pdf',
+                url: '<?= base_url('/dtsiswa/pdf') ?>',
             })
         })
     })

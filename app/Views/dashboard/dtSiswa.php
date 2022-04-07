@@ -86,15 +86,17 @@
 <!-- Main-Content -->
 <div class="main-content">
     <section class="section">
+        <div class="section-header">
+            <h1>Data Siswa</h1>
+        </div>
         <div class="row mt-2">
             <div class="col">
-                <h5 class="mt-5">Data Siswa</h5>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-add">
                     Tambah Data
                 </button>
 
-                <table class="table" id="datasiswa">
+                <table class="table table-bordered table-hover table-striped table-head-fixed" id="datasiswa">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -140,7 +142,7 @@
         var usia = $('#usia').val();
 
         $.ajax({
-            url: '/siswa/add',
+            url: '<?= base_url('/siswa/add') ?>',
             method: 'POST',
             data: {
                 type: 1,
@@ -165,7 +167,7 @@
         var ids = $(this).attr('data-id');
 
         $.ajax({
-            url: '/siswa/edit',
+            url: '<?= base_url('/siswa/edit') ?>',
             method: 'GET',
             dataType: 'JSON',
             data: {
@@ -188,7 +190,7 @@
         var id = $('#ids').val();
 
         $.ajax({
-            url: '/siswa/update',
+            url: '<?= base_url('/siswa/update') ?>',
             method: 'POST',
             data: {
                 nama: nama,
@@ -230,7 +232,7 @@
                 }).then((hapus) => {
                     if (hapus.isConfirmed) {
                         $.ajax({
-                            url: '/siswa/delete',
+                            url: '<?= base_url('/siswa/delete') ?>',
                             method: 'GET',
                             data: {
                                 id_siswa: ids,
