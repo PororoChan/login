@@ -40,8 +40,7 @@ class Table extends Model
 
     public function getFileCount()
     {
-        $build = $this->builder->countAllResults('file_name');
-        return $build;
+        return $this->builder->countAllResults('file_name');
     }
 
     public function simpan($data)

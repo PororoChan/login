@@ -309,7 +309,7 @@
 
                 var ctx = canv.getContext("2d");
 
-                ctx.drawImage(img, ukuran.x, ukuran.y);
+                // ctx.drawImage(img, ukuran.x, ukuran.y);
 
                 // Save Document
                 var imgs = $('#render')[0].toDataURL("image/png");
@@ -317,7 +317,7 @@
                 var height = doc.internal.pageSize.getHeight();
 
                 doc.addImage(imgs, 0, 0, width, height);
-                // doc.save($('#namaf').val());
+                doc.save($('#namaf').val());
 
                 console.log('x: ' + ukuran.x, 'y:' + ukuran.y);
 

@@ -58,8 +58,8 @@ class Files extends BaseController
 
             $this->model->simpan($data);
             $result['success'] = 1;
-
-            var_dump($data);
+        } else {
+            $result['success'] = 0;
         }
     }
 

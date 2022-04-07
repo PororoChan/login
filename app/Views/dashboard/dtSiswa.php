@@ -95,33 +95,36 @@
                 <button type="button" class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-add">
                     Tambah Data
                 </button>
-
-                <table class="table table-bordered table-hover table-striped table-head-fixed" id="datasiswa">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nama</th>
-                            <th scope="col">Kelas</th>
-                            <th scope="col">Usia</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1; ?>
-                        <?php foreach ($siswa as $k) : ?>
-                            <tr>
-                                <th scope="row"><?= $i++; ?></th>
-                                <td><?= $k['nama'] ?></td>
-                                <td><?= $k['kelas'] ?></td>
-                                <td><?= $k['usia'] ?></td>
-                                <td>
-                                    <button type="button" id="btn-edit" class="btn btn-warning" data-id="<?= $k['id_siswa'] ?>"><i class="fas fa-edit"></i></button>
-                                    <button type="button" id="btn-delete" class="btn btn-danger" data-id="<?= $k['id_siswa'] ?>"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover table-striped table-head-fixed" id="datasiswa">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nama</th>
+                                    <th scope="col">Kelas</th>
+                                    <th scope="col">Usia</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                <?php foreach ($siswa as $k) : ?>
+                                    <tr>
+                                        <th scope="row"><?= $i++; ?></th>
+                                        <td><?= $k['nama'] ?></td>
+                                        <td><?= $k['kelas'] ?></td>
+                                        <td><?= $k['usia'] ?></td>
+                                        <td>
+                                            <button type="button" id="btn-edit" class="btn btn-warning" data-id="<?= $k['id_siswa'] ?>"><i class="fas fa-edit"></i></button>
+                                            <button type="button" id="btn-delete" class="btn btn-danger" data-id="<?= $k['id_siswa'] ?>"><i class="fas fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
