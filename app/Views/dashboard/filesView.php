@@ -106,7 +106,6 @@
                                 <button onclick="cancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button id="sign" type="button" class="btn btn-primary">Simpan</button>
                             </div>
-                            <label id="size"></label>
                         </div>
                     </div>
                 </form>
@@ -271,7 +270,7 @@
         if ($('#signature-frame').html() != '') {
             $('#signature-frame').css('display', 'none');
         } else {
-            $('#signature-frame').css('display', 'block');
+            $('#signature-frame').css('display', 'contents');
         }
         $('#sign').html('Simpan');
     }
@@ -302,14 +301,10 @@
             var img = $('#signature-result').attr('src');
 
             if ($('#sign').html() == 'Terapkan') {
-
-                // Add Signature Image
                 var img = document.getElementById('signature-result');
                 var canv = document.getElementById('render');
 
                 var ctx = canv.getContext("2d");
-
-                // ctx.drawImage(img, ukuran.x, ukuran.y);
 
                 // Save Document
                 var imgs = $('#render')[0].toDataURL("image/png");
@@ -318,8 +313,6 @@
 
                 doc.addImage(imgs, 0, 0, width, height);
                 doc.save($('#namaf').val());
-
-                console.log('x: ' + ukuran.x, 'y:' + ukuran.y);
 
             } else if ($('#sign').html() == 'Simpan') {
 
@@ -363,8 +356,11 @@
                 cache: false,
                 success: function() {
                     $('#modal-tambah').modal('hide');
+                    $.notify('Berhasil menambah data', 'success');
                     $('#dataf')[0].reset();
-                    _table.ajax.reload();
+                    setTimeout(() => {
+                        _table.ajax.reload();
+                    }, 300);
                 }
             });
         });
@@ -386,7 +382,7 @@
                         $.notify('Data telah dihapus', 'success');
                         setTimeout(() => {
                             _table.ajax.reload();
-                        }, 500);
+                        }, 300);
                     }
                 }
             })

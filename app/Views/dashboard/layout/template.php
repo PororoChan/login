@@ -47,9 +47,10 @@
         }
 
         #signature-result {
+            padding: 10px;
             display: none;
             cursor: pointer;
-            align-items: center;
+            text-align: center;
             image-rendering: smooth;
         }
     </style>
