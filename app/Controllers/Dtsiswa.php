@@ -119,7 +119,6 @@ class Dtsiswa extends BaseController
                     'usia'  =>  $this->request->getVar('usia'),
                     'gambar' => $name,
                 ];
-
                 $model->insert($data);
             }
         }

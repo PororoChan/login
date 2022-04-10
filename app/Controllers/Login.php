@@ -59,7 +59,7 @@ class Login extends BaseController
         $data = [
             'title' => 'RekSpot | Dashboard',
             'nama'  => $session->get('nama'),
-            'count' => $count,
+            'count' => $count
         ];
         return view('/dashboard/dashboard', $data);
     }

@@ -8,16 +8,13 @@ const cnv = document.getElementById('render');
 const im = document.getElementById('signature-result');
 const ct = cnv.getContext("2d");
 
-// cnv.onmousedown = (ev) => {
-//     var rect = cnv.getBoundingClientRect();
-
-//     ukuran.x = Math.round((ev.clientX - rect.left) / (rect.right - rect.left) * cnv.width);
-//     ukuran.y = Math.round((ev.clientY - rect.top) / (rect.bottom - rect.top) * cnv.height);
-
-//     console.log(ev.relatedTarget);
-
-//     ct.fillRect(ukuran.x, ukuran.y, 50, 50);
-// }
+function centerimageundercursor(ev) {
+    ev.preventDefault();
+    var rect = cnv.getBoundingClientRect();
+    ukuran.x = (ev.clientX - rect.left) / (rect.right - rect.left) * cnv.width;
+    ukuran.y = (ev.clientY - rect.top) / (rect.bottom - rect.top) * cnv.height;
+    // ct.drawImage(im, ukuran.x - im.width / 2, ukuran.y - im.height / 2);
+}
 
 interact(".draggable")
     .draggable({
@@ -30,15 +27,7 @@ interact(".draggable")
                 event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
             },
             end: function (ev) {
-                ev.preventDefault();
-                var rect = cnv.getBoundingClientRect(); 
-
-                ukuran.x = Math.round((ev.clientX - rect.left) / (rect.right - rect.left) * cnv.width);
-                ukuran.y = Math.round((ev.clientY - rect.top) / (rect.bottom - rect.top) * cnv.height);
-
-                console.log(ev.target);
-
-                ct.fillRect(ukuran.x, ukuran.y, 50, 50);
+                centerimageundercursor(ev);
             }
         },
     })
@@ -80,5 +69,7 @@ interact('#render').dropzone({
     accept: '#signature-result',
     overlap: 0.25,
 })
+
+
 
 

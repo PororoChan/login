@@ -106,6 +106,7 @@
                                 <button onclick="cancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                 <button id="sign" type="button" class="btn btn-primary">Simpan</button>
                             </div>
+                            <label id="size"></label>
                         </div>
                     </div>
                 </form>
@@ -298,13 +299,13 @@
         $('#sign').click(function(ev) {
 
             var doc = new jsPDF();
-            var img = $('#signature-result').attr('src');
+            var img = document.getElementById('signature-result');
 
             if ($('#sign').html() == 'Terapkan') {
-                var img = document.getElementById('signature-result');
                 var canv = document.getElementById('render');
 
                 var ctx = canv.getContext("2d");
+                ct.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2)
 
                 // Save Document
                 var imgs = $('#render')[0].toDataURL("image/png");
@@ -313,6 +314,7 @@
 
                 doc.addImage(imgs, 0, 0, width, height);
                 doc.save($('#namaf').val());
+                $('#modal-prev').modal('hide');
 
             } else if ($('#sign').html() == 'Simpan') {
 
