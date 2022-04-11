@@ -39,7 +39,7 @@
                     </div>
                     <input type="hidden" name="id" id="ids">
                     <div class="modal-footer">
-                        <button type="button" id="batal" class="btn btn-warning">Batal</button>
+                        <button type="button" id="batal" class="btn btn-warning" data-bs-dismiss="modal">Batal</button>
                         <button id="btn-update" type="button" class="btn btn-primary">Update</button>
                     </div>
                 </form>

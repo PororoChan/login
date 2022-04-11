@@ -276,7 +276,6 @@
         $('#sign').html('Simpan');
     }
 
-
     // READY----------------------------------
     $(document).ready(function() {
 
@@ -299,7 +298,7 @@
 
         $('#sign').click(function(ev) {
 
-            var doc = new jsPDF("p", "mm", "a4");
+            var doc = new jsPDF();
             var img = document.getElementById('signature-result');
 
             if ($('#sign').html() == 'Terapkan') {
@@ -311,10 +310,11 @@
 
                 // Save Document
                 var imgs = canv.toDataURL("image/png");
+
                 var width = doc.internal.pageSize.getWidth();
                 var height = doc.internal.pageSize.getHeight();
 
-                doc.addImage(imgs, 'PNG', 1, 1, width, height);
+                doc.addImage(imgs, 'PNG', 0, 0, width, height);
                 doc.save($('#namaf').val());
                 $('#modal-prev').modal('hide');
 
