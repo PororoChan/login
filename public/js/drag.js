@@ -5,14 +5,12 @@ const ukuran = { x: 0, y: 0 };
 
 // CanvasRender
 const cnv = document.getElementById('render');
-const im = document.getElementById('signature-result');
-const ct = cnv.getContext("2d");
 
-function centerimageundercursor(ev) {
+function getPos(ev) {
     ev.preventDefault();
     var rect = cnv.getBoundingClientRect();
-    ukuran.x = (ev.clientX - rect.left) / (rect.right - rect.left) * cnv.width;
-    ukuran.y = (ev.clientY - rect.top) / (rect.bottom - rect.top) * cnv.height;
+    ukuran.x = (ev.pageX - rect.left) / (rect.right - rect.left) * cnv.width;
+    ukuran.y = (ev.pageY - rect.top) / (rect.bottom - rect.top) * cnv.height;
     // ct.drawImage(im, ukuran.x - im.width / 2, ukuran.y - im.height / 2);
 }
 
@@ -27,7 +25,7 @@ interact(".draggable")
                 event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
             },
             end: function (ev) {
-                centerimageundercursor(ev);
+                getPos(ev);
             }
         },
     })

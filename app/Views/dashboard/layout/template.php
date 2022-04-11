@@ -33,12 +33,18 @@
         }
 
         #signcanva {
+            left: 0;
+            top: 0;
             display: none;
             align-items: center;
             width: 100%;
             border: 1px solid;
             border-radius: 5px;
             position: relative;
+        }
+
+        #signcanva:hover {
+            cursor: url('<?= base_url('images/cursor/pen.cur') ?>'), auto;
         }
 
         #signature-frame {
@@ -101,26 +107,10 @@
                             </div>
                         </div>
                     </li>
-                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg nav-link-user">
                             <img alt="image" src="<?= base_url('template'); ?>/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, <?= $nama ?></div>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-title">Logged in 5 min ago</div>
-                            <a href="features-profile.html" class="dropdown-item has-icon">
-                                <i class="far fa-user"></i> Profile
-                            </a>
-                            <a href="features-activities.html" class="dropdown-item has-icon">
-                                <i class="fas fa-bolt"></i> Activities
-                            </a>
-                            <a href="features-settings.html" class="dropdown-item has-icon">
-                                <i class="fas fa-cog"></i> Settings
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a href="<?= base_url('/login/logout') ?>" class="dropdown-item has-icon text-danger">
-                                <i class="fas fa-sign-out-alt"></i> Logout
-                            </a>
-                        </div>
                     </li>
                 </ul>
             </nav>
@@ -142,6 +132,11 @@
                         <li><a title="Data User" class="nav-link" href="<?= base_url('/users'); ?>"><i class="fas fa-user-lock"></i><span>User</span></a></li>
                         <li><a title="Data Files" class="nav-link" href="<?= base_url('/files'); ?>"><i class="fas fa-folder"></i><span>Files</span></a></li>
                         </li>
+                        <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+                            <a href="<?= base_url('/login/logout') ?>" class="btn btn-primary btn-lg btn-block btn-icon-split">
+                                <i class="fas fa-sign-out-alt"></i> Log Out
+                            </a>
+                        </div>
                     </ul>
                     </li>
                     </ul>
@@ -171,12 +166,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
     <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js" integrity="sha512-pZmE8nx/gdufIRZ9DdgsipK4ocMbdq6zU2epbECb4/iwu9bHfN3aDYmOiVNC8SHk90uWi03o1ziB6JEd6/3VQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
-    <script src="<?= base_url('template/assets/js/drag.js'); ?>"></script>
+    <script src="<?= base_url('js/drag.js'); ?>"></script>
     <script src="<?= base_url('template/assets/js/stisla.js'); ?>"></script>
     <script src="<?= base_url('template/assets/js/scripts.js'); ?>"></script>
     <script src="<?= base_url('template/assets/js/custom.js'); ?>"></script>

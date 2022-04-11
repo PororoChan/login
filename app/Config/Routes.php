@@ -39,11 +39,12 @@ $routes->get('/valid', 'Register::save');
 $routes->get('/register', 'Register::register');
 
 //index-page-per-controller
-$routes->get('/siswa', 'Login::siswa');
-$routes->get('/kelas', 'Kelas::index');
-$routes->get('/dtsiswa', 'Dtsiswa::show');
-$routes->get('/files', 'Files::index');
 $routes->get('/home', 'Login::dashboard', ['filter' => 'auth']);
+$routes->get('/kelas', 'Kelas::index', ['filter' => 'auth']);
+$routes->get('/siswa', 'Login::siswa', ['filter' => 'auth']);
+$routes->get('/dtsiswa', 'Dtsiswa::show', ['filter' => 'auth']);
+$routes->add('/users', 'Users::show', ['filter' => 'auth']);
+$routes->get('/files', 'Files::index', ['filter' => 'auth']);
 
 //crud-siswa
 $routes->add('/siswa/add', 'Siswa::addSiswa');
@@ -70,7 +71,6 @@ $routes->add('/dtsiswa/pdf', 'Dtsiswa::pdf');
 //crud-users
 $routes->get('/users/data', 'Users::data');
 $routes->add('/users/update', 'Users::update');
-$routes->add('/users', 'Users::show');
 $routes->add('/users/delete', 'Users::delete');
 
 //crud-files

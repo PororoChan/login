@@ -38,7 +38,7 @@ class Excel extends Model
 
     private $border_body = [
         "alignment" => [
-            "horizontal" => Alignment::HORIZONTAL_CENTER
+            "horizontal" => Alignment::HORIZONTAL_LEFT
         ],
         "borders" => [
             "allBorders" => [

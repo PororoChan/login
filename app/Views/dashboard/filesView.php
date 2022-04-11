@@ -159,10 +159,10 @@
     var csrfHash = $('#txt_csrfname').val();
     var can = document.getElementById('render');
     var canvas = document.getElementById('signcanva');
+
     var signaturePad = new SignaturePad(canvas, {
-        minWidth: 1,
         maxWidth: 2,
-        penColor: "rgb(25, 25, 25)"
+        penColor: "rgb(25, 25, 25)",
     });
 
     // DtTable-Load
@@ -197,12 +197,12 @@
                 renderPage(pageNum);
             })
             .catch((err) => {
-                var ctx = $('#render')[0].getContext("2d");
+                var ctx = document.getElementById('render').getContext("2d");
                 var img = new Image();
                 img.src = "<?= base_url('images/canva/null.png') ?>";
                 img.onload = () => {
                     ctx.imageSmoothingEnabled = false;
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, can.width, can.height);
                 }
             })
     }
@@ -276,6 +276,7 @@
         $('#sign').html('Simpan');
     }
 
+
     // READY----------------------------------
     $(document).ready(function() {
 
@@ -298,21 +299,22 @@
 
         $('#sign').click(function(ev) {
 
-            var doc = new jsPDF();
+            var doc = new jsPDF("p", "mm", "a4");
             var img = document.getElementById('signature-result');
 
             if ($('#sign').html() == 'Terapkan') {
                 var canv = document.getElementById('render');
 
                 var ctx = canv.getContext("2d");
-                ct.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2)
+
+                ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2)
 
                 // Save Document
-                var imgs = $('#render')[0].toDataURL("image/png");
+                var imgs = canv.toDataURL("image/png");
                 var width = doc.internal.pageSize.getWidth();
                 var height = doc.internal.pageSize.getHeight();
 
-                doc.addImage(imgs, 0, 0, width, height);
+                doc.addImage(imgs, 'PNG', 1, 1, width, height);
                 doc.save($('#namaf').val());
                 $('#modal-prev').modal('hide');
 

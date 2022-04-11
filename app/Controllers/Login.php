@@ -11,6 +11,7 @@ class Login extends BaseController
 {
     public function __construct()
     {
+        $this->session = session();
         $this->model = new Table();
     }
 
@@ -59,28 +60,32 @@ class Login extends BaseController
         $data = [
             'title' => 'RekSpot | Dashboard',
             'nama'  => $session->get('nama'),
-            'count' => $count
+            'count' => $count,
         ];
         return view('/dashboard/dashboard', $data);
     }
 
     public function siswa()
     {
-        $model = new SiswaModel();
-        $session = session();
-        $data = [
-            'title' => 'RekSpot | Data Siswa',
-            'siswa' => $model->findAll(),
-            'nama'  => $session->get('nama'),
-        ];
+        if ($this->session->get('logged_in') == true) {
+            $model = new SiswaModel();
+            $session = session();
+            $data = [
+                'title' => 'RekSpot | Data Siswa',
+                'siswa' => $model->findAll(),
+                'nama'  => $session->get('nama'),
+            ];
 
-        return view('/dashboard/dtsiswa', $data);
+            return view('/dashboard/dtsiswa', $data);
+        } else {
+            return view('/login');
+        }
     }
 
     public function logout()
     {
-        $session = session();
-        $session->destroy();
+        $this->session->destroy();
+
         return redirect()->to('/login');
     }
 }
