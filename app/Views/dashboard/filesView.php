@@ -160,9 +160,9 @@
     var can = document.getElementById('render');
     var canvas = document.getElementById('signcanva');
 
-    var signaturePad = new SignaturePad(canvas, {
+    let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
-        penColor: "rgb(25, 25, 25)",
+        penColor: 'rgb(25, 25, 25)'
     });
 
     // DtTable-Load
@@ -273,6 +273,7 @@
         } else {
             $('#signature-frame').css('display', 'contents');
         }
+        signaturePad.clear();
         $('#sign').html('Simpan');
     }
 
@@ -306,16 +307,17 @@
 
                 var ctx = canv.getContext("2d");
 
-                ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2)
+                ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
 
                 // Save Document
-                var imgs = canv.toDataURL("image/png");
+                var imgs = canv.toDataURL("image/png", 1.0);
 
                 var width = doc.internal.pageSize.getWidth();
                 var height = doc.internal.pageSize.getHeight();
 
                 doc.addImage(imgs, 'PNG', 0, 0, width, height);
                 doc.save($('#namaf').val());
+
                 $('#modal-prev').modal('hide');
 
             } else if ($('#sign').html() == 'Simpan') {

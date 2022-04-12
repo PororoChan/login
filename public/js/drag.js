@@ -1,6 +1,5 @@
 // DrawingSize
 const position = { x: 0, y: 0 };
-const res = { x: 0, y: 0 };
 const ukuran = { x: 0, y: 0 };
 
 // CanvasRender
@@ -11,7 +10,6 @@ function getPos(ev) {
     var rect = cnv.getBoundingClientRect();
     ukuran.x = (ev.pageX - rect.left) / (rect.right - rect.left) * cnv.width;
     ukuran.y = (ev.pageY - rect.top) / (rect.bottom - rect.top) * cnv.height;
-    // ct.drawImage(im, ukuran.x - im.width / 2, ukuran.y - im.height / 2);
 }
 
 interact(".draggable")
