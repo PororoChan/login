@@ -73,6 +73,7 @@ interact('#dropped').dropzone({
     listeners: {
         drop: function (event) {
             event.relatedTarget.remove();
+            $.notify('Tanda Tangan dihapus', 'success');
         }
     }
 })
