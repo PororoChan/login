@@ -60,7 +60,7 @@
 </div>
 
 <!-- Modal-Sign -->
-<div class="modal fade" id="modal-prev" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal-prev" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,6 +114,39 @@
         </div>
     </div>
 </div>
+
+<!-- Sign 2 -->
+<div class="modal fade" id="modal-sign" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tanda Tangan Digital</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <input type="hidden" id="idf">
+            <input type="hidden" id="nmfile">
+            <div class="modal-body">
+                <div class="row">
+                    <div id="load-pdf" style="width: 1024px; height: 600px;" class="col-9 mt-1">
+                        <!-- <div id="rendering">
+                            <canvas id="load-pdf" style="width: 100%; height: 100%;">
+
+                            </canvas>
+                        </div> -->
+                    </div>
+                    <div class="col-3 mt-1" id="sidebar-modal">
+                        <div class="col mt-2">
+                            <button id="btn-buat" class="btn btn-outline-warning"><i class="fas fa-signature mr-3"></i>Tambah Tanda Tangan</button>
+                        </div>
+                        <div class="col mt-2">
+                            <button class="btn btn-primary float-bottom" id="btn-unduh">Simpan & Unduh</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?= $this->endSection(); ?>
 <?= $this->section('content') ?>
 <div class="main-content">
@@ -157,13 +190,6 @@
     // GlobalVariable
     var csrfName = '<?= csrf_token() ?>';
     var csrfHash = $('#txt_csrfname').val();
-    var can = document.getElementById('render');
-    var canvas = document.getElementById('signcanva');
-
-    let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
-        maxWidth: 2,
-        penColor: 'rgb(25, 25, 25)'
-    });
 
     // DtTable-Load
     var _table = $('#dtfile').DataTable({
@@ -171,7 +197,7 @@
         destroy: true,
         ajax: {
             type: 'post',
-            url: '<?= base_url('/tbfile') ?>',
+            url: "<?= base_url('/tbfile') ?>",
             data: function(param) {
                 param[csrfName] = csrfHash;
                 return param;
@@ -179,77 +205,27 @@
         }
     });
 
-    // RenderPDF
-    var pdfDoc = null;
-    var pageNum;
-    var ctx;
-    var home = $('#namaf').val();
+    function lihat(id, files) {
+        $('#modal-sign').modal('show');
+        $('#idf').val(id);
+        $('#nmfile').val(files);
 
-    function renderPDF(url) {
-        pdfDoc = null;
-        pageNum = 1;
-        scale = 1.5;
-        ctx = can.getContext('2d');
-        pdfjsLib.disableWorker = true;
-        var loadingTask = pdfjsLib.getDocument(url);
-        loadingTask.promise.then(function getPdf(_pdfDoc) {
-                pdfDoc = _pdfDoc;
-                renderPage(pageNum);
+        var file = $('#nmfile').val();
+        var link = "<?= base_url('file_upload') ?>" + "/" + file;
+
+        WebViewer({
+                path: 'Webviewer/lib',
+                initialDoc: link,
+            }, document.getElementById('load-pdf'))
+            .then(instance => {
+                const {
+                    documentViewer
+                } = instance.Core;
+
+                documentViewer.addEventListener('documentLoaded', () => {
+
+                });
             })
-            .catch((err) => {
-                var ctx = document.getElementById('render').getContext("2d");
-                var img = new Image();
-                img.src = "<?= base_url('images/canva/null.png') ?>";
-                img.onload = () => {
-                    ctx.imageSmoothingEnabled = false;
-                    ctx.drawImage(img, 0, 0, can.width, can.height);
-                }
-            })
-    }
-
-    pdfjsLib.disableWorker = true;
-
-    function renderPage(num) {
-        pdfDoc.getPage(num).then(function(page) {
-            var viewport = page.getViewport({
-                scale: scale
-            });
-            can.height = viewport.height;
-            can.width = viewport.width;
-
-            var renderContext = {
-                canvasContext: ctx,
-                viewport: viewport
-            };
-            page.render(renderContext);
-        });
-
-        $('#page_num').val(num);
-        document.getElementById('page_count').textContent = pdfDoc.numPages;
-    }
-
-    function goToPage() {
-        let input = document.getElementById('page_num');
-        let pageNum = parseInt(input.value);
-        if (pageNum) {
-            if (pageNum <= pdfDoc.numPages && pageNum >= 1) {
-                renderPage(pageNum);
-            }
-        }
-    }
-
-    function goPrevious() {
-        if (pageNum <= 1)
-            return;
-        pageNum--;
-        renderPage(pageNum);
-    }
-
-    function goNext() {
-        if (pageNum >= pdfDoc.numPages)
-            return;
-        pageNum++;
-        renderPage(pageNum);
     }
 
     function deleteDt(id) {
@@ -267,73 +243,8 @@
         renderPDF(link);
     }
 
-    function cancel() {
-        if ($('#signature-frame').html() != '') {
-            $('#signature-frame').css('display', 'none');
-        } else {
-            $('#signature-frame').css('display', 'contents');
-        }
-        signaturePad.clear();
-        $('#sign').html('Simpan');
-    }
-
     // READY----------------------------------
     $(document).ready(function() {
-
-        // Signature-Pad------------------------------------------------------------
-        $('#addsign').click(function() {
-            var canva = $('#signcanva').css('display');
-
-            if (canva == 'none') {
-                $('#signcanva').css('display', 'block');
-                $('#sign').html('Simpan');
-            } else if (canva == 'block') {
-                $('#signcanva').css('display', 'none');
-                signaturePad.clear();
-            }
-        });
-
-        $('#resetCanva').click(function() {
-            signaturePad.clear();
-        });
-
-        $('#sign').click(function(ev) {
-
-            var doc = new jsPDF();
-            var img = document.getElementById('signature-result');
-
-            if ($('#sign').html() == 'Terapkan') {
-                var canv = document.getElementById('render');
-
-                var ctx = canv.getContext("2d");
-
-                ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
-
-                // Save Document
-                var imgs = canv.toDataURL("image/png", 1.0);
-
-                var width = doc.internal.pageSize.getWidth();
-                var height = doc.internal.pageSize.getHeight();
-
-                doc.addImage(imgs, 'PNG', 0, 0, width, height);
-                doc.save($('#namaf').val());
-
-                $('#modal-prev').modal('hide');
-
-            } else if ($('#sign').html() == 'Simpan') {
-
-                var signature = signaturePad.toDataURL('image/png');
-                $('#signature-result').css('display', 'block');
-                $('#signature-result').attr('src', signature);
-                $('#signcanva').css('display', 'none');
-                $('#signature-frame').css('display', 'flex');
-                $('#sign').html('Terapkan');
-                signaturePad.clear();
-
-            } else {
-                alert('Unknown Button Process');
-            }
-        });
 
         $('#modal-prev').on('hidden.bs.modal', function() {
             $('#signcanva').css('display', 'none');
