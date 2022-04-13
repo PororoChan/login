@@ -4,12 +4,14 @@ const ukuran = { x: 0, y: 0 };
 
 // CanvasRender
 const cnv = document.getElementById('render');
+const img = document.getElementById('signature-result');
 
 function getPos(ev) {
     ev.preventDefault();
     var rect = cnv.getBoundingClientRect();
     ukuran.x = (ev.pageX - rect.left) / (rect.right - rect.left) * cnv.width;
     ukuran.y = (ev.pageY - rect.top) / (rect.bottom - rect.top) * cnv.height;
+    // ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
 }
 
 interact(".draggable")
@@ -64,6 +66,15 @@ interact(".draggable")
 interact('#render').dropzone({
     accept: '#signature-result',
     overlap: 0.25,
+})
+
+interact('#dropped').dropzone({
+    accept: '#signature-result',
+    listeners: {
+        drop: function (event) {
+            event.relatedTarget.remove();
+        }
+    }
 })
 
 

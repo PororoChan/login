@@ -16,51 +16,8 @@
     <link rel="stylesheet" href="<?= base_url('template/assets/css/components.css') ?>">
     <script src="<?= base_url('WebViewer/lib/webviewer.min.js') ?>"></script>
     <style>
-        #pilihkelas:hover {
-            cursor: pointer;
-        }
-
-        #signframe {
-            padding-left: 35px;
-        }
-
-        #frame {
-            border-right: 3px solid #78828A;
-        }
-
-        #render {
-            padding: 1px;
-            border: 0.5px solid grey;
-            border-radius: 5px;
-        }
-
-        #signcanva {
-            left: 0;
-            top: 0;
-            display: none;
-            align-items: center;
-            width: 100%;
-            border: 1px solid;
-            border-radius: 5px;
-            position: relative;
-        }
-
         #signcanva:hover {
-            cursor: url('<?= base_url('images/cursor/pen.cur') ?>'), auto;
-        }
-
-        #signature-frame {
-            display: none;
-            border-radius: 5px;
-        }
-
-        #signature-result {
-            margin: auto;
-            border-radius: 5px;
-            display: none;
-            cursor: pointer;
-            text-align: center;
-            image-rendering: crisp-edges;
+            cursor: url("<?= base_url('images/cursor/pen.cur') ?>"), auto;
         }
     </style>
 </head>
@@ -168,7 +125,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js" integrity="sha512-Z8CqofpIcnJN80feS2uccz+pXWgZzeKxDsDNMD/dJ6997/LSRY+W4NmEt9acwR+Gt9OHN0kkI1CTianCwoqcjQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.4/dist/signature_pad.umd.min.js"></script>
     <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js" integrity="sha512-pZmE8nx/gdufIRZ9DdgsipK4ocMbdq6zU2epbECb4/iwu9bHfN3aDYmOiVNC8SHk90uWi03o1ziB6JEd6/3VQA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

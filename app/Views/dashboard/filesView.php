@@ -64,7 +64,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Files</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tanda Tangan Dokumen</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
@@ -72,11 +72,12 @@
                     <input type="hidden" id="ids">
                     <input type="hidden" id="namaf">
                     <div class="row">
-                        <div id="frame" class="col">
-                            <button type="button" class="btn btn-info" id="prev" onclick="goPrevious()">Prev</button>
-                            <button type="button" class="btn btn-info" id="next" onclick="goNext()">Next</button>
+                        <div id="frame" class="col-8">
+                            <button type="button" class="btn btn-info" id="prev" onclick="goPrevious()"><i class="fas fa-arrow-left pr-1"></i>Prev</button>
+                            <button type="button" class="btn btn-info" id="next" onclick="goNext()">Next<i class="fas fa-arrow-right pl-1"></i></button>
                             &nbsp;
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
+                            <div id="dropped" style="width: 50px;" class="btn btn-outline-danger float-right"><i class="fas fa-trash"></i></div>
                             <br>
                             <br>
                             <canvas class="col" id="render">
@@ -89,22 +90,24 @@
                             </div>
                             <br>
                             <div class="row-2 mt-2">
-                                <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-primary"><b>Buat Tanda Tangan</b></button>
+                                <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-primary"><i class="fas fa-pencil-alt mr-3"></i><b>Buat Tanda Tangan</b></button>
                                 <div class="mt-2">
                                     <div id="signature-frame" class="border border-success">
-                                        <img draggable="true" src="" class="draggable" id="signature-result" />
+                                        <img draggable="true" src="" width="330" height="150" class="draggable" id="signature-result" />
                                     </div>
-                                    <canvas class="border-secondary mt-2" id="signcanva">
-
-                                    </canvas>
                                 </div>
+                                <canvas class="border-secondary mt-2" width="330" height="150" id="signcanva">
+
+                                </canvas>
                             </div>
                             <div class="row-2 mt-2">
-                                <button id="resetCanva" type="button" style="width: 100%; height: 50px;" class="btn btn-warning"><b>Bersihkan</b></button>
+                                <button id="resetCanva" type="button" style="width: 100%; height: 50px;" class="btn btn-warning"><i class="fas fa-eraser mr-3"></i><b>Bersihkan</b></button>
                             </div>
                             <div class="modal-footer">
-                                <button onclick="cancel()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                <button id="sign" type="button" class="btn btn-primary">Simpan</button>
+                                <div class="row">
+                                    <button onclick="cancel()" type="button" class="btn btn-secondary mr-2" data-bs-dismiss="modal">Cancel</button>
+                                    <button id="sign" type="button" class="btn btn-primary">Simpan</button>
+                                </div>
                             </div>
                             <label id="size"></label>
                         </div>
@@ -148,6 +151,7 @@
     </div>
 </div>
 <?= $this->endSection(); ?>
+
 <?= $this->section('content') ?>
 <div class="main-content">
     <section class="section">
@@ -217,14 +221,8 @@
                 path: 'Webviewer/lib',
                 initialDoc: link,
             }, document.getElementById('load-pdf'))
-            .then(instance => {
-                const {
-                    documentViewer
-                } = instance.Core;
-
-                documentViewer.addEventListener('documentLoaded', () => {
-
-                });
+            .then(i => {
+                i.UI.loadDocument(link);
             })
     }
 
@@ -234,6 +232,7 @@
     }
 
     function preview(id, files) {
+        signaturePad.on();
         $('#modal-prev').modal('show');
         $('#ids').val(id);
         $('#namaf').val(files);

@@ -1,6 +1,5 @@
-var can = document.getElementById('render');
-    var canvas = document.getElementById('signcanva');
 
+var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
         penColor: 'rgb(25, 25, 25)'
@@ -15,7 +14,7 @@ var can = document.getElementById('render');
     function renderPDF(url) {
         pdfDoc = null;
         pageNum = 1;
-        scale = 1.5;
+        scale = 1.3;
         ctx = can.getContext('2d');
         pdfjsLib.disableWorker = true;
         var loadingTask = pdfjsLib.getDocument(url);
@@ -85,7 +84,8 @@ function cancel() {
     } else {
         $('#signature-frame').css('display', 'contents');
     }
-    signaturePad.clear();
+    signaturePad.off();
+    $('#addsign').html('<i class="fas fa-pencil-alt mr-3"></i> Buat Tanda Tangan');
     $('#sign').html('Simpan');
 }
 
@@ -108,36 +108,34 @@ $('#resetCanva').click(function() {
 
 $('#sign').click(function(ev) {
 
-    var doc = new jsPDF();
+    var doc = new jsPDF();  
     var img = document.getElementById('signature-result');
-
+    
     if ($('#sign').html() == 'Terapkan') {
         var canv = document.getElementById('render');
-
         var ctx = canv.getContext("2d");
-
         ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
 
         // Save Document
         var imgs = canv.toDataURL("image/png", 1.0);
-
         var width = doc.internal.pageSize.getWidth();
         var height = doc.internal.pageSize.getHeight();
-
         doc.addImage(imgs, 'PNG', 0, 0, width, height);
         doc.save($('#namaf').val());
-
         $('#modal-prev').modal('hide');
-
     } else if ($('#sign').html() == 'Simpan') {
-
-        var signature = signaturePad.toDataURL('image/png');
-        $('#signature-result').css('display', 'block');
-        $('#signature-result').attr('src', signature);
-        $('#signcanva').css('display', 'none');
-        $('#signature-frame').css('display', 'flex');
-        $('#sign').html('Terapkan');
-        signaturePad.clear();
+        if (signaturePad.isEmpty()) {
+            $.notify('Tanda Tangan Belum Diisi!', 'error');
+        } else {
+            var signature = signaturePad.toDataURL('image/svg+xml');
+            $('#addsign').html('<i class="fas fa-plus mr-3"></i> Tambah Tanda Tangan');
+            $('#signature-result').css('display', 'block');
+            $('#signature-result').attr('src', signature);
+            $('#signcanva').css('display', 'none');
+            $('#signature-frame').css('display', 'flex');
+            $('#sign').html('Terapkan');
+            signaturePad.clear();
+        }
 
     } else {
         alert('Unknown Button Process');
