@@ -55,6 +55,7 @@
 }
 
 #signature-result {
+    object-fit: cover;
     margin: auto;
     border-radius: 5px;
     display: none;

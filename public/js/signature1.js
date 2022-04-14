@@ -14,7 +14,7 @@ var can = document.getElementById('render');
     function renderPDF(url) {
         pdfDoc = null;
         pageNum = 1;
-        scale = 1.3;
+        scale = 1.25;
         ctx = can.getContext('2d');
         pdfjsLib.disableWorker = true;
         var loadingTask = pdfjsLib.getDocument(url);
@@ -81,10 +81,10 @@ var can = document.getElementById('render');
 function cancel() {
     if ($('#signature-frame').html() != '') {
         $('#signature-frame').css('display', 'none');
-    } else {
-        $('#signature-frame').css('display', 'contents');
+    } else if($('#signature-frame').html() == '') {
+        $('#signature-frame').css('display', 'block');
     }
-    signaturePad.off();
+    signaturePad.clear();
     $('#addsign').html('<i class="fas fa-pencil-alt mr-3"></i> Buat Tanda Tangan');
     $('#sign').html('Simpan');
 }
@@ -112,17 +112,21 @@ $('#sign').click(function(ev) {
     var img = document.getElementById('signature-result');
     
     if ($('#sign').html() == 'Terapkan') {
-        var canv = document.getElementById('render');
-        var ctx = canv.getContext("2d");
-        ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
+        if (dragged == true) {
+            var canv = document.getElementById('render');
+            var ctx = canv.getContext("2d");
+            ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
 
-        // Save Document
-        var imgs = canv.toDataURL("image/png", 1.0);
-        var width = doc.internal.pageSize.getWidth();
-        var height = doc.internal.pageSize.getHeight();
-        doc.addImage(imgs, 'PNG', 0, 0, width, height);
-        doc.save($('#namaf').val());
-        $('#modal-prev').modal('hide');
+            // Save Document
+            var imgs = canv.toDataURL("image/png", 1.0);
+            var width = doc.internal.pageSize.getWidth();
+            var height = doc.internal.pageSize.getHeight();
+            doc.addImage(imgs, 'PNG', 0, 0, width, height);
+            doc.save($('#namaf').val());
+            $('#modal-prev').modal('hide');
+        } else if(dragged == false) {
+            $.notify('No Signature Detected', 'error');
+        }
     } else if ($('#sign').html() == 'Simpan') {
         if (signaturePad.isEmpty()) {
             $.notify('Tanda Tangan Belum Diisi!', 'error');
@@ -136,8 +140,7 @@ $('#sign').click(function(ev) {
             $('#sign').html('Terapkan');
             signaturePad.clear();
         }
-
     } else {
-        alert('Unknown Button Process');
+        $.notify('Unknown Button Process', 'error');
     }
 });

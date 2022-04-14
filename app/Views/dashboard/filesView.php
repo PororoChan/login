@@ -77,7 +77,7 @@
                             <button type="button" class="btn btn-info" id="next" onclick="goNext()">Next<i class="fas fa-arrow-right pl-1"></i></button>
                             &nbsp;
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
-                            <div id="dropped" style="width: 50px;" class="btn btn-outline-danger float-right"><i class="fas fa-trash"></i></div>
+                            <div title="Drop Signature" id="dropped" style="width: 50px;" class="btn btn-outline-danger float-right"><i id="icons" class="fas fa-trash"></i></div>
                             <br>
                             <br>
                             <canvas class="col" id="render">
@@ -93,7 +93,7 @@
                                 <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-primary"><i class="fas fa-pencil-alt mr-3"></i><b>Buat Tanda Tangan</b></button>
                                 <div class="mt-2">
                                     <div id="signature-frame" class="border border-success">
-                                        <img draggable="true" src="" width="330" height="150" class="draggable" id="signature-result" />
+                                        <img draggable="true" src="" class="draggable" id="signature-result" />
                                     </div>
                                 </div>
                                 <canvas class="border-secondary mt-2" width="330" height="150" id="signcanva">
