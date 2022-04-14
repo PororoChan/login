@@ -118,38 +118,6 @@
     </div>
 </div>
 
-<!-- Sign 2 -->
-<div class="modal fade" id="modal-sign" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tanda Tangan Digital</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
-            </div>
-            <input type="hidden" id="idf">
-            <input type="hidden" id="nmfile">
-            <div class="modal-body">
-                <div class="row">
-                    <div id="load-pdf" style="width: 1024px; height: 600px;" class="col-9 mt-1">
-                        <!-- <div id="rendering">
-                            <canvas id="load-pdf" style="width: 100%; height: 100%;">
-
-                            </canvas>
-                        </div> -->
-                    </div>
-                    <div class="col-3 mt-1" id="sidebar-modal">
-                        <div class="col mt-2">
-                            <button id="btn-buat" class="btn btn-outline-warning"><i class="fas fa-signature mr-3"></i>Tambah Tanda Tangan</button>
-                        </div>
-                        <div class="col mt-2">
-                            <button class="btn btn-primary float-bottom" id="btn-unduh">Simpan & Unduh</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <?= $this->endSection(); ?>
 
 <?= $this->section('content') ?>
@@ -208,23 +176,6 @@
             }
         }
     });
-
-    function lihat(id, files) {
-        $('#modal-sign').modal('show');
-        $('#idf').val(id);
-        $('#nmfile').val(files);
-
-        var file = $('#nmfile').val();
-        var link = "<?= base_url('file_upload') ?>" + "/" + file;
-
-        WebViewer({
-                path: 'Webviewer/lib',
-                initialDoc: link,
-            }, document.getElementById('load-pdf'))
-            .then(i => {
-                i.UI.loadDocument(link);
-            })
-    }
 
     function deleteDt(id) {
         $('#modal-del').modal('show');
