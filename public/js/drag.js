@@ -13,6 +13,8 @@ function getPos(ev) {
     var rect = cnv.getBoundingClientRect();
     ukuran.x = (ev.pageX - rect.left) / (rect.right - rect.left) * cnv.width;
     ukuran.y = (ev.pageY - rect.top) / (rect.bottom - rect.top) * cnv.height;
+    var img = signaturePad.toDataURL('image/svg+xml').removeBlanks();
+    ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
 }
 
 interact(".draggable")
@@ -41,7 +43,7 @@ interact(".draggable")
             !interaction.interacting() &&
             currentTarget.style.transform === ""
         ) {
-            element = currentTarget.cloneNode(true);
+            element = currentTarget.cloneNode(true); 
 
             element.style.position = "absolute"; 
             element.style.left = 0;
