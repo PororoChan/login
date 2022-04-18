@@ -8,6 +8,8 @@ var dragged = false;
 var icon = document.getElementById('icons');
 var btn = document.getElementById('dropped');
 
+function hello();
+
 function getPos(ev) {
     ev.preventDefault();
     var rect = cnv.getBoundingClientRect();
