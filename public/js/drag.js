@@ -33,6 +33,7 @@ interact(".draggable")
             },
             end: function (ev) {
                 getPos(ev);
+                console.log(ev);
             }
         },
     })
