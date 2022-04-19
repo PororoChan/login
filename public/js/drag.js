@@ -15,8 +15,6 @@ function getPos(ev) {
     var rect = cnv.getBoundingClientRect();
     ukuran.x = (ev.pageX - rect.left) / (rect.right - rect.left) * cnv.width;
     ukuran.y = (ev.pageY - rect.top) / (rect.bottom - rect.top) * cnv.height;
-    var img = signaturePad.toDataURL('image/svg+xml').removeBlanks();
-    ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
 }
 
 interact(".draggable")
@@ -63,33 +61,6 @@ interact(".draggable")
         interaction.start({ name: "drag" }, event.interactable, element);
     })  
 
-interact('#render').dropzone({
-    accept: '#signature-result',
-    overlap: 0.25,
-    listeners: {
-        drop: function (event) {
-            dragged = true;
-        }
-    }
-})
-
-interact('#dropped').dropzone({
-    accept: '#signature-result',
-    listeners: {
-        drop: function (event) {
-            icon.setAttribute('class', 'fas fa-check');
-            btn.setAttribute('class', 'btn btn-outline-secondary float-right');
-            
-            setTimeout(() => {
-                icon.setAttribute('class', 'fas fa-trash');
-                btn.setAttribute('class', 'btn btn-outline-danger float-right');
-            }, 1000);
-
-            event.relatedTarget.remove();
-            $.notify('Tanda Tangan dihapus', 'info');
-        }
-    }
-})
 
 
 
