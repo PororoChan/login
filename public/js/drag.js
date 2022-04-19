@@ -8,8 +8,6 @@ var dragged = false;
 var icon = document.getElementById('icons');
 var btn = document.getElementById('dropped');
 
-function hello();
-
 function getPos(ev) {
     ev.preventDefault();
     var rect = cnv.getBoundingClientRect();
@@ -31,7 +29,6 @@ interact(".draggable")
             },
             end: function (ev) {
                 getPos(ev);
-                console.log(ev);
             }
         },
     })
@@ -60,6 +57,34 @@ interact(".draggable")
 
         interaction.start({ name: "drag" }, event.interactable, element);
     })  
+
+interact('#render').dropzone({
+    accept: '.draggable',
+    listeners: {
+        drop: function (ev) {
+            dragged = true;
+        }
+    }
+});
+
+interact('#dropped').dropzone({
+    accept: '.draggable',
+    listeners: {
+        drop: function (ev) {
+            icon.setAttribute('class', 'fas fa-check');
+            btn.setAttribute('class', 'btn btn-outline-success float-right');
+
+            setTimeout(() => {
+                icon.setAttribute('class', 'fas fa-trash');
+                btn.setAttribute('class', 'btn btn-outline-danger float-right');
+            }, 1000);
+
+            ev.relatedTarget.remove();
+            $.notify('Tanda Tangan dihapus!', 'info');
+        }
+    }
+})
+
 
 
 

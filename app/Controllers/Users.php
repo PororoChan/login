@@ -39,8 +39,8 @@ class Users extends BaseController
             $row[] = $l->username;
             $row[] = $l->password;
             $row[] = "
-                <button id='dt-edit' data-id='$l->id_user' class='btn btn-warning'><i class='fas fa-edit'></i></button>
-                <button id='dt-delete' data-id='$l->id_user' class='btn btn-danger'><i class='fas fa-trash'></i></button>
+                <button id='dt-edit' data-id='$l->id_user' class='btn btn-warning btn-sm'><i class='fas fa-edit'></i></button>
+                <button id='dt-delete' data-id='$l->id_user' class='btn btn-danger btn-sm'><i class='fas fa-trash'></i></button>
             ";
             $data[] = $row;
         }

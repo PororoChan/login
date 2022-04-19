@@ -1,20 +1,19 @@
-
-var can = document.getElementById('render');
+    var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
         penColor: 'rgb(25, 25, 25)'
     });
 
     // RenderPDF
-    var pdfDoc = null;
-    var pageNum;
-    var ctx;
-    var home = $('#namaf').val();
+var pdfDoc = null;
+var pageNum;
+var ctx;
+var home = $('#namaf').val();
 
     function renderPDF(url) {
         pdfDoc = null;
         pageNum = 1;
-        scale = 1.25;
+        scale = 1.5;
         ctx = can.getContext('2d');
         pdfjsLib.disableWorker = true;
         var loadingTask = pdfjsLib.getDocument(url);
@@ -23,13 +22,9 @@ var can = document.getElementById('render');
                 renderPage(pageNum);
             })
             .catch((err) => {
-                var ctx = document.getElementById('render').getContext("2d");
-                var img = new Image();
-                img.src = "<?= base_url('images/canva/null.png') ?>";
-                img.onload = () => {
-                    ctx.imageSmoothingEnabled = false;
-                    ctx.drawImage(img, 0, 0, can.width, can.height);
-                }
+                var cons = document.getElementById('render').getContext('2d');
+                cons.clearRect(0, 0, can.width, can.height);
+                $.notify('Unsupported Document Rendering', 'error');
             })
     }
 
@@ -47,6 +42,7 @@ var can = document.getElementById('render');
                 canvasContext: ctx,
                 viewport: viewport
             };
+
             page.render(renderContext);
         });
 
@@ -60,24 +56,27 @@ var can = document.getElementById('render');
         if (pageNum) {
             if (pageNum <= pdfDoc.numPages && pageNum >= 1) {
                 renderPage(pageNum);
+                return;
             }
         }
     }
 
     function goPrevious() {
-        if (pageNum <= 1)
+        if (pageNum <= 1) {
             return;
+        }
         pageNum--;
         renderPage(pageNum);
     }
 
     function goNext() {
-        if (pageNum >= pdfDoc.numPages)
+        if (pageNum >= pdfDoc.numPages) {
             return;
+        }
         pageNum++;
         renderPage(pageNum);
-}
-    
+    }
+
 function cancel() {
     if ($('#signature-frame').html() != '') {
         $('#signature-frame').css('display', 'none');
@@ -108,8 +107,9 @@ $('#resetCanva').click(function() {
 
 $('#sign').click(function(ev) {
 
-    var doc = new jsPDF();  
+    var doc = new jsPDF("p", "mm", "a4");  
     var img = document.getElementById('signature-result');
+    var home = $('#namaf').val();
     
     if ($('#sign').html() == 'Terapkan') {
         if (dragged == true) {
@@ -119,13 +119,13 @@ $('#sign').click(function(ev) {
 
             // Save Document
             var imgs = canv.toDataURL("image/png", 1.0);
-            var width = doc.internal.pageSize.getWidth();
-            var height = doc.internal.pageSize.getHeight();
-            doc.addImage(imgs, 'PNG', 0, 0, width, height);
-            doc.save($('#namaf').val());
+            doc.addImage(imgs, 'PNG', 0, 0, 210, 297);
+
+            doc.save(home.split('.').slice(0, -1).join() + '_ditandatangani');
             $('#modal-prev').modal('hide');
-        } else if(dragged == false) {
-            $.notify('No Signature Detected', 'error');
+            $.notify('File berhasil disimpan', 'success');
+        } else if (dragged == false) {
+            $.notify('Tanda Tangan Belum Diisi', 'error');
         }
     } else if ($('#sign').html() == 'Simpan') {
         if (signaturePad.isEmpty()) {
@@ -138,6 +138,7 @@ $('#sign').click(function(ev) {
             $('#signcanva').css('display', 'none');
             $('#signature-frame').css('display', 'flex');
             $('#sign').html('Terapkan');
+            $.notify('Tanda Tangan Berhasil Disimpan', 'success');
             signaturePad.clear();
         }
     } else {

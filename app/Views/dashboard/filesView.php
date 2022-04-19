@@ -81,7 +81,6 @@
                             <br>
                             <br>
                             <canvas class="col" id="render">
-
                             </canvas>
                         </div>
                         <div id="signframe" class="col-4">
@@ -96,7 +95,7 @@
                                         <img draggable="true" src="" class="draggable" id="signature-result" />
                                     </div>
                                 </div>
-                                <canvas class="border-secondary mt-2" width="330" height="150" id="signcanva">
+                                <canvas class="border-secondary mt-2" id="signcanva">
 
                                 </canvas>
                             </div>
