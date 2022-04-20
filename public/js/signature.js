@@ -1,14 +1,14 @@
     var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
-        penColor: 'rgb(25, 25, 25)'
+        penColor: 'rgb(62, 62, 62)'
     });
 
     // RenderPDF
-var pdfDoc = null;
-var pageNum;
-var ctx;
-var home = $('#namaf').val();
+    var pdfDoc = null;
+    var pageNum;
+    var ctx;
+    var home = $('#namaf').val();
 
     function renderPDF(url) {
         pdfDoc = null;
@@ -22,8 +22,7 @@ var home = $('#namaf').val();
                 renderPage(pageNum);
             })
             .catch((err) => {
-                var cons = document.getElementById('render').getContext('2d');
-                cons.clearRect(0, 0, can.width, can.height);
+                ctx.clearRect(0, 0, can.width, can.height);
                 $.notify('Unsupported Document Rendering', 'error');
             })
     }
@@ -46,21 +45,23 @@ var home = $('#namaf').val();
             page.render(renderContext);
         });
 
-        $('#page_num').val(num);
+        document.getElementById('page_num').value = pageNum;
         document.getElementById('page_count').textContent = pdfDoc.numPages;
     }
 
     function goToPage() {
         let input = document.getElementById('page_num');
-        let pageNum = parseInt(input.value);
-        if (pageNum) {
-            if (pageNum <= pdfDoc.numPages && pageNum >= 1) {
-                renderPage(pageNum);
+        let numPage = parseInt(input.value);
+        if (numPage) {
+            if (numPage <= pdfDoc.numPages && numPage >= 1) {
+                renderPage(numPage);
+                pageNum = numPage;
+                document.getElementById('page_num').value = numPage;
                 return;
             }
         }
     }
-
+    
     function goPrevious() {
         if (pageNum <= 1) {
             return;
@@ -77,16 +78,16 @@ var home = $('#namaf').val();
         renderPage(pageNum);
     }
 
-function cancel() {
-    if ($('#signature-frame').html() != '') {
-        $('#signature-frame').css('display', 'none');
-    } else if($('#signature-frame').html() == '') {
-        $('#signature-frame').css('display', 'block');
+    function cancel() {
+        if ($('#signature-frame').html() != '') {
+            $('#signature-frame').css('display', 'none');
+        } else if($('#signature-frame').html() == '') {
+            $('#signature-frame').css('display', 'block');
+        }
+        signaturePad.clear();
+        $('#addsign').html('<i class="fas fa-pencil-alt mr-3"></i> Buat Tanda Tangan');
+        $('#sign').html('Simpan');
     }
-    signaturePad.clear();
-    $('#addsign').html('<i class="fas fa-pencil-alt mr-3"></i> Buat Tanda Tangan');
-    $('#sign').html('Simpan');
-}
 
 // Signature-Pad------------------------------------------------------------
 $('#addsign').click(function() {
@@ -112,6 +113,7 @@ $('#sign').click(function(ev) {
     var home = $('#namaf').val();
     
     if ($('#sign').html() == 'Terapkan') {
+
         if (dragged == true) {
             var canv = document.getElementById('render');
             var ctx = canv.getContext("2d");
@@ -127,7 +129,9 @@ $('#sign').click(function(ev) {
         } else if (dragged == false) {
             $.notify('Tanda Tangan Belum Diisi', 'error');
         }
+
     } else if ($('#sign').html() == 'Simpan') {
+
         if (signaturePad.isEmpty()) {
             $.notify('Tanda Tangan Belum Diisi!', 'error');
         } else {
@@ -141,7 +145,10 @@ $('#sign').click(function(ev) {
             $.notify('Tanda Tangan Berhasil Disimpan', 'success');
             signaturePad.clear();
         }
+
     } else {
+
         $.notify('Unknown Button Process', 'error');
+
     }
 });

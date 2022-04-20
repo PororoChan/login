@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="batal" class="btn btn-warning">Batal</button>
+                        <button type="button" id="batal" class="btn btn-warning" data-bs-dismiss="modal">Batal</button>
                         <button type="button" id="save" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
@@ -129,7 +129,7 @@
             <div class="col">
                 <input type="hidden" id="txt_csrfname" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-tambah">
+                <button type="button" id="plus" class="btn btn-sm btn-round btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-tambah">
                     Tambah Data
                 </button>
                 <div class="card mt-5" style="width: 100%;">

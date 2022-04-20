@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="<?= base_url('css/table.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/signature.css') ?>">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.2/pdf_viewer.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link rel="stylesheet" href="<?= base_url('template/assets/css/style.css') ?>">
     <link rel="stylesheet" href="<?= base_url('template/assets/css/components.css') ?>">
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.2/pdf_viewer.css" rel="stylesheet"> -->
     <style>
         #signcanva:hover {
             cursor: url("<?= base_url('images/cursor/pen.cur') ?>"), auto;
@@ -134,7 +134,7 @@
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <?= $this->renderSection('javascript'); ?>
     <script src="<?= base_url('js/drag.js'); ?>"></script>
-    <script src="<?= base_url('js/signature1.js'); ?>"></script>
+    <script src="<?= base_url('js/signature.js'); ?>"></script>
     <script src="<?= base_url('template/assets/js/stisla.js'); ?>"></script>
     <script src="<?= base_url('template/assets/js/scripts.js'); ?>"></script>
     <script src="<?= base_url('template/assets/js/custom.js'); ?>"></script>
