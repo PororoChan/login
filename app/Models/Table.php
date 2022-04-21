@@ -48,6 +48,11 @@ class Table extends Model
         return $this->builder->insert($data);
     }
 
+    public function edit($data, $id)
+    {
+        return $this->builder->update($data, ['userid' => $id]);
+    }
+
     public function hapus($id)
     {
         return $this->builder->delete(['userid' => $id]);

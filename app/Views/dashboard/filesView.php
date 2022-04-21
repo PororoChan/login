@@ -68,7 +68,7 @@
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="formcanva">
+                <form id="formcanva" method="post">
                     <input type="hidden" id="ids">
                     <input type="hidden" id="namaf">
                     <div class="row">
@@ -108,7 +108,6 @@
                                     <button id="sign" type="button" class="btn btn-primary">Simpan</button>
                                 </div>
                             </div>
-                            <label id="size"></label>
                         </div>
                     </div>
                 </form>
@@ -156,7 +155,8 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('javascript') ?>
-
+<script src="<?= base_url('js/drag.js'); ?>"></script>
+<script src="<?= base_url('js/signature.js'); ?>"></script>
 <script type="text/javascript">
     // GlobalVariable
     var csrfName = '<?= csrf_token() ?>';
@@ -181,15 +181,16 @@
         $('#userid').val(id);
     }
 
+
     function preview(id, files) {
         signaturePad.on();
         $('#modal-prev').modal('show');
         $('#ids').val(id);
         $('#namaf').val(files);
         var home = $('#namaf').val();
+        var links = "<?= base_url('file_upload') ?>" + "/" + home;
 
-        var link = "<?= base_url('file_upload') ?>" + "/" + home;
-        renderPDF(link);
+        renderPDF(links);
     }
 
     // READY----------------------------------
@@ -198,7 +199,6 @@
         $('#modal-prev').on('hidden.bs.modal', function() {
             $('#signcanva').css('display', 'none');
         });
-        // End-Signature-------------------------------------------------------------
 
         // CRUD-Proccess-------------------------------------------------------------
         $('#batal').click(function() {
@@ -206,6 +206,7 @@
         });
 
         $('#save').click(function() {
+            var link = "<?= base_url('files/add') ?>";
             var desc = $('#desc').val();
             var file = $('#upload').prop('files')[0];
             let data = new FormData();
@@ -214,7 +215,7 @@
             data.append('desc', desc);
 
             $.ajax({
-                url: 'files/add',
+                url: link,
                 method: 'post',
                 data: data,
                 processData: false,
@@ -230,6 +231,25 @@
                 }
             });
         });
+
+        // $('#sign').on('click', function() {
+        //     if ($('#sign').html() == 'Terapkan') {
+        //         var id = $('#ids').val();
+        //         var file = doc.output('datauristring');
+
+        //         let dt = new FormData();
+        //         dt.append('id', id)
+        //         dt.append('file', file)
+        //         $.ajax({
+        //             url: link,
+        //             processData: false,
+        //             contentType: false,
+        //             cache: false,
+        //             data: dt,
+        //             success: function(res) {}
+        //         })
+        //     }
+        // })
 
         $('#delete').on('click', function() {
             var id = $('#userid').val();

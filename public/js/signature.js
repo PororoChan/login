@@ -1,3 +1,4 @@
+    const doc = new jsPDF("p", "mm", "a4");   
     var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
@@ -108,7 +109,6 @@ $('#resetCanva').click(function() {
 
 $('#sign').click(function(ev) {
 
-    var doc = new jsPDF("p", "mm", "a4");  
     var img = document.getElementById('signature-result');
     var home = $('#namaf').val();
     
@@ -124,8 +124,7 @@ $('#sign').click(function(ev) {
             doc.addImage(imgs, 'PNG', 0, 0, 210, 297);
 
             doc.save(home.split('.').slice(0, -1).join() + '_ditandatangani');
-            $('#modal-prev').modal('hide');
-            $.notify('File berhasil disimpan', 'success');
+            $.notify('Document Saved', 'success');
         } else if (dragged == false) {
             $.notify('Tanda Tangan Belum Diisi', 'error');
         }

@@ -63,6 +63,20 @@ class Files extends BaseController
         }
     }
 
+    public function updateFile()
+    {
+        $id = $this->request->getPost('id');
+        $files = $this->request->getFile('file');
+
+        $arr = $this->model->getOne($id);
+
+        $data = [
+            'file_name' => $files,
+        ];
+
+        echo json_encode($data);
+    }
+
     public function delete()
     {
         $id = $this->request->getPost('id');

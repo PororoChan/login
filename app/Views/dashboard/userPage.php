@@ -8,7 +8,7 @@
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
-                <form method="POST" id="ubahsiswa" class="needs-validation">
+                <form method="POST" id="ubahuser" class="needs-validation">
                     <div class="form-group">
                         <label for="nama">Nama</label>
                         <input id="edit-nama" type="text" value="" class="form-control" name="nama" tabindex="1" required autofocus>
@@ -167,7 +167,7 @@
                                 },
                                 success: function() {
                                     $('#modal-upt').modal('hide');
-
+                                    $('#ubahuser')[0].reset();
                                     _table.ajax.reload();
                                 }
                             })
