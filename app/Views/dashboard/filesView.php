@@ -157,6 +157,7 @@
 <?= $this->section('javascript') ?>
 <script src="<?= base_url('js/drag.js'); ?>"></script>
 <script src="<?= base_url('js/signature.js'); ?>"></script>
+<script src="https://unpkg.com/trim-canvas-blank@1.0.0/lib/bundle.browser.js"></script>
 <script type="text/javascript">
     // GlobalVariable
     var csrfName = '<?= csrf_token() ?>';
@@ -231,25 +232,6 @@
                 }
             });
         });
-
-        // $('#sign').on('click', function() {
-        //     if ($('#sign').html() == 'Terapkan') {
-        //         var id = $('#ids').val();
-        //         var file = doc.output('datauristring');
-
-        //         let dt = new FormData();
-        //         dt.append('id', id)
-        //         dt.append('file', file)
-        //         $.ajax({
-        //             url: link,
-        //             processData: false,
-        //             contentType: false,
-        //             cache: false,
-        //             data: dt,
-        //             success: function(res) {}
-        //         })
-        //     }
-        // })
 
         $('#delete').on('click', function() {
             var id = $('#userid').val();

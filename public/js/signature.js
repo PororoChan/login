@@ -6,10 +6,10 @@
     });
 
     // RenderPDF
-    var pdfDoc = null;
-    var pageNum;
-    var ctx;
-    var home = $('#namaf').val();
+    var pdfDoc = null,
+        pageNum,
+        ctx,
+        home = $('#namaf').val();
 
     function renderPDF(url) {
         pdfDoc = null;
@@ -22,13 +22,11 @@
                 pdfDoc = _pdfDoc;
                 renderPage(pageNum);
             })
-            .catch((err) => {
+            .catch((er) => {
                 ctx.clearRect(0, 0, can.width, can.height);
                 $.notify('Unsupported Document Rendering', 'error');
             })
     }
-
-    pdfjsLib.disableWorker = true;
 
     function renderPage(num) {
         pdfDoc.getPage(num).then(function(page) {
@@ -51,8 +49,8 @@
     }
 
     function goToPage() {
-        let input = document.getElementById('page_num');
-        let numPage = parseInt(input.value);
+        let input = document.getElementById('page_num'),
+        numPage = parseInt(input.value);
         if (numPage) {
             if (numPage <= pdfDoc.numPages && numPage >= 1) {
                 renderPage(numPage);
@@ -109,14 +107,13 @@ $('#resetCanva').click(function() {
 
 $('#sign').click(function(ev) {
 
-    var img = document.getElementById('signature-result');
-    var home = $('#namaf').val();
+    var img = document.getElementById('signature-result'),
+        home = $('#namaf').val();
     
     if ($('#sign').html() == 'Terapkan') {
-
         if (dragged == true) {
-            var canv = document.getElementById('render');
-            var ctx = canv.getContext("2d");
+            var canv = document.getElementById('render'),
+                ctx = canv.getContext("2d");
             ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
 
             // Save Document
@@ -124,30 +121,28 @@ $('#sign').click(function(ev) {
             doc.addImage(imgs, 'PNG', 0, 0, 210, 297);
 
             doc.save(home.split('.').slice(0, -1).join() + '_ditandatangani');
+            $('#modal-prev').modal('hide');
             $.notify('Document Saved', 'success');
         } else if (dragged == false) {
             $.notify('Tanda Tangan Belum Diisi', 'error');
         }
-
     } else if ($('#sign').html() == 'Simpan') {
-
         if (signaturePad.isEmpty()) {
             $.notify('Tanda Tangan Belum Diisi!', 'error');
         } else {
-            var signature = signaturePad.toDataURL('image/svg+xml');
+            var signature = trimCanvas(document.getElementById('signcanva')),
+                src = signature.toDataURL('image/png');
+            
             $('#addsign').html('<i class="fas fa-plus mr-3"></i> Tambah Tanda Tangan');
             $('#signature-result').css('display', 'block');
-            $('#signature-result').attr('src', signature);
+            $('#signature-result').attr('src', src);
             $('#signcanva').css('display', 'none');
             $('#signature-frame').css('display', 'flex');
             $('#sign').html('Terapkan');
             $.notify('Tanda Tangan Berhasil Disimpan', 'success');
             signaturePad.clear();
         }
-
     } else {
-
         $.notify('Unknown Button Process', 'error');
-
     }
 });

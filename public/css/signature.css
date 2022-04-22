@@ -26,13 +26,11 @@
 }
 
 #signature-frame {
-    border: 1px solid #000;
     display: none;
     border-radius: 5px;
 }
 
 #signature-result {
-    object-fit: cover;
     margin: auto;
     border-radius: 5px;
     display: none;

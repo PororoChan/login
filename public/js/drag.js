@@ -4,10 +4,10 @@ const ukuran = { x: 0, y: 0 };
 
 // CanvasRender
 const cnv = document.getElementById('render');
-var image = document.getElementById('signature-result');
-var dragged = false;
-var icon = document.getElementById('icons');
-var btn = document.getElementById('dropped');
+var image = document.getElementById('signature-result'),
+    dragged = false,
+    icon = document.getElementById('icons'),
+    btn = document.getElementById('dropped');
 
 function getPos(ev) {
     ev.preventDefault();
@@ -73,7 +73,7 @@ interact('#render').dropzone({
     accept: '.draggable',
     listeners: {
         drop: function (ev) {
-            dragged = true;
+            dragged = true; 
         }
     }
 });
