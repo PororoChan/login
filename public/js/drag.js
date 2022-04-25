@@ -4,8 +4,8 @@ const ukuran = { x: 0, y: 0 };
 
 // CanvasRender
 const cnv = document.getElementById('render');
-var image = document.getElementById('signature-result'),
-    dragged = false,
+
+var dragged = false,
     icon = document.getElementById('icons'),
     btn = document.getElementById('dropped');
 
@@ -14,7 +14,7 @@ function getPos(ev) {
     var rect = cnv.getBoundingClientRect();
     ukuran.x = (ev.pageX - rect.left) / (rect.right - rect.left) * cnv.width;
     ukuran.y = (ev.pageY - rect.top) / (rect.bottom - rect.top) * cnv.height;
-    // ctx.drawImage(image, ukuran.x - image.width / 2, ukuran.y - image.height / 2);
+    // ctx.drawImage(ev.target, ukuran.x - ev.target.width / 2, ukuran.y - ev.target.height / 2);
 }
 
 interact(".draggable")
@@ -81,7 +81,7 @@ interact('#render').dropzone({
 interact('#dropped').dropzone({
     accept: '.draggable',
     listeners: {
-        drop: function (ev) {
+        drop: function(ev) {
             icon.setAttribute('class', 'fas fa-check');
             btn.setAttribute('class', 'btn btn-outline-success float-right');
 
@@ -91,7 +91,7 @@ interact('#dropped').dropzone({
             }, 1500);
 
             ev.relatedTarget.remove();
-            $.notify('Tanda Tangan dihapus!', 'info');
+            $.notify('class', 'btn btn-outline-danger float-right');
         }
     }
 })

@@ -1,4 +1,4 @@
-    const doc = new jsPDF("p", "mm", "a4");   
+          const doc = new jsPDF("p", "mm", "a4");   
     var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
@@ -31,14 +31,16 @@
     function renderPage(num) {
         pdfDoc.getPage(num).then(function(page) {
             var viewport = page.getViewport({
-                scale: scale
+                scale: scale,
             });
             can.height = viewport.height;
             can.width = viewport.width;
+            can.style.width = viewport.width;
+            can.style.height = viewport.height;
 
             var renderContext = {
                 canvasContext: ctx,
-                viewport: viewport
+                viewport: viewport,
             };
 
             page.render(renderContext);

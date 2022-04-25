@@ -1,4 +1,4 @@
-/* Signature 1 */
+/* Signature */
 #pilihkelas:hover {
     cursor: pointer;
 }
@@ -26,6 +26,7 @@
 }
 
 #signature-frame {
+    padding: 1px;
     display: none;
     border-radius: 5px;
 }
