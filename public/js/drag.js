@@ -91,7 +91,7 @@ interact('#dropped').dropzone({
             }, 1500);
 
             ev.relatedTarget.remove();
-            $.notify('class', 'btn btn-outline-danger float-right');
+            $.notify('Tanda Tangan Dihapus!', 'info');
         }
     }
 })

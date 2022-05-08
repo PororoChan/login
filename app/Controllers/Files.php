@@ -65,16 +65,25 @@ class Files extends BaseController
 
     public function updateFile()
     {
-        $id = $this->request->getPost('id');
-        $upfile = $this->request->getFile('file');
+        $id = $this->request->getPost('ids');
+        // Problem Here
+        $files = $this->request->getPost('file_data');
+        $decoded = base64_decode($files);
+        $upfile = $this->request->getPost('file_name');
 
-        $model = $this->model->getOne($id);
+        $list = $this->model->getOne($id);
+        $oldf = $list['file'];
+
+        if (file_exists('file_upload/' . $oldf)) {
+            unlink('file_upload/' . $oldf);
+            file_put_contents('file_upload/' . $upfile, base64_decode($decoded));
+        }
 
         $dt = [
             'file_name' => $upfile,
         ];
 
-        return $this->model->edit($dt, $id);
+        $this->model->edit($dt, $id);
 
         echo json_encode($dt);
     }

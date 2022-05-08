@@ -233,6 +233,33 @@
             });
         });
 
+        $('#sign').on('click', function() {
+            if ($('#sign').html() == 'Terapkan') {
+                var id = $('#ids').val(),
+                    link = "<?= base_url('files/update') ?>",
+                    file = $('#namaf').val(),
+                    dtfile = doc.output();
+                let dt = new FormData();
+                dt.append('ids', id);
+                dt.append('file_name', file);
+                dt.append('file_data', dtfile);
+
+                $.ajax({
+                    url: link,
+                    type: 'post',
+                    data: dt,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        console.log(res);
+                        setTimeout(() => {
+                            _table.ajax.reload();
+                        }, 2500);
+                    }
+                });
+            }
+        })
+
         $('#delete').on('click', function() {
             var id = $('#userid').val();
             var link = "<?= base_url('files/delete') ?>";

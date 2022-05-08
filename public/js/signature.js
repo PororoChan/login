@@ -1,4 +1,4 @@
-          const doc = new jsPDF("p", "mm", "a4");   
+    const doc = new jsPDF("p", "mm", "a4");   
     var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
@@ -122,7 +122,7 @@ $('#sign').click(function(ev) {
             var imgs = canv.toDataURL("image/png", 1.0);
             doc.addImage(imgs, 'PNG', 0, 0, 210, 297);
 
-            doc.save(home.split('.').slice(0, -1).join() + '_ditandatangani');
+            // doc.save(home.split('.').slice(0, -1).join() + '_ditandatangani');
             $('#modal-prev').modal('hide');
             $.notify('Document Saved', 'success');
         } else if (dragged == false) {
@@ -133,8 +133,9 @@ $('#sign').click(function(ev) {
             $.notify('Tanda Tangan Belum Diisi!', 'error');
         } else {
             var signature = trimCanvas(document.getElementById('signcanva')),
-                src = signature.toDataURL('image/png');
-            
+                src = signature.toDataURL('image/png'); 
+                
+            $('#namaf').val(home.split('.').slice(0, -1).join() + '_ditandatangani.pdf');
             $('#addsign').html('<i class="fas fa-plus mr-3"></i> Tambah Tanda Tangan');
             $('#signature-result').css('display', 'block');
             $('#signature-result').attr('src', src);

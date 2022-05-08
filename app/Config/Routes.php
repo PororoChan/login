@@ -75,6 +75,7 @@ $routes->add('/users/delete', 'Users::delete');
 
 //crud-files
 $routes->add('/files/add', 'Files::save');
+$routes->add('/files/update', 'Files::updateFile');
 $routes->add('/files/delete', 'Files::delete');
 
 // table
