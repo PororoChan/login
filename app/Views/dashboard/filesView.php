@@ -182,7 +182,6 @@
         $('#userid').val(id);
     }
 
-
     function preview(id, files) {
         signaturePad.on();
         $('#modal-prev').modal('show');
@@ -193,6 +192,35 @@
 
         renderPDF(links);
     }
+
+    $('#sign').click(function() {
+        if ($('#sign').html() == 'Terapkan') {
+            var id = $('#ids').val(),
+                link = "<?= base_url('files/update') ?>",
+                file = $('#namaf').val(),
+                dtfile = btoa(doc.output());
+
+            let dt = new FormData();
+            dt.append('ids', id);
+            dt.append('file_name', file);
+            dt.append('file_data', dtfile);
+
+            $.ajax({
+                url: link,
+                type: 'post',
+                data: dt,
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                    setTimeout(() => {
+                        _table.ajax.reload();
+                    }, 2000);
+                }
+            });
+        } else if ($('#sign').html() == 'Simpan') {
+            $('#sign').html('Terapkan');
+        }
+    })
 
     // READY----------------------------------
     $(document).ready(function() {
@@ -232,33 +260,6 @@
                 }
             });
         });
-
-        $('#sign').on('click', function() {
-            if ($('#sign').html() == 'Terapkan') {
-                var id = $('#ids').val(),
-                    link = "<?= base_url('files/update') ?>",
-                    file = $('#namaf').val(),
-                    dtfile = doc.output();
-                let dt = new FormData();
-                dt.append('ids', id);
-                dt.append('file_name', file);
-                dt.append('file_data', dtfile);
-
-                $.ajax({
-                    url: link,
-                    type: 'post',
-                    data: dt,
-                    processData: false,
-                    contentType: false,
-                    success: function(res) {
-                        console.log(res);
-                        setTimeout(() => {
-                            _table.ajax.reload();
-                        }, 2500);
-                    }
-                });
-            }
-        })
 
         $('#delete').on('click', function() {
             var id = $('#userid').val();

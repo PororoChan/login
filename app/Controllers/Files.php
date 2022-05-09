@@ -67,8 +67,7 @@ class Files extends BaseController
     {
         $id = $this->request->getPost('ids');
         // Problem Here
-        $files = $this->request->getPost('file_data');
-        $decoded = base64_decode($files);
+        $files = base64_decode($this->request->getPost('file_data'));
         $upfile = $this->request->getPost('file_name');
 
         $list = $this->model->getOne($id);
@@ -76,7 +75,7 @@ class Files extends BaseController
 
         if (file_exists('file_upload/' . $oldf)) {
             unlink('file_upload/' . $oldf);
-            file_put_contents('file_upload/' . $upfile, base64_decode($decoded));
+            file_put_contents('file_upload/' . $upfile, $files);
         }
 
         $dt = [

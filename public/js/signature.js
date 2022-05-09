@@ -1,4 +1,4 @@
-    const doc = new jsPDF("p", "mm", "a4");   
+    const doc = new jsPDF();   
     var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
@@ -20,11 +20,10 @@
         var loadingTask = pdfjsLib.getDocument(url);
         loadingTask.promise.then(function getPdf(_pdfDoc) {
                 pdfDoc = _pdfDoc;
-                renderPage(pageNum);
-            })
-            .catch((er) => {
+                renderPage(pageNum); 
+            }).catch((er) => {
                 ctx.clearRect(0, 0, can.width, can.height);
-                $.notify('Unsupported Document Rendering', 'error');
+                $.notify('Cannot read Document', 'error');
             })
     }
 
@@ -118,11 +117,11 @@ $('#sign').click(function(ev) {
                 ctx = canv.getContext("2d");
             ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
 
-            // Save Document
+            // SaveDocument
             var imgs = canv.toDataURL("image/png", 1.0);
             doc.addImage(imgs, 'PNG', 0, 0, 210, 297);
 
-            // doc.save(home.split('.').slice(0, -1).join() + '_ditandatangani');
+            doc.save($('#namaf').val());
             $('#modal-prev').modal('hide');
             $.notify('Document Saved', 'success');
         } else if (dragged == false) {
@@ -133,7 +132,7 @@ $('#sign').click(function(ev) {
             $.notify('Tanda Tangan Belum Diisi!', 'error');
         } else {
             var signature = trimCanvas(document.getElementById('signcanva')),
-                src = signature.toDataURL('image/png'); 
+                src = signature.toDataURL('image/png');
                 
             $('#namaf').val(home.split('.').slice(0, -1).join() + '_ditandatangani.pdf');
             $('#addsign').html('<i class="fas fa-plus mr-3"></i> Tambah Tanda Tangan');
@@ -141,7 +140,6 @@ $('#sign').click(function(ev) {
             $('#signature-result').attr('src', src);
             $('#signcanva').css('display', 'none');
             $('#signature-frame').css('display', 'flex');
-            $('#sign').html('Terapkan');
             $.notify('Tanda Tangan Berhasil Disimpan', 'success');
             signaturePad.clear();
         }
