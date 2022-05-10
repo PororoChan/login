@@ -77,7 +77,8 @@
                             <button type="button" class="btn btn-info" id="next" onclick="goNext()">Next<i class="fas fa-arrow-right pl-1"></i></button>
                             &nbsp;
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
-                            <div title="Drop Signature" id="dropped" style="width: 50px;" class="btn btn-outline-danger float-right"><i id="icons" class="fas fa-trash"></i></div>
+                            <div title="Drop Signature" id="dropped" class="btn btn-outline-danger float-right"><i id="icons" class="fas fa-trash"></i></div>
+                            <button type="button" class="btn btn-outline-info float-right" style="margin-right: 10px;" title="Unduh Dokumen" id="unduh"><i class="fas fa-download"></i></button>
                             <br>
                             <br>
                             <canvas class="col" id="render">
@@ -195,28 +196,32 @@
 
     $('#sign').click(function() {
         if ($('#sign').html() == 'Terapkan') {
-            var id = $('#ids').val(),
-                link = "<?= base_url('files/update') ?>",
-                file = $('#namaf').val(),
-                dtfile = btoa(doc.output());
+            if (dragged == true) {
+                var id = $('#ids').val(),
+                    link = "<?= base_url('files/update') ?>",
+                    file = $('#namaf').val(),
+                    dtfile = btoa(doc.output());
 
-            let dt = new FormData();
-            dt.append('ids', id);
-            dt.append('file_name', file);
-            dt.append('file_data', dtfile);
+                let dt = new FormData();
+                dt.append('ids', id);
+                dt.append('file_name', file);
+                dt.append('file_data', dtfile);
 
-            $.ajax({
-                url: link,
-                type: 'post',
-                data: dt,
-                processData: false,
-                contentType: false,
-                success: function(res) {
-                    setTimeout(() => {
-                        _table.ajax.reload();
-                    }, 2000);
-                }
-            });
+                $.ajax({
+                    url: link,
+                    type: 'post',
+                    data: dt,
+                    processData: false,
+                    contentType: false,
+                    success: function(res) {
+                        setTimeout(() => {
+                            _table.ajax.reload();
+                        }, 2000);
+                    }
+                });
+            } else {
+                console.error('Dragged Is False');
+            }
         } else if ($('#sign').html() == 'Simpan') {
             $('#sign').html('Terapkan');
         }
@@ -227,6 +232,7 @@
 
         $('#modal-prev').on('hidden.bs.modal', function() {
             $('#signcanva').css('display', 'none');
+            $('#signature-result').removeData();
         });
 
         // CRUD-Proccess-------------------------------------------------------------

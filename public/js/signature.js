@@ -2,7 +2,7 @@
     var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
-        penColor: 'rgb(62, 62, 62)'
+        penColor: 'rgb(41, 42, 45)'
     });
 
     // RenderPDF
@@ -14,7 +14,9 @@
     function renderPDF(url) {
         pdfDoc = null;
         pageNum = 1;
-        scale = 1.5;
+        scales = { 1: 3.2, 2: 4 };
+        defaultScale = 1.5;
+        scale = scales[window.devicePixelRatio] || defaultScale;
         ctx = can.getContext('2d');
         pdfjsLib.disableWorker = true;
         var loadingTask = pdfjsLib.getDocument(url);
@@ -106,6 +108,14 @@ $('#resetCanva').click(function() {
     signaturePad.clear();
 });
 
+$('#unduh').click(function () {
+    var cns = can.toDataURL("image/png", 1.0);
+    doc.addImage(cns, 'PNG', 0, 0, 210, 297);
+    
+    doc.save($('#namaf').val());
+    $('#modal-prev').modal('hide');
+});
+
 $('#sign').click(function(ev) {
 
     var img = document.getElementById('signature-result'),
@@ -121,11 +131,10 @@ $('#sign').click(function(ev) {
             var imgs = canv.toDataURL("image/png", 1.0);
             doc.addImage(imgs, 'PNG', 0, 0, 210, 297);
 
-            doc.save($('#namaf').val());
             $('#modal-prev').modal('hide');
             $.notify('Document Saved', 'success');
         } else if (dragged == false) {
-            $.notify('Tanda Tangan Belum Diisi', 'error');
+            $.notify('Tempatkan tanda tangan didalam dokumen!', 'error');
         }
     } else if ($('#sign').html() == 'Simpan') {
         if (signaturePad.isEmpty()) {

@@ -13,6 +13,7 @@
 
 #render {   
     border: 0.5px solid grey;
+    padding: 1px;
     border-radius: 5px;
 }
 
