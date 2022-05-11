@@ -81,6 +81,7 @@
     }
 
     function cancel() {
+        
         if ($('#signature-frame').html() != '') {
             $('#signature-frame').css('display', 'none');
         } else if($('#signature-frame').html() == '') {
@@ -109,12 +110,22 @@ $('#resetCanva').click(function() {
 });
 
 $('#unduh').click(function () {
-    var cns = can.toDataURL("image/png", 1.0);
+    var home = $('#namaf').val(),
+        cns = can.toDataURL("image/png", 1.0);
     doc.addImage(cns, 'PNG', 0, 0, 210, 297);
     
-    doc.save($('#namaf').val());
+    doc.save(home.split('.').slice(0, -1).join() + '_ditandatangani.pdf');
     $('#modal-prev').modal('hide');
 });
+
+$('#print').click(function () {
+    var cn = can.toDataURL("image/png", 1.0);
+
+    doc.addImage(cn, 'PNG', 0, 0, 210, 297);
+    doc.autoPrint();
+
+    window.open(doc.output('bloburl'), '_blank');
+})
 
 $('#sign').click(function(ev) {
 
@@ -125,8 +136,8 @@ $('#sign').click(function(ev) {
         if (dragged == true) {
             var canv = document.getElementById('render'),
                 ctx = canv.getContext("2d");
-            ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
-
+                ctx.drawImage(img, ukuran.x - img.width / 2, ukuran.y - img.height / 2);
+                
             // SaveDocument
             var imgs = canv.toDataURL("image/png", 1.0);
             doc.addImage(imgs, 'PNG', 0, 0, 210, 297);
@@ -142,7 +153,7 @@ $('#sign').click(function(ev) {
         } else {
             var signature = trimCanvas(document.getElementById('signcanva')),
                 src = signature.toDataURL('image/png');
-                
+
             $('#namaf').val(home.split('.').slice(0, -1).join() + '_ditandatangani.pdf');
             $('#addsign').html('<i class="fas fa-plus mr-3"></i> Tambah Tanda Tangan');
             $('#signature-result').css('display', 'block');

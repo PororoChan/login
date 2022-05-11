@@ -78,7 +78,8 @@
                             &nbsp;
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
                             <div title="Drop Signature" id="dropped" class="btn btn-outline-danger float-right"><i id="icons" class="fas fa-trash"></i></div>
-                            <button type="button" class="btn btn-outline-info float-right" style="margin-right: 10px;" title="Unduh Dokumen" id="unduh"><i class="fas fa-download"></i></button>
+                            <button type="button" class="btn btn-outline-info float-right" style="margin-right: 5px;" title="Unduh Dokumen" id="unduh"><i class="fas fa-download"></i></button>\
+                            <button type="button" class="btn btn-outline-secondary float-right" style="margin-right: 5px;" title="Print" id="print"><i class="fas fa-print"></i></button>
                             <br>
                             <br>
                             <canvas class="col" id="render">
@@ -157,7 +158,7 @@
 
 <?= $this->section('javascript') ?>
 <script src="<?= base_url('js/drag.js'); ?>"></script>
-<script src="<?= base_url('js/signature.js'); ?>"></script>
+<script src="<?= base_url('js/proccess.js'); ?>"></script>
 <script src="https://unpkg.com/trim-canvas-blank@1.0.0/lib/bundle.browser.js"></script>
 <script type="text/javascript">
     // GlobalVariable
