@@ -80,6 +80,9 @@ $routes->add('/files/delete', 'Files::delete');
 
 // table
 $routes->add('/tbfile', 'Files::table');
+
+// pdf
+$routes->add('/files/print', 'Pdf::genPDF');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

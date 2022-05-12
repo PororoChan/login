@@ -135,6 +135,9 @@
                 <button type="button" id="plus" class="btn btn-sm btn-round btn-primary mt-auto mb-2 float-right" data-bs-toggle="modal" data-bs-target="#modal-tambah">
                     Tambah Data
                 </button>
+                <button type="button" id="prints" class="btn btn-primary float-left mr-2">
+                    <i class="fas fa-print"></i>
+                </button>
                 <div class="card mt-5" style="width: 100%;">
                     <div class="card-body">
                         <table class="table table-striped table-hover table-bordered table-head-fixed" id="dtfile" width="100%">
@@ -293,6 +296,14 @@
             })
         });
         // End-CRUD-Proccess---------------------------------------------------------   
+
+        $('#prints').on('click', function() {
+            // Generate PDF
+            $.ajax({
+                url: "<?= base_url('files/print') ?>",
+                success: function(dt) {}
+            })
+        })
     });
 </script>
 <?= $this->endSection(); ?>

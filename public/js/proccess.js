@@ -112,19 +112,21 @@ $('#resetCanva').click(function() {
 $('#unduh').click(function () {
     var home = $('#namaf').val(),
         cns = can.toDataURL("image/png", 1.0);
-    doc.addImage(cns, 'PNG', 0, 0, 210, 297, undefined, 'FAST');
     
+    doc.addImage(cns, 'PNG', 0, 0, 210, 297);
     doc.save(home);
+
     $('#modal-prev').modal('hide');
 });
 
 $('#print').click(function () {
-    var d = can.toDataURL("image/png", 1.0);
+    var out = can.toDataURL("image/png", 1.0);
 
-    doc.addImage(d, 'PNG', 0, 0, 210, 297);
+    doc.addImage(out, 'PNG', 0, 0, 210, 297);
     doc.autoPrint();
+
     window.open(doc.output('bloburl'), '_blank');
-})
+});
 
 $('#sign').click(function(ev) {
 
