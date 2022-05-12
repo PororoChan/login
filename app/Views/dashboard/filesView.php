@@ -74,24 +74,26 @@
                     <div class="row">
                         <div id="frame" class="col-8">
                             <button type="button" class="btn btn-info" id="prev" onclick="goPrevious()"><i class="fas fa-arrow-left pr-1"></i>Prev</button>
-                            <button type="button" class="btn btn-info" id="next" onclick="goNext()">Next<i class="fas fa-arrow-right pl-1"></i></button>
                             &nbsp;
                             <span>Page: <input onkeyup="goToPage()" type="text" id="page_num" style="width: 25px; text-align: center;"> / <span id="page_count"></span></span>
+                            <button type="button" class="btn btn-info" style="margin-left: 10px;" id="next" onclick="goNext()">Next<i class="fas fa-arrow-right pl-1"></i></button>
                             <div title="Drop Signature" id="dropped" class="btn btn-outline-danger float-right"><i id="icons" class="fas fa-trash"></i></div>
-                            <button type="button" class="btn btn-outline-info float-right" style="margin-right: 5px;" title="Unduh Dokumen" id="unduh"><i class="fas fa-download"></i></button>\
-                            <button type="button" class="btn btn-outline-secondary float-right" style="margin-right: 5px;" title="Print" id="print"><i class="fas fa-print"></i></button>
+                            <div class="float-right" style="margin-right: 10px; position: relative; border-right: 1px solid grey;">
+                                <button type="button" class="btn btn-secondary float-right" style="margin-right: 10px;" title="Unduh Dokumen" id="unduh"><i class="fas fa-download"></i></button>
+                                <button type="button" class="btn btn-secondary float-right" style="margin-right: 5px;" title="Print" id="print"><i class="fas fa-print"></i></button>
+                            </div>
                             <br>
                             <br>
                             <canvas class="col" id="render">
                             </canvas>
                         </div>
-                        <div id="signframe" class="col-4">
+                        <div id="signframe" class="col-4 mt-3">
                             <div class="row">
                                 <b>Make a Digital Signature</b>
                             </div>
                             <br>
-                            <div class="row-2 mt-2">
-                                <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-primary"><i class="fas fa-pencil-alt mr-3"></i><b>Buat Tanda Tangan</b></button>
+                            <div class="row-2 mt-auto">
+                                <button type="button" id="addsign" style="width: 100%; height: 50px;" class="btn btn-primary"><i class="fas fa-pen mr-3"></i><b>Buat Tanda Tangan</b></button>
                                 <div class="mt-2">
                                     <div id="signature-frame" class="border border-success">
                                         <img draggable="true" src="" class="draggable" id="signature-result" />
@@ -226,7 +228,7 @@
         } else if ($('#sign').html() == 'Simpan') {
             $('#sign').html('Terapkan');
         }
-    })
+    });
 
     // READY----------------------------------
     $(document).ready(function() {

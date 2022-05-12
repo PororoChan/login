@@ -83,7 +83,7 @@ interact('#dropped').dropzone({
     listeners: {
         drop: function(ev) {
             icon.setAttribute('class', 'fas fa-check');
-            btn.setAttribute('class', 'btn btn-outline-success float-right');
+            btn.setAttribute('class', 'btn btn-danger float-right');
 
             setTimeout(() => {
                 icon.setAttribute('class', 'fas fa-trash');
@@ -95,10 +95,3 @@ interact('#dropped').dropzone({
         }
     }
 })
-
-
-
-
-
-
-

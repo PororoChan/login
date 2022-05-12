@@ -2,7 +2,7 @@
     var can = document.getElementById('render');
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
-        penColor: 'rgb(41, 42, 45)'
+        penColor: 'rgb(9, 9, 9)'
     });
 
     // RenderPDF
@@ -88,7 +88,7 @@
             $('#signature-frame').css('display', 'block');
         }
         signaturePad.clear();
-        $('#addsign').html('<i class="fas fa-pencil-alt mr-3"></i> Buat Tanda Tangan');
+        $('#addsign').html('<i class="fas fa-pen mr-3"></i> Buat Tanda Tangan');
         $('#sign').html('Simpan');
     }
 
@@ -112,18 +112,17 @@ $('#resetCanva').click(function() {
 $('#unduh').click(function () {
     var home = $('#namaf').val(),
         cns = can.toDataURL("image/png", 1.0);
-    doc.addImage(cns, 'PNG', 0, 0, 210, 297);
+    doc.addImage(cns, 'PNG', 0, 0, 210, 297, undefined, 'FAST');
     
-    doc.save(home.split('.').slice(0, -1).join() + '_ditandatangani.pdf');
+    doc.save(home);
     $('#modal-prev').modal('hide');
 });
 
 $('#print').click(function () {
-    var cn = can.toDataURL("image/png", 1.0);
+    var d = can.toDataURL("image/png", 1.0);
 
-    doc.addImage(cn, 'PNG', 0, 0, 210, 297);
+    doc.addImage(d, 'PNG', 0, 0, 210, 297);
     doc.autoPrint();
-
     window.open(doc.output('bloburl'), '_blank');
 })
 
