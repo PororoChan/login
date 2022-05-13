@@ -284,8 +284,8 @@
                 type: 'post',
                 url: link,
                 data: data,
-                success: function(response) {
-                    if (response == 1) {
+                success: function(res) {
+                    if (res == 1) {
                         $('#modal-del').modal('hide');
                         $.notify('Data telah dihapus', 'success');
                         setTimeout(() => {
@@ -293,7 +293,7 @@
                         }, 300);
                     }
                 }
-            })
+            });
         });
         // End-CRUD-Proccess---------------------------------------------------------   
 
@@ -302,7 +302,7 @@
             $.ajax({
                 url: "<?= base_url('files/print') ?>",
                 success: function(dt) {}
-            })
+            });
         })
     });
 </script>

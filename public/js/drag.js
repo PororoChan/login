@@ -72,7 +72,7 @@ interact(".draggable")
 interact('#render').dropzone({
     accept: '.draggable',
     listeners: {
-        drop: function (ev) {
+        drop: function (evt) {
             dragged = true; 
         }
     }
@@ -88,7 +88,7 @@ interact('#dropped').dropzone({
             setTimeout(() => {
                 icon.setAttribute('class', 'fas fa-trash');
                 btn.setAttribute('class', 'btn btn-outline-danger float-right');
-            }, 1500);
+            }, 1000);
 
             ev.relatedTarget.remove();
             $.notify('Tanda Tangan Dihapus!', 'info');

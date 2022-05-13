@@ -66,7 +66,6 @@ class Files extends BaseController
     public function updateFile()
     {
         $id = $this->request->getPost('ids');
-        // Problem Here
         $files = base64_decode($this->request->getPost('file_data'));
         $upfile = $this->request->getPost('file_name');
 

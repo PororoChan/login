@@ -21,12 +21,12 @@
         pdfjsLib.disableWorker = true;
         var loadingTask = pdfjsLib.getDocument(url);
         loadingTask.promise.then(function getPdf(_pdfDoc) {
-                pdfDoc = _pdfDoc;
-                renderPage(pageNum); 
-            }).catch((er) => {
-                ctx.clearRect(0, 0, can.width, can.height);
-                $.notify('Cannot read Document', 'error');
-            })
+            pdfDoc = _pdfDoc;
+            renderPage(pageNum);
+        }).catch((er) => {
+            ctx.clearRect(0, 0, can.width, can.height);
+            $.notify('Cannot read Document', 'error');
+        });
     }
 
     function renderPage(num) {
@@ -128,7 +128,7 @@ $('#print').click(function () {
     window.open(doc.output('bloburl'), '_blank');
 });
 
-$('#sign').click(function(ev) {
+$('#sign').click(function(evt) {
 
     var img = document.getElementById('signature-result'),
         home = $('#namaf').val();
