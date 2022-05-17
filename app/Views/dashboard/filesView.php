@@ -162,8 +162,8 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('javascript') ?>
-<script src="<?= base_url('js/drag.js'); ?>"></script>
-<script src="<?= base_url('js/proccess.js'); ?>"></script>
+<script src="<?= base_url('public/js/drag.js'); ?>"></script>
+<script src="<?= base_url('public/js/proccess.js'); ?>"></script>
 <script src="https://unpkg.com/trim-canvas-blank@1.0.0/lib/bundle.browser.js"></script>
 <script type="text/javascript">
     // GlobalVariable
@@ -195,7 +195,7 @@
         $('#ids').val(id);
         $('#namaf').val(files);
         var home = $('#namaf').val();
-        var links = "<?= base_url('file_upload') ?>" + "/" + home;
+        var links = "<?= base_url('public/file_upload') ?>" + "/" + home;
 
         renderPDF(links);
     }

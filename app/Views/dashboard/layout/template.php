@@ -7,18 +7,18 @@
     <title><?= $title ?></title>
 
     <!-- General CSS Files -->
-    <link rel="stylesheet" href="<?= base_url('css/table.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/signature.css') ?>">
+    <link rel="icon" href="<?= base_url('public/favicon.ico') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/css/table.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/css/signature.css') ?>">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?= base_url('template/assets/css/style.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('template/assets/css/components.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/template/assets/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/template/assets/css/components.css') ?>">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.2/pdf_viewer.css" rel="stylesheet"> -->
     <style>
         #signcanva:hover {
-            cursor: url("<?= base_url('images/cursor/pen.cur') ?>"), auto;
+            cursor: url("<?= base_url('public/images/cursor/pen.cur') ?>"), auto;
         }
     </style>
 </head>
@@ -69,7 +69,7 @@
                         </div>
                     </li>
                     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link nav-link-lg nav-link-user">
-                            <img alt="image" src="<?= base_url('template'); ?>/assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+                            <img alt="image" src="<?= base_url('public/template/assets/img/avatar/avatar-1.png'); ?>" class="rounded-circle mr-1">
                             <div class="d-sm-none d-lg-inline-block">Hi, <?= $nama ?></div>
                         </a>
                     </li>
@@ -83,7 +83,7 @@
                     <div class="sidebar-brand sidebar-brand-sm">
                         <a href="#">RS</a>
                     </div>
-                    <ul class="sidebar-menu">
+                    <ul id="tabs" class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
                         <li class="nav-item">
                         <li><a title="Home" class="nav-link" href="<?= base_url('/home'); ?>"><i class="fas fa-home"></i><span>Home</span></a></li>
@@ -135,23 +135,13 @@
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <?= $this->renderSection('javascript'); ?>
 
-    <script src="<?= base_url('template/assets/js/stisla.js'); ?>"></script>
-    <script src="<?= base_url('template/assets/js/scripts.js'); ?>"></script>
-    <script src="<?= base_url('template/assets/js/custom.js'); ?>"></script>
-    <script src="<?= base_url('template/assets/js/notify.js'); ?>"></script>
-    <script src="<?= base_url('template/assets/js/page/index.js'); ?>"></script>
+    <script src="<?= base_url('public/template/assets/js/stisla.js'); ?>"></script>
+    <script src="<?= base_url('public/template/assets/js/scripts.js'); ?>"></script>
+    <script src="<?= base_url('public/template/assets/js/custom.js'); ?>"></script>
+    <script src="<?= base_url('public/template/assets/js/notify.js'); ?>"></script>
+    <script src="<?= base_url('public/template/assets/js/page/index.js'); ?>"></script>
     <script>
-        $(document).ready(function() {
-            var folder = document.getElementById('folder')
-            var path = location.pathname.split('/');
-            var url = location.origin + '/' + path[1];
-
-            $('ul.sidebar-menu li a').each(function() {
-                if ($(this).attr('href').indexOf(url) !== -1) {
-                    $(this).parent().addClass('active').parent().parent('li').addClass('active');
-                }
-            })
-        })
+        // Sidebar 
     </script>
 </body>
 

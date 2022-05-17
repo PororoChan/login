@@ -6,16 +6,12 @@ use App\Controllers\BaseController;
 use App\Models\Datasiswa;
 use App\Models\Datatable;
 use App\Models\Excel;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Style;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use App\Models\KelasModel;
 use Config\Services;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
 class Dtsiswa extends BaseController
 {
-    private $datat;
     private $excel;
 
     public function __construct()
@@ -105,14 +101,13 @@ class Dtsiswa extends BaseController
             ],
         ];
 
-
         if ($this->request->getVar('type') == 1) {
             if ($this->validate($rules)) {
                 $model = new Datasiswa();
 
                 $image = $this->request->getFile('gambar');
                 $name = $image->getRandomName();
-                $image->move('../public/images', $name);
+                $image->move('public/images/', $name);
                 $data = [
                     'nama'  =>  $this->request->getVar('nama'),
                     'kelas' =>  $this->request->getVar('kelas'),
@@ -149,8 +144,8 @@ class Dtsiswa extends BaseController
         $image = $dt['gambar'];
 
         if ($did) {
-            if (file_exists('images/' . $image)) {
-                unlink('images/' . $image);
+            if (file_exists('public/images/' . $image)) {
+                unlink('public/images/' . $image);
             }
 
             $imgNew = $this->request->getFile('gambar');
@@ -165,7 +160,7 @@ class Dtsiswa extends BaseController
 
             $model->update($did, $data);
 
-            $imgNew->move('../public/images', $nama);
+            $imgNew->move('public/images', $nama);
         }
 
         echo json_encode($data);
@@ -180,8 +175,8 @@ class Dtsiswa extends BaseController
 
         if ($id) {
             $model->delete($this->request->getVar('id_data'));
-            if (file_exists('images/' . $image)) {
-                unlink('images/' . $image);
+            if (file_exists('public/images/' . $image)) {
+                unlink('public/images/' . $image);
             }
         }
     }

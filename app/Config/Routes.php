@@ -17,6 +17,8 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php')) {
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Login');
+$routes->setDefaultMethod('login');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
@@ -35,7 +37,7 @@ $routes->setAutoRoute(true);
 
 //Login & Register
 $routes->get('/login', 'Login::login');
-$routes->get('/valid', 'Register::save');
+$routes->add('/valid', 'Register::save');
 $routes->get('/register', 'Register::register');
 
 //index-page-per-controller

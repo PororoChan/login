@@ -81,7 +81,7 @@ interact('#render').dropzone({
 interact('#dropped').dropzone({
     accept: '.draggable',
     listeners: {
-        drop: function(ev) {
+        drop: function (ev) {
             icon.setAttribute('class', 'fas fa-check');
             btn.setAttribute('class', 'btn btn-danger float-right');
 
@@ -94,4 +94,4 @@ interact('#dropped').dropzone({
             $.notify('Tanda Tangan Dihapus!', 'info');
         }
     }
-})
+});

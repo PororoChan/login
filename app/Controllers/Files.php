@@ -49,7 +49,7 @@ class Files extends BaseController
             $file = $this->request->getFile('file_name');
             $filename = $file->getClientName();
             $name = str_replace(' ', '_', $filename);
-            $file->move('../public/file_upload', $name);
+            $file->move('public/file_upload/', $name);
             $data = [
                 'publisher' => session()->get('nama'),
                 'file_name' => $name,
@@ -72,9 +72,9 @@ class Files extends BaseController
         $list = $this->model->getOne($id);
         $oldf = $list['file'];
 
-        if (file_exists('file_upload/' . $oldf)) {
-            unlink('file_upload/' . $oldf);
-            file_put_contents('file_upload/' . $upfile, $files);
+        if (file_exists('public/file_upload/' . $oldf)) {
+            unlink('public/file_upload/' . $oldf);
+            file_put_contents('public/file_upload/' . $upfile, $files);
         }
 
         $dt = [
@@ -92,8 +92,8 @@ class Files extends BaseController
         $dt = $this->model->getOne($id);
 
         if ($id) {
-            if (file_exists('file_upload/' . $dt['file'])) {
-                unlink('file_upload/' . $dt['file']);
+            if (file_exists('public/file_upload/' . $dt['file'])) {
+                unlink('public/file_upload/' . $dt['file']);
             }
 
             $this->model->hapus($id);

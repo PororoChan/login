@@ -11,8 +11,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="<?= base_url('template/assets/css/style.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('template/assets/css/components.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/template/assets/css/style.css') ?>">
+    <link rel="icon" href="<?= base_url('public/favicon.ico') ?>">
+    <link rel="stylesheet" href="<?= base_url('public/template/assets/css/components.css') ?>">
 </head>
 
 <body>
@@ -22,7 +23,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
                         <div class="login-brand">
-                            <img src="<?= base_url('template'); ?>/assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+                            <img src="<?= base_url('public/template/assets/img/stisla-fill.svg'); ?>" alt="logo" width="100" class="shadow-light rounded-circle">
                         </div>
 
                         <div class="card card-primary">
@@ -33,7 +34,7 @@
                                 <div class="alert alert-danger m-4 mb-auto"><?= session()->getFlashdata('msg') ?></div>
                             <?php endif; ?>
                             <div class="card-body">
-                                <form method="POST" action="/register/save">
+                                <form id="add-regist" method="POST">
                                     <div class="col">
                                         <div class="form-group">
                                             <label for="first_name">Name</label>
@@ -41,8 +42,8 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="email">Username</label>
-                                            <input id="email" type="text" class="form-control" name="uname">
+                                            <label for="uname">Username</label>
+                                            <input id="uname" type="text" class="form-control" name="uname">
                                             <div class="invalid-feedback">
                                             </div>
                                         </div>
@@ -69,7 +70,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                            <button type="button" id="add-reg" class="btn btn-primary btn-lg btn-block">
                                                 Register
                                             </button>
                                         </div>
@@ -91,14 +92,33 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="<?= base_url('template') ?>/assets/js/stisla.js"></script>
+    <script src="<?= base_url('public/template/assets/js/stisla.js') ?>"></script>
+    <script src="<?= base_url('public/template/assets/js/scripts.js') ?>"></script>
+    <script src="<?= base_url('public/template/assets/js/custom.js') ?>"></script>
+    <script>
+        $('#add-reg').on('click', function() {
+            var first = $('#first_name').val();
+            var uname = $('#uname').val();
+            var password = $('#password').val();
 
-    <!-- Template JS File -->
-    <script src="<?= base_url('template') ?>/assets/js/scripts.js"></script>
-    <script src="<?= base_url('template') ?>/assets/js/custom.js"></script>
-
-    <!-- Page Specific JS File -->
-    <script src="<?= base_url('template') ?>/assets/js/page/auth-register.js"></script>
+            $.ajax({
+                url: "<?= base_url('/valid') ?>",
+                method: 'POST',
+                data: {
+                    nama: first,
+                    username: uname,
+                    password: password,
+                },
+                success: function(res) {
+                    if (res == 1) {
+                        window.location.href = '<?= base_url('/login') ?>';
+                    } else if (res != 1) {
+                        window.location.href = '<?= base_url('/register') ?>';
+                    }
+                }
+            })
+        });
+    </script>
 </body>
 
 </html>

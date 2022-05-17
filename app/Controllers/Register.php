@@ -18,23 +18,23 @@ class Register extends BaseController
         $session = session();
         $rules = [
             'nama' => 'required|min_length[3]|max_length[25]',
-            'uname' => 'required|min_length[3]|max_length[25]',
+            'username' => 'required|min_length[3]|max_length[25]',
             'password' => 'required|min_length[6]|max_length[200]',
-            'password-confirm' => 'matches[password]',
         ];
 
         if ($this->validate($rules)) {
             $model = new userModel();
             $data = [
                 'nama'  => $this->request->getPost('nama'),
-                'username'  => $this->request->getPost('uname'),
+                'username'  => $this->request->getPost('username'),
                 'password'  => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
             ];
             $model->save($data);
-            return redirect()->to('/login');
+
+            echo '1';
         } else {
             $session->setFlashdata('msg', 'Data yang dimasukkan salah');
-            return redirect()->to('/register');
+            echo '0';
         }
     }
 }

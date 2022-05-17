@@ -283,7 +283,7 @@
                     $('#id-kelas').text(data.kelas);
                     $('#id-usia').text(data.usia);
                     $('#idn').val(ids)
-                    $('#id-gambar').attr('src', 'images/' + img);
+                    $('#id-gambar').attr('src', 'public/images/' + img);
                 }
             })
         })

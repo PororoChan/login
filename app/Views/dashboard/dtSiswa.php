@@ -34,7 +34,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="batal" class="btn btn-warning">Batal</button>
-                        <button id="simpan" type="buton" class="btn btn-primary">Simpan</button>
+                        <button id="simpan" type="button" class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -74,7 +74,7 @@
                     <input type="hidden" id="ids">
                     <div class="modal-footer">
                         <button type="button" id="batal" class="btn btn-warning">Batal</button>
-                        <button id="update" type="buton" class="btn btn-primary">Update</button>
+                        <button id="update" type="button" class="btn btn-primary">Update</button>
                     </div>
                 </form>
             </div>
