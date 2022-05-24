@@ -10,7 +10,7 @@
         pageNum,
         ctx,
         pages = [],
-    home = $('#namaf').val();
+        home = $('#namaf').val();
 
     function renderPDF(url) {
         pdfDoc = null;
