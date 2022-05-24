@@ -64,7 +64,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tanda Tangan Dokumen</h5>
+                <h5 class="modal-title" id="judul">Tanda Tangan Dokumen</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
@@ -222,7 +222,7 @@
                     success: function(res) {
                         setTimeout(() => {
                             _table.ajax.reload();
-                        }, 2000);
+                        }, 500);
                     }
                 });
             } else {

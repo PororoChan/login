@@ -20,6 +20,10 @@
         #signcanva:hover {
             cursor: url("<?= base_url('public/images/cursor/pen.cur') ?>"), auto;
         }
+
+        #signature-result:active {
+            cursor: grab;
+        }
     </style>
 </head>
 
@@ -118,9 +122,6 @@
     </div>
 
     <!-- General JS Scripts -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.2/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.2/pdf_viewer.js"></script> -->
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -129,12 +130,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.4/dist/signature_pad.umd.min.js"></script>
-    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
     <?= $this->renderSection('javascript'); ?>
-
     <script src="<?= base_url('public/template/assets/js/stisla.js'); ?>"></script>
     <script src="<?= base_url('public/template/assets/js/scripts.js'); ?>"></script>
     <script src="<?= base_url('public/template/assets/js/custom.js'); ?>"></script>

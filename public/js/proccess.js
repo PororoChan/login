@@ -9,7 +9,8 @@
     var pdfDoc = null,
         pageNum,
         ctx,
-        home = $('#namaf').val();
+        pages = [],
+    home = $('#namaf').val();
 
     function renderPDF(url) {
         pdfDoc = null;
@@ -23,13 +24,14 @@
         loadingTask.promise.then(function getPdf(_pdfDoc) {
             pdfDoc = _pdfDoc;
             renderPage(pageNum);
-        }).catch((er) => {
+        }).catch(() => {
             ctx.clearRect(0, 0, can.width, can.height);
             $.notify('Cannot read Document', 'error');
         });
     }
-
+    
     function renderPage(num) {
+                
         pdfDoc.getPage(num).then(function(page) {
             var viewport = page.getViewport({
                 scale: scale,
