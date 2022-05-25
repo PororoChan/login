@@ -1,64 +1,74 @@
     const doc = new jsPDF();   
-    var can = document.getElementById('render');
+    var can;
     let signaturePad = new SignaturePad(document.getElementById('signcanva'), {
         maxWidth: 2,
         penColor: 'rgb(9, 9, 9)'
     });
-
+    
     // RenderPDF
     var pdfDoc = null,
-        pageNum,
-        ctx,
-        pages = [],
-        home = $('#namaf').val();
-
+    pageNum,
+    ctx,
+    scales,
+    scale,
+    defaultScale,
+    home = $('#namaf').val();
+    
     function renderPDF(url) {
         pdfDoc = null;
         pageNum = 1;
         scales = { 1: 3.2, 2: 4 };
         defaultScale = 1.5;
         scale = scales[window.devicePixelRatio] || defaultScale;
-        ctx = can.getContext('2d');
         pdfjsLib.disableWorker = true;
-        var loadingTask = pdfjsLib.getDocument(url);
-        loadingTask.promise.then(function getPdf(_pdfDoc) {
+        pdfjsLib.getDocument(url).promise.then(function getPdf(_pdfDoc) {
             pdfDoc = _pdfDoc;
-            renderPage(pageNum);
+            renderPages();  
         }).catch(() => {
-            ctx.clearRect(0, 0, can.width, can.height);
-            $.notify('Cannot read Document', 'error');
+            $.notify('Cannot read Document', 'error');   
         });
-    }
-    
-    function renderPage(num) {
-                
-        pdfDoc.getPage(num).then(function(page) {
-            var viewport = page.getViewport({
-                scale: scale,
-            });
+        
+        function renderPage(page) {
+            can = document.createElement("canvas");
+            can.id = "render";  
+            can.className = "col";
+            ctx = can.getContext('2d');
+
+            var wrapper = document.getElementById("wrapper");
+            var holder = document.getElementById("holder");
+
+            var viewport = page.getViewport({ scale: scale });
+        
             can.height = viewport.height;
             can.width = viewport.width;
-            can.style.width = viewport.width;
-            can.style.height = viewport.height;
 
             var renderContext = {
                 canvasContext: ctx,
                 viewport: viewport,
             };
 
+            wrapper.appendChild(can);
+            holder.appendChild(wrapper);
+            
             page.render(renderContext);
-        });
 
-        document.getElementById('page_num').value = pageNum;
-        document.getElementById('page_count').textContent = pdfDoc.numPages;
+            document.getElementById('page_num').value = pageNum;
+            document.getElementById('page_count').textContent = pdfDoc.numPages;
+        }
+
+        function renderPages() {
+            for (var num = 1; num <= pdfDoc.numPages; num++) {
+                pdfDoc.getPage(num).then(renderPage);
+            }
+        }
     }
-
+        
     function goToPage() {
         let input = document.getElementById('page_num'),
         numPage = parseInt(input.value);
         if (numPage) {
             if (numPage <= pdfDoc.numPages && numPage >= 1) {
-                renderPage(numPage);
+                renderPages();
                 pageNum = numPage;
                 document.getElementById('page_num').value = numPage;
                 return;
@@ -66,21 +76,21 @@
         }
     }
     
-    function goPrevious() {
-        if (pageNum <= 1) {
-            return;
-        }
-        pageNum--;
-        renderPage(pageNum);
-    }
+    // function goPrevious() {
+    //     if (pageNum <= 1) {
+    //         return;
+    //     }
+    //     pageNum--;
+    //     renderPage(pageNum);
+    // }
 
-    function goNext() {
-        if (pageNum >= pdfDoc.numPages) {
-            return;
-        }
-        pageNum++;
-        renderPage(pageNum);
-    }
+    // function goNext() {
+    //     if (pageNum >= pdfDoc.numPages) {
+    //         return;
+    //     }
+    //     pageNum++;
+    //     renderPage(pageNum);
+    // }
 
     function cancel() {
         
@@ -113,12 +123,16 @@ $('#resetCanva').click(function() {
 
 $('#unduh').click(function () {
     var home = $('#namaf').val(),
-        cns = can.toDataURL("image/png", 1.0);
+        cns = document.querySelector('canvas').toDataURL("image/png", 1.0);
     
-    doc.addImage(cns, 'PNG', 0, 0, 210, 297);
+        for (var i = 1; i <= pdfDoc.numPages; i++) {
+            doc.addImage(cns, 'PNG', 0, 0, 210, 297);
+            // doc.addPage();
+        }
+    
     doc.save(home);
 
-    $('#modal-prev').modal('hide');
+    $('#modal-prev').modal('toggle');
 });
 
 $('#print').click(function () {
@@ -145,7 +159,7 @@ $('#sign').click(function(evt) {
             var imgs = canv.toDataURL("image/png", 1.0);
             doc.addImage(imgs, 'PNG', 0, 0, 210, 297);
 
-            $('#modal-prev').modal('hide');
+            $('#modal-prev').modal('toggle');
             $.notify('Document Saved', 'success');
         } else if (dragged == false) {
             $.notify('Tempatkan tanda tangan didalam dokumen!', 'error');

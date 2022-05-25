@@ -84,8 +84,10 @@
                             </div>
                             <br>
                             <br>
-                            <canvas class="col" id="render">
-                            </canvas>
+                            <div class="col" id="holder">
+                                <div id="wrapper">
+                                </div>
+                            </div>
                         </div>
                         <div id="signframe" class="col-4 mt-3">
                             <div class="row">
@@ -162,8 +164,8 @@
 <?= $this->endSection(); ?>
 
 <?= $this->section('javascript') ?>
-<script src="<?= base_url('public/js/drag.js'); ?>"></script>
 <script src="<?= base_url('public/js/proccess.js'); ?>"></script>
+<script src="<?= base_url('public/js/drag.js'); ?>"></script>
 <script src="https://unpkg.com/trim-canvas-blank@1.0.0/lib/bundle.browser.js"></script>
 <script type="text/javascript">
     // GlobalVariable

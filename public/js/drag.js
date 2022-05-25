@@ -3,14 +3,14 @@ const position = { x: 0, y: 0 };
 const ukuran = { x: 0, y: 0 };
 
 // CanvasRender
-const cnv = document.getElementById('render');
 
 var dragged = false,
-    icon = document.getElementById('icons'),
-    btn = document.getElementById('dropped');
+icon = document.getElementById('icons'),
+btn = document.getElementById('dropped');
 
 function getPos(ev) {
     ev.preventDefault();
+    var cnv = document.getElementById('render');
     var rect = cnv.getBoundingClientRect();
     ukuran.x = (ev.pageX - rect.left) / (rect.right - rect.left) * cnv.width;
     ukuran.y = (ev.pageY - rect.top) / (rect.bottom - rect.top) * cnv.height;
