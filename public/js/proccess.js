@@ -123,10 +123,15 @@ $('#resetCanva').click(function() {
 
 $('#unduh').click(function () {
     var home = $('#namaf').val(),
-        cns = document.querySelector('canvas').toDataURL("image/png", 1.0);
+        ty,
+        cns = document.querySelectorAll('canvas');
+    
+    cns.forEach(function (elem) {
+        ty = elem.toDataURL("image/png", 1.0);
+    })
     
         for (var i = 1; i <= pdfDoc.numPages; i++) {
-            doc.addImage(cns, 'PNG', 0, 0, 210, 297);
+            doc.addImage(ty, 'PNG', 0, 0, 210, 297);
             // doc.addPage();
         }
     
